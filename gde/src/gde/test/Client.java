@@ -20,7 +20,7 @@ public class Client {
             System.exit(1);
         }
         
-        String json = "{\"gameId\":5, \"instanceId\":0, \"frameNumber\":1, \"data\":{\"strength\":false, \"vitality\":10}}";
+        String json = "{\"gameId\": \"507f1f77acf86ce799439011\", \"identifier\": \"ill\", \"data\":{\"strength\": false, \"vitality\": 10}}";
         out.write(json);
         out.flush();
 

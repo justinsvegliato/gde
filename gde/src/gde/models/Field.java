@@ -30,21 +30,12 @@ public class Field extends Entry {
     private FieldType type;
     
     /** the id of the associated game */
-    private Integer gameId;
+    private String gameId;
 
     /**
      * Instantiates a newly-created Field object.
      */
     public Field() {
-    }
-
-    /**
-     * Instantiates a newly-created Field object.
-     * 
-     * @param id the id assigned by MongoDB
-     */
-    public Field(Integer id) {
-        super(id);
     }
     
     /**
@@ -54,22 +45,12 @@ public class Field extends Entry {
      * @param type the type of the field
      * @param gameId the id of the associated game
      */
-    public Field(String name, FieldType type, Integer gameId) {
+    public Field(String name, FieldType type, String gameId) {
         this.name = name;
         this.type = type;
         this.gameId = gameId;
     }
-    
-    /**
-     * Instantiates a newly-created Field object.
-     * 
-     * @param name the name of the field
-     * @param type the type of the field
-     */
-    public Field(String name, FieldType type) {
-        this(name, type, -1);
-    }
-    
+
     /**
      * Gets the name of the field.
      * 
@@ -111,7 +92,7 @@ public class Field extends Entry {
      * 
      * @return the id of the associated game
      */
-    public Integer getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
@@ -120,7 +101,7 @@ public class Field extends Entry {
      * 
      * @param gameId the id of the associated game
      */
-    public void setGameId(Integer gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 }

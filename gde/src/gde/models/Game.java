@@ -23,15 +23,6 @@ public class Game extends Entry {
     /**
      * Instantiates a newly-created Game object.
      * 
-     * @param id the id assigned by MongoDB
-     */
-    public Game(Integer id) {
-        super(id);
-    }
-    
-    /**
-     * Instantiates a newly-created Game object.
-     * 
      * @param title the title of the game
      * @param genre the genre of the game
      * @param developerId the id of the associated developer

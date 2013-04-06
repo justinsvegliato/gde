@@ -12,26 +12,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Listener {
-    
-    private static final Logger logger = LoggerFactory.getLogger(Listener.class);
 
-    private static int localPort = 8746;
-    
-    private Listener() {
-    }
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
+    private static int LOCAL_PORT = 8746;
+
 //    static {
 //        InputStream inputStream = Listener.class.getClassLoader().getResourceAsStream("resources/listener.properties");
 //        Properties listenerProperties = new Properties();
 //        try {
 //            listenerProperties.load(inputStream);
-//            localPort = Integer.parseInt(listenerProperties.getProperty("localPort"));            
+//            LOCAL_PORT = Integer.parseInt(listenerProperties.getProperty("LOCAL_PORT"));            
 //        } catch (IOException e) {
 //            System.exit(1);
 //        } finally {
 //            SocketUtils.close(inputStream);
 //        }
 //    }
+    
+    private Listener() {
+    }
 
     public static void main(String[] args) {
         listen();
@@ -40,32 +39,32 @@ public class Listener {
     private static void listen() {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(localPort);
-            logger.debug("Opened ServerSocket on port [" + localPort + "]");
+            serverSocket = new ServerSocket(LOCAL_PORT);
+            LOGGER.debug("Opened ServerSocket on port [" + LOCAL_PORT + "]");
         } catch (IOException ioe) {
-            logger.error("Failed to open ServerSocket on port [" + localPort + "]", ioe);
+            LOGGER.error("Failed to open ServerSocket on port [" + LOCAL_PORT + "]", ioe);
             return;
         }
-        
+
         Socket clientSocket = null;
         BufferedReader bufferedReader = null;
         RequestHandler requestHandler = new RequestHandler();
         try {
-            logger.debug("Initialized and ready to receive messages from game client");
+            LOGGER.debug("Initialized and ready to receive messages from game client");
             String clientRequest;
             while (true) {
                 clientSocket = serverSocket.accept();
-                logger.debug("Established connection with game client");
+                LOGGER.debug("Established a connection with the game client");
                 bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 while ((clientRequest = bufferedReader.readLine()) != null) {
-                    logger.debug("Received request from game client");
+                    LOGGER.debug("Received a request from the game client");
                     requestHandler.handleRequest(clientRequest);
                 }
             }
         } catch (IOException e) {
-            logger.error("IOException encountered while working with the ServerSocket or ClientSocket", e);
+            LOGGER.error("Encountered IOException while working with the ServerSocket or ClientSocket", e);
         } catch (Throwable t) {
-            logger.error("Throwable caught for logging purposes", t);
+            LOGGER.error("Caught Throwable for logging purposes", t);
         } finally {
             SocketUtils.close(bufferedReader);
             SocketUtils.close(clientSocket);

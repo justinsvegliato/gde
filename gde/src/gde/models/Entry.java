@@ -17,9 +17,6 @@ public abstract class Entry {
     @JsonProperty("_id")
     private ObjectId key = null;
     
-    /** the unique canonical id of the entry */
-    protected Integer id = -1;
-    
     /** the date when the entry was last updated */
     protected Date updateDate = null;
 
@@ -28,15 +25,6 @@ public abstract class Entry {
      */
     public Entry() {
        
-    }
-    
-    /** 
-     * Instantiates a newly-created Entry object.
-     * 
-     * @param id the unique canonical id of the object
-     */
-    public Entry(Integer id) {
-        this.id = id;
     }
     
     /**
@@ -56,25 +44,6 @@ public abstract class Entry {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
-    
-    /**
-     * Gets the unique canonical id of the entry.
-     *
-     * @return the unique canonical id of the entry
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * Set the unique canonical id of the entry.
-     *
-     * @param id the unique canonical id of the entry
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 
     /**
      * Gets the id required by Mongo.

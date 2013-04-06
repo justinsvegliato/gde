@@ -27,21 +27,12 @@ public class Developer extends Entry {
     private String password;
     
     /** the ids of the associated developers */
-    private List<Integer> gameIds = new ArrayList<Integer>();
+    private List<String> gameIds = new ArrayList<String>();
 
     /**
      * Instantiates a newly-created Developer object.
      */
     public Developer() {
-    }
-
-    /**
-     * Instantiates a newly-created Developer object.
-     * 
-     * @param id the id assigned by MongoDB
-     */
-    public Developer(Integer id) {
-        super(id);
     }
 
     /**
@@ -156,7 +147,7 @@ public class Developer extends Entry {
      * 
      * @return the id of the associated games
      */
-    public List<Integer> getGameIds() {
+    public List<String> getGameIds() {
         return gameIds;
     }
     
@@ -165,7 +156,7 @@ public class Developer extends Entry {
      * 
      * @param gameIds the id of the associated games
      */
-    public void setGameIds(List<Integer> gameIds) {
+    public void setGameIds(List<String> gameIds) {
         this.gameIds = gameIds;
     }
 }

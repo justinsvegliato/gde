@@ -1,26 +1,18 @@
 package gde.models;
 
-import java.util.Date;
-
 /**
  * The implementation of the Instance data structure that will be used by
  * MongoDB as well as the application.
- * 
+ *
  * @author Justin Svegliato and Andrew Evans
  */
 public class Instance extends Entry {
 
-    /** the name of the game instance */
-    private String name;
-    
-    /** the date of when the game instance was initiated */
-    private Date started;
-    
-    /** the total play time of the game instance */
-    private Integer playtime;
+    /** the identifier of the game instance */
+    private String identifier;
     
     /** the id of the associated game */
-    private Integer gameId;
+    private String gameId;
 
     /**
      * Instantiates the newly-created Instance object.
@@ -30,108 +22,48 @@ public class Instance extends Entry {
 
     /**
      * Instantiates the newly-created Instance object.
-     * 
-     * @param id the id assigned by MongoDB
-     */
-    public Instance(Integer id) {
-        super(id);
-    }
-    
-    /** 
-     * Instantiates the newly-created Instance object.
-     * 
-     * @param name the name of the game instance 
-    * @param started the date of when the game instance was initiated
-     * @param playtime the total play time of the game instance
+     *
+     * @param identifier the identifier of the game instance
      * @param gameId the id of the associated game
      */
-    public Instance(String name, Date started, Integer playtime, Integer gameId) {
-        this.name = name;
-        this.started = started;
-        this.playtime = playtime;
+    public Instance(String name, String gameId) {
+        this.identifier = name;
         this.gameId = gameId;
     }
-    
-    /**
-     * Instantiates a newly-created Instance object.
-     * 
-     * @param name the name of the game instance
-     * @param started the date of when the game instance was initiated
-     * @param playtime the total play time of the game instance
-     */
-    public Instance(String name, Date started, Integer playtime) {
-        this(name, started, playtime, -1);
-    }
-    
-    /**
-     * Gets the name of the instance.
-     * 
-     * @return the name of the instance
-     */
-    public String getName() {
-        return name;
-    }
 
-    /** 
-     * Sets the name of the instance.
-     * 
-     * @param name the name of the instance
+    /**
+     * Gets the identifier of the instance.
+     *
+     * @return the identifier of the instance
      */
-    public void setName(String name) {
-        this.name = name;
+    public String getIdentifier() {
+        return identifier;
     }
 
     /**
-     * Gets thedate of when the instance was initiated.
-     * 
-     * @return the time and date of when the instance was initiated
+     * Sets the identifier of the instance.
+     *
+     * @param identifier the identifier of the instance
      */
-    public Date getStarted() {
-        return started;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     /**
-     * Sets the date of when the instance was initiated
-     * 
-     * @param started the time and date of when the instance was initiated
-     */
-    public void setStarted(Date started) {
-        this.started = started;
-    }
-
-    /**
-     * Gets the total play time of the game instance.
-     * 
-     * @return the total play time of the game instance
-     */
-    public Integer getPlaytime() {
-        return playtime;
-    }
-
-    /**
-     * Sets the total play time of the game instance.
-     * 
-     * @param playtime the total play time of the game instance
-     */
-    public void setPlaytime(Integer playtime) {
-        this.playtime = playtime;
-    }
-
-    /** 
      * Gets the id of the associated game.
-     * 
+     *
      * @return the id of the associated game
      */
-    public Integer getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
     /**
      * Sets the id of the associated game.
-     * 
+     *
      * @param gameId the id of the associated game
      */
-    public void setGameId(Integer gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 }

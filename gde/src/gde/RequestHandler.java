@@ -2,39 +2,68 @@ package gde;
 
 import gde.util.Request;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.DB;
+import com.mongodb.Mongo;
+import com.mongodb.WriteResult;
 import gde.models.CapturedData;
-import gde.util.MongoHelper;
+import gde.models.Instance;
 import java.io.IOException;
+import java.net.UnknownHostException;
+import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RequestHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
+    private static final String DATABASE = "gde";
+    private static Jongo jongo;
+
+    static {
+        try {
+            DB db = new Mongo().getDB(DATABASE);
+            jongo = new Jongo(db);
+            LOGGER.debug("Instantiated connection to the database [" + DATABASE + "]");
+        } catch (UnknownHostException ex) {
+            LOGGER.error("Failed to connect to the database [" + DATABASE + "]", ex);
+        }
+    }
 
     RequestHandler() {
     }
-
+    
     public void handleRequest(String clientRequest) {
-        ObjectMapper mapper = new ObjectMapper();
-        Request request;
         try {
-            request = mapper.readValue(clientRequest, Request.class);
-            CapturedData data = new CapturedData(null,
-                    request.getFrameNumber(),
-                    request.getData(),
-                    request.getInstanceId());
-            logger.debug("Created mongo database object from request");
-            
+            ObjectMapper mapper = new ObjectMapper();
+            Request request = mapper.readValue(clientRequest, Request.class);
 
-            MongoHelper.setDB("gde");
-            if (!MongoHelper.save(data, "captureddata")) {
-                logger.error("Failed to write data to database");
-            } else {
-                logger.debug("Wrote data to database");
+            LOGGER.debug("Retrieving the Instance object from the database");
+            MongoCollection instances = jongo.getCollection("instances");
+            String query = String.format("{identifier: '%s', gameId: '%s'}", request.getIdentifier(), request.getGameId());
+            Instance instance;
+            if ((instance = instances.findOne(query).as(Instance.class)) == null) {
+                LOGGER.debug("Creating a new Instance object since it could not be found");
+                instance = new Instance(request.getIdentifier(), request.getGameId());
+                WriteResult result = instances.save(instance);
+                if (!result.getLastError().ok()) {
+                    LOGGER.error("Failed to write the Instance object to the database");
+                    return;
+                }
+                LOGGER.debug("Wrote new Instance object to the database");
             }
+
+            LOGGER.debug("Writing the CapturedData object to the database");
+            MongoCollection capturedData = jongo.getCollection("captureddata");
+            CapturedData data = new CapturedData(request.getData(), instance.getKey().toString());
+            WriteResult result = capturedData.save(data);
+            if (!result.getLastError().ok()) {
+                LOGGER.error("Failed to write the CapturedData object to the database");
+                return;
+            }
+            LOGGER.debug("Wrote the CapturedData object to the database");
         } catch (IOException ex) {
-            logger.error("Received malformed request");
+            LOGGER.error("Received malformed request");
         }
     }
 }

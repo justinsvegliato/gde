@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 public class SocketUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(SocketUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SocketUtils.class);
 
     private SocketUtils() {
         throw new AssertionError();
@@ -19,36 +19,36 @@ public class SocketUtils {
     public static void close(ServerSocket serverSocket) {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
-                logger.debug("Attempting to close the ServerSocket");
+                LOGGER.debug("Attempting to close the ServerSocket");
                 serverSocket.close();
-                logger.debug("Closed the ServerSocket");
+                LOGGER.debug("Closed the ServerSocket");
             }
         } catch (IOException ioe) {
-            logger.debug("IOException encountered while trying to close the ServerSocket", ioe);
+            LOGGER.debug("IOException encountered while trying to close the ServerSocket", ioe);
         }
     }
 
     public static void close(Socket socket) {
         try {
             if (socket != null && !socket.isClosed()) {
-                logger.debug("Attempting to close the Socket");
+                LOGGER.debug("Attempting to close the Socket");
                 socket.close();
-                logger.debug("Closed the Socket");
+                LOGGER.debug("Closed the Socket");
             }
         } catch (IOException ioe) {
-            logger.debug("IOException encountered while trying to close the Socket", ioe);
+            LOGGER.debug("IOException encountered while trying to close the Socket", ioe);
         }
     }
 
     public static void close(InputStream inputStream) {
         try {
             if (inputStream != null) {
-                logger.debug("Attempting to close the InputStream");
+                LOGGER.debug("Attempting to close the InputStream");
                 inputStream.close();
-                logger.debug("Closed the InputStream");
+                LOGGER.debug("Closed the InputStream");
             }
         } catch (IOException ioe) {
-            logger.debug("IOException encountered while trying to close the InputStream", ioe);
+            LOGGER.debug("IOException encountered while trying to close the InputStream", ioe);
         }
     }
 
@@ -56,10 +56,10 @@ public class SocketUtils {
         try {
             if (bufferedReader != null) {
                 bufferedReader.close();
-                logger.debug("Closed the BufferedReader");
+                LOGGER.debug("Closed the BufferedReader");
             }
         } catch (IOException ioe) {
-            logger.debug("IOException encountered while trying to close the BufferedReader", ioe);
+            LOGGER.debug("IOException encountered while trying to close the BufferedReader", ioe);
         }
     }
 }

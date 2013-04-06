@@ -4,36 +4,27 @@ import java.util.Map;
 
 public class Request {
 
-    private Integer gameId;
-    private Integer instanceId;
-    private Integer frameNumber;
+    private String gameId;
+    private String identifier;
     private Map<String, String> data;
 
     public Request() {
     }
 
-    public Integer getGameId() {
+    public String getGameId() {
         return gameId;
     }
 
-    public void setGameId(Integer gameId) {
+    public void setGameId(String gameId) {
         this.gameId = gameId;
     }
 
-    public Integer getInstanceId() {
-        return instanceId;
+    public String getIdentifier() {
+        return identifier;
     }
 
-    public void setInstanceId(Integer instanceId) {
-        this.instanceId = instanceId;
-    }
-    
-    public Integer getFrameNumber() {
-        return frameNumber;
-    }
-
-    public void getFrameNumber(Integer frameNumber) {
-        this.frameNumber = frameNumber;
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 
     public Map<String, String> getData() {
@@ -43,5 +34,4 @@ public class Request {
     public void setData(Map<String, String> data) {
         this.data = data;
     }
-    
 }
