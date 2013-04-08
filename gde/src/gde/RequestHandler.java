@@ -50,7 +50,7 @@ public class RequestHandler {
                     LOGGER.error("Failed to write the Instance object to the database");
                     return;
                 }
-                LOGGER.debug("Wrote new Instance object to the database");
+                LOGGER.debug("Wrote the new Instance object to the database");
             }
 
             LOGGER.debug("Writing the CapturedData object to the database");

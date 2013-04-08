@@ -11,10 +11,10 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Listener {
+public final class Listener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
-    private static int LOCAL_PORT = 8746;
+    private static final int LOCAL_PORT = 8746;
 
 //    static {
 //        InputStream inputStream = Listener.class.getClassLoader().getResourceAsStream("resources/listener.properties");
