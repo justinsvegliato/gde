@@ -1,8 +1,5 @@
 package gde.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The implementation of the Developer data structure that will be used by
  * MongoDB as well as the application.
@@ -25,9 +22,6 @@ public class Developer extends Entry {
     
     /** the password of the developer's username */
     private String password;
-    
-    /** the ids of the associated developers */
-    private List<String> gameIds = new ArrayList<String>();
 
     /**
      * Instantiates a newly-created Developer object.
@@ -122,41 +116,5 @@ public class Developer extends Entry {
      */
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    /**
-     * Gets the password of the developer's username.
-     *
-     * @return the password of the developer's username
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * Gets the password of the developer's username.
-     *
-     * @param password the password of the developer's username
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    /**
-     * Gets the id of the associated games.
-     * 
-     * @return the id of the associated games
-     */
-    public List<String> getGameIds() {
-        return gameIds;
-    }
-    
-    /**
-     * Sets the id of the associated games.
-     * 
-     * @param gameIds the id of the associated games
-     */
-    public void setGameIds(List<String> gameIds) {
-        this.gameIds = gameIds;
     }
 }

@@ -1,36 +1,19 @@
 package gde.gui;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
 import gde.models.Developer;
-import java.net.UnknownHostException;
+import gde.models.Game;
+import gde.gui.util.DatabaseHandler;
 import javax.swing.JOptionPane;
-import javax.swing.UIManager;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  *
  * @author Justin Svegliato and Andrew Evans
  */
 public class LoginFrame extends javax.swing.JFrame {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(LoginFrame.class);
-    private static final String DATABASE = "gde";
-    private static Jongo jongo;
-
-    static {
-        try {
-            DB db = new Mongo().getDB(DATABASE);
-            jongo = new Jongo(db);
-            LOGGER.debug("Instantiated connection to the database [" + DATABASE + "]");
-        } catch (UnknownHostException ex) {
-            LOGGER.error("Failed to connect to the database [" + DATABASE + "]", ex);
-        }
-    }
-
+    
+    private static final Jongo database = DatabaseHandler.getDatabase();
+    
     /**
      * Creates new form LoginFrame
      */
@@ -54,17 +37,15 @@ public class LoginFrame extends javax.swing.JFrame {
         loginButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
         applicationNameLabel = new javax.swing.JLabel();
+        gameLabel = new javax.swing.JLabel();
+        gameComboBox = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
 
         usernameLabel.setText("Username");
 
-        usernameTextField.setText("jTextField1");
-
         passwordLabel.setText("Password");
-
-        passwordTextField.setText("jPasswordField1");
 
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +64,10 @@ public class LoginFrame extends javax.swing.JFrame {
         applicationNameLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         applicationNameLabel.setText("Game Diagnostics Engine");
 
+        gameLabel.setText("Game");
+
+        gameComboBox.setEnabled(false);
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -100,11 +85,13 @@ public class LoginFrame extends javax.swing.JFrame {
                             .add(9, 9, 9)
                             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                                 .add(usernameLabel)
-                                .add(passwordLabel))
+                                .add(passwordLabel)
+                                .add(gameLabel))
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                                 .add(usernameTextField)
-                                .add(passwordTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))))
+                                .add(passwordTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                                .add(gameComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -112,7 +99,7 @@ public class LoginFrame extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(applicationNameLabel)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(usernameLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(usernameTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -120,7 +107,11 @@ public class LoginFrame extends javax.swing.JFrame {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(passwordLabel)
                     .add(passwordTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 14, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(gameLabel)
+                    .add(gameComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(10, 10, 10)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(exitButton)
                     .add(loginButton))
@@ -131,16 +122,34 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String username = usernameTextField.getText();
-        String password = new String(passwordTextField.getPassword());
-        if (isCorrectCredentials(username, password)) {
+        String command = evt.getActionCommand();
+        Developer developer = null;
+        if (command.equals("Login")) {
+            String username = usernameTextField.getText();
+            String password = new String(passwordTextField.getPassword());
+            if ((developer = getDeveloper(username, password)) != null) {
+                usernameTextField.setEnabled(false);
+                passwordTextField.setEnabled(false);
+                gameComboBox.setEnabled(true);
+                loginButton.setText("Choose Game");
+
+                MongoCollection gamesCollection = database.getCollection("games");
+                String query = String.format("{developerIds: '%s'}", developer.getKey().toString());
+                Iterable<Game> games = gamesCollection.find(query).as(Game.class);
+                for (Game game : games) {
+                    gameComboBox.addItem(game);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "The username or password is incorrect. Please try again.",
+                        "Incorrect Credentials",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (command.equals("Choose Game")) {
+            Game game = (Game) gameComboBox.getSelectedItem();
             this.setVisible(false);
-            new MainMenu().setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "The username or password is incorrect. Please try again.",
-                    "Incorrect Credentials",
-                    JOptionPane.ERROR_MESSAGE);
+            new MainMenu(game, developer).setVisible(true);
+            
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -148,38 +157,17 @@ public class LoginFrame extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    private static boolean isCorrectCredentials(String username, String password) {
-        MongoCollection developers = jongo.getCollection("developers");
+    private Developer getDeveloper(String username, String password) {
+        MongoCollection developersCollection = database.getCollection("developers");
         String query = String.format("{username: '%s', password: '%s'}", username, password);
-        return (developers.findOne(query).as(Developer.class) == null) ? false : true;
+        return developersCollection.findOne(query).as(Developer.class);
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginFrame().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel applicationNameLabel;
     private javax.swing.JButton exitButton;
+    private javax.swing.JComboBox gameComboBox;
+    private javax.swing.JLabel gameLabel;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordTextField;

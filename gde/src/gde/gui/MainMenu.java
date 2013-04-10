@@ -1,22 +1,28 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gde.gui;
 
-import javax.swing.UIManager;
+import gde.models.Developer;
+import gde.models.Game;
+import gde.models.Instance;
+import gde.gui.util.DatabaseHandler;
+import gde.gui.util.TableModel;
+import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
 /**
  *
- * @author Andrew
+ * @author Justin Svegliato and Andrew Evans
  */
 public class MainMenu extends javax.swing.JFrame {
+    
+    private static final Jongo database = DatabaseHandler.getDatabase();
+    
+    private final Game game;
+    private final Developer developer;
 
-    /**
-     * Creates new form MainMenu
-     */
-    public MainMenu() {
+    public MainMenu(Game game, Developer developer) {
         initComponents();
+        this.game = game;
+        this.developer = developer;
     }
 
     /**
@@ -40,17 +46,17 @@ public class MainMenu extends javax.swing.JFrame {
         menuBar4 = new java.awt.MenuBar();
         menu7 = new java.awt.Menu();
         menu8 = new java.awt.Menu();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        instanceSummaryTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        instancesTable = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jSpinner1 = new javax.swing.JSpinner();
         jButton3 = new javax.swing.JButton();
@@ -99,10 +105,16 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
 
+        tabbedPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabbedPaneMouseClicked(evt);
+            }
+        });
+
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Overview"));
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 181));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        instanceSummaryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Name", "--", "--", "--", "--"},
                 {"Level", "34", "32.24", "3", "90"},
@@ -114,7 +126,7 @@ public class MainMenu extends javax.swing.JFrame {
                 "Field", "Mode", "Average", "Lowest", "Highest"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(instanceSummaryTable);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Number of Instances: 14");
@@ -131,7 +143,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -149,7 +161,7 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -163,47 +175,34 @@ public class MainMenu extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 534, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("View Summary Data", jPanel2);
+        tabbedPane.addTab("View Summary Data", jPanel2);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Instances"));
 
-        jTable3.setAutoCreateRowSorter(true);
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        instancesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null,  new Integer(1), "Andrew",  new Integer(3), "Gnome", "Warrior"},
-                {null,  new Integer(2), "Justin",  new Integer(90), "Elf", "Rogue"},
-                {null,  new Integer(3), "Ron",  new Integer(60), "Tauren", "Druid"},
-                {null,  new Integer(4), "Jack",  new Integer(67), "Undead", "Coondawg"},
-                {null,  new Integer(5), "Cat",  new Integer(55), "Human", "Warlock"},
-                {null,  new Integer(6), "Laura",  new Integer(30), "Blood Elf", "Mage"},
-                {null,  new Integer(7), "x",  new Integer(54), "x", "x"},
-                {null,  new Integer(8), "x",  new Integer(43), "x", "x"},
-                {null,  new Integer(9), "x",  new Integer(34), "x", "x"},
-                {null,  new Integer(10), "x",  new Integer(32), "x", "x"},
-                {null,  new Integer(11), "x",  new Integer(23), "x", "x"},
-                {null,  new Integer(12), "x",  new Integer(23), "x", "x"},
-                {null,  new Integer(13), "x",  new Integer(64), "x", "x"},
-                {null,  new Integer(14), "x",  new Integer(85), "x", "x"}
+
             },
             new String [] {
-                "Select", "Id", "Name", "Level", "Race", "Class"
+                "Select", "Identifier"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jTable3.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
-        jScrollPane3.setViewportView(jTable3);
+        instancesTable.setAutoCreateRowSorter(true);
+        instancesTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        jScrollPane3.setViewportView(instancesTable);
 
         jLabel1.setText("Age (in months)");
 
@@ -220,7 +219,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -239,12 +238,12 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)
+                        .addComponent(jSpinner1)
                         .addComponent(jButton1)
                         .addComponent(jButton3))))
         );
 
-        jTabbedPane1.addTab("Select Instances", jPanel6);
+        tabbedPane.addTab("Select Instances", jPanel6);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -271,18 +270,18 @@ public class MainMenu extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("View Instance Data", jPanel3);
+        tabbedPane.addTab("View Instance Data", jPanel3);
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Existing Charts"));
         jPanel7.setPreferredSize(new java.awt.Dimension(800, 181));
@@ -324,7 +323,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 234, Short.MAX_VALUE)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6)
@@ -336,7 +335,7 @@ public class MainMenu extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton5)
@@ -353,10 +352,10 @@ public class MainMenu extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Create & Edit Charts", jPanel4);
+        tabbedPane.addTab("Create & Edit Charts", jPanel4);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -372,10 +371,10 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(186, 186, 186)
                 .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(354, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("View Charts", jPanel5);
+        tabbedPane.addTab("View Charts", jPanel5);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -394,52 +393,40 @@ public class MainMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabbedPane)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabbedPane)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void tabbedPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabbedPaneMouseClicked
+        if (tabbedPane.getSelectedIndex() == 1) {
+            TableModel model = new TableModel(
+                    new Class[]{Boolean.class, String.class}, 
+                    new String[]{"Select", "Identifier"}
+            );
+            instancesTable.setModel(model);
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainMenu().setVisible(true);
+            MongoCollection instancesCollection = database.getCollection("instances");
+            String query = String.format("{gameId: '%s'}", game.getKey().toString());
+            Iterable<Instance> instances = instancesCollection.find(query).as(Instance.class);
+            for (Instance instance : instances) {
+                model.addRow(new Object[]{false, instance.getIdentifier()});
             }
-        });
-    }
+        }
+    }//GEN-LAST:event_tabbedPaneMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
+    private javax.swing.JTable instanceSummaryTable;
+    private javax.swing.JTable instancesTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
@@ -465,10 +452,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
@@ -482,5 +466,6 @@ public class MainMenu extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar2;
     private java.awt.MenuBar menuBar3;
     private java.awt.MenuBar menuBar4;
+    private javax.swing.JTabbedPane tabbedPane;
     // End of variables declaration//GEN-END:variables
 }

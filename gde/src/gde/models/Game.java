@@ -1,5 +1,8 @@
 package gde.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The implementation of the Game data structure that will be used by
  * MongoDB as well as the application.
@@ -13,6 +16,9 @@ public class Game extends Entry {
     
     /** the genre of the game */
     private String genre;
+    
+    /** the ids of the associated games */
+    private List<String> developerIds = new ArrayList<String>();
 
     /**
      * Instantiates a newly-created Game object.
@@ -25,11 +31,12 @@ public class Game extends Entry {
      * 
      * @param title the title of the game
      * @param genre the genre of the game
-     * @param developerId the id of the associated developer
+     * @param developerIds the ids of the associated developers
      */
-    public Game(String title, String genre) {
+    public Game(String title, String genre, List<String> developerIds) {
         this.title = title;
         this.genre = genre;
+        this.developerIds = developerIds;
     }
 
     /**
@@ -67,4 +74,11 @@ public class Game extends Entry {
     public void setGenre(String genre) {
         this.genre = genre;
     }
+    
+    @Override
+    public String toString() {
+        return title;
+    }
+    
+    
 }

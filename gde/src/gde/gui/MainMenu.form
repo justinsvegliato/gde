@@ -104,7 +104,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="tabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -113,14 +113,17 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Component id="tabbedPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="tabbedPane">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabbedPaneMouseClicked"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -207,7 +210,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="jTable1">
+                    <Component class="javax.swing.JTable" name="instanceSummaryTable">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="5" rowCount="5">
@@ -342,95 +345,30 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable3">
+                <Component class="javax.swing.JTable" name="instancesTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="14">
+                      <Table columnCount="2" rowCount="0">
                         <Column editable="true" title="Select" type="java.lang.Boolean"/>
-                        <Column editable="true" title="Id" type="java.lang.Integer">
-                          <Data value="1"/>
-                          <Data value="2"/>
-                          <Data value="3"/>
-                          <Data value="4"/>
-                          <Data value="5"/>
-                          <Data value="6"/>
-                          <Data value="7"/>
-                          <Data value="8"/>
-                          <Data value="9"/>
-                          <Data value="10"/>
-                          <Data value="11"/>
-                          <Data value="12"/>
-                          <Data value="13"/>
-                          <Data value="14"/>
-                        </Column>
-                        <Column editable="true" title="Name" type="java.lang.String">
-                          <Data value="Andrew"/>
-                          <Data value="Justin"/>
-                          <Data value="Ron"/>
-                          <Data value="Jack"/>
-                          <Data value="Cat"/>
-                          <Data value="Laura"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                        </Column>
-                        <Column editable="true" title="Level" type="java.lang.Integer">
-                          <Data value="3"/>
-                          <Data value="90"/>
-                          <Data value="60"/>
-                          <Data value="67"/>
-                          <Data value="55"/>
-                          <Data value="30"/>
-                          <Data value="54"/>
-                          <Data value="43"/>
-                          <Data value="34"/>
-                          <Data value="32"/>
-                          <Data value="23"/>
-                          <Data value="23"/>
-                          <Data value="64"/>
-                          <Data value="85"/>
-                        </Column>
-                        <Column editable="true" title="Race" type="java.lang.String">
-                          <Data value="Gnome"/>
-                          <Data value="Elf"/>
-                          <Data value="Tauren"/>
-                          <Data value="Undead"/>
-                          <Data value="Human"/>
-                          <Data value="Blood Elf"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                        </Column>
-                        <Column editable="true" title="Class" type="java.lang.String">
-                          <Data value="Warrior"/>
-                          <Data value="Rogue"/>
-                          <Data value="Druid"/>
-                          <Data value="Coondawg"/>
-                          <Data value="Warlock"/>
-                          <Data value="Mage"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                          <Data value="x"/>
-                        </Column>
+                        <Column editable="true" title="Identifier" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="autoResizeMode" type="int" value="4"/>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>

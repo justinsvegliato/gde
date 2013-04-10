@@ -1,4 +1,4 @@
-package gde.util;
+package gde.service.util;
 
 import java.util.Map;
 

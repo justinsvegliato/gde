@@ -1,6 +1,6 @@
-package gde;
+package gde.service;
 
-import gde.util.SocketUtils;
+import gde.service.util.SocketUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
-package gde;
+package gde.service;
 
-import gde.util.Request;
+import gde.service.util.Request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
