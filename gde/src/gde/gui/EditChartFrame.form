@@ -27,33 +27,33 @@
           <Group type="102" alignment="0" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="25" max="32767" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="25" pref="177" max="32767" attributes="0"/>
+                      <Component id="saveButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel3" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel4" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chartTitleLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="verticalAxisLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chartTypeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="horizontalAxisLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jTextField1" alignment="0" pref="222" max="32767" attributes="0"/>
-                          <Component id="jComboBox3" max="32767" attributes="0"/>
+                          <Component id="verticalAxisComboBox" alignment="0" max="32767" attributes="0"/>
+                          <Component id="horizontalAxisComboBox" alignment="0" max="32767" attributes="0"/>
+                          <Component id="chartTitleTextField" alignment="0" pref="222" max="32767" attributes="0"/>
+                          <Component id="chartTypeComboBox" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -66,28 +66,28 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel1" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                  <Component id="chartTitleLabel" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="chartTitleTextField" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jComboBox1" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="horizontalAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="horizontalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="verticalAxisComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="verticalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jComboBox3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="chartTypeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="chartTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="saveButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -95,76 +95,64 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="cancelButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="saveButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="saveButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel4">
+    <Component class="javax.swing.JLabel" name="chartTypeLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Chart Type"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="chartTitleLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Chart Title"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="jLabel2">
+    <Component class="javax.swing.JLabel" name="horizontalAxisLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Horizontal Axis"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox1">
+    <Component class="javax.swing.JComboBox" name="horizontalAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="Class"/>
-          </StringArray>
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="chartTitleTextField">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="chartTypeComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+        <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="chartTypeComboBoxInputStateChanged"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Level vs. Class Scatter Plot"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox3">
+    <Component class="javax.swing.JComboBox" name="verticalAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="Scatter Plot"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="jComboBox2">
-      <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="1">
-            <StringItem index="0" value="Level"/>
-          </StringArray>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="jLabel3">
+    <Component class="javax.swing.JLabel" name="verticalAxisLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vertical Axis"/>
       </Properties>

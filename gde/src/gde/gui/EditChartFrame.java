@@ -1,22 +1,36 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package gde.gui;
 
-import javax.swing.UIManager;
+import gde.gui.tablemodels.ChartTableModel;
+import gde.gui.util.DatabaseHandler;
+import gde.models.Chart;
+import gde.models.Chart.ChartType;
+import gde.models.Field;
+import gde.models.Game;
+import javax.swing.JTable;
+import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
-/**
- *
- * @author justinsvegliato
- */
 public class EditChartFrame extends javax.swing.JFrame {
+    
+    private static final Jongo database = DatabaseHandler.getDatabase();
+    private final Game game;
+    private final JTable chartTable;
 
-    /**
-     * Creates new form EditChartFrame
-     */
-    public EditChartFrame() {
+    public EditChartFrame(Game game, JTable chartTable) {
         initComponents();
+        this.game = game;
+        this.chartTable = chartTable;
+        
+        MongoCollection fieldsCollection = database.getCollection("fields");
+        String query = String.format("{gameId: '%s'}", game.getKey().toString());
+        Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
+        for (Field field : fields) {
+            horizontalAxisComboBox.addItem(field);
+            verticalAxisComboBox.addItem(field);
+        }
+        for (ChartType fieldType : ChartType.values()) {
+            chartTypeComboBox.addItem(fieldType);
+        }
     }
 
     /**
@@ -28,59 +42,47 @@ public class EditChartFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jTextField1 = new javax.swing.JTextField();
-        jComboBox3 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jLabel3 = new javax.swing.JLabel();
+        cancelButton = new javax.swing.JButton();
+        saveButton = new javax.swing.JButton();
+        chartTypeLabel = new javax.swing.JLabel();
+        chartTitleLabel = new javax.swing.JLabel();
+        horizontalAxisLabel = new javax.swing.JLabel();
+        horizontalAxisComboBox = new javax.swing.JComboBox();
+        chartTitleTextField = new javax.swing.JTextField();
+        chartTypeComboBox = new javax.swing.JComboBox();
+        verticalAxisComboBox = new javax.swing.JComboBox();
+        verticalAxisLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
 
-        jButton2.setText("Cancel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Save");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Chart Type");
+        chartTypeLabel.setText("Chart Type");
 
-        jLabel1.setText("Chart Title");
+        chartTitleLabel.setText("Chart Title");
 
-        jLabel2.setText("Horizontal Axis");
+        horizontalAxisLabel.setText("Horizontal Axis");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Class" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+        chartTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chartTypeComboBoxInputStateChanged(evt);
             }
         });
 
-        jTextField1.setText("Level vs. Class Scatter Plot");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Scatter Plot" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Level" }));
-
-        jLabel3.setText("Vertical Axis");
+        verticalAxisLabel.setText("Vertical Axis");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -89,28 +91,28 @@ public class EditChartFrame extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jButton1)
+                        .add(25, 177, Short.MAX_VALUE)
+                        .add(saveButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton2))
+                        .add(cancelButton))
                     .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(layout.createSequentialGroup()
                                 .add(25, 25, 25)
                                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel1)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel3)
-                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel4))
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, chartTitleLabel)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, verticalAxisLabel)
+                                    .add(org.jdesktop.layout.GroupLayout.TRAILING, chartTypeLabel))
                                 .add(18, 18, 18))
                             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
-                                .add(jLabel2)
+                                .add(horizontalAxisLabel)
                                 .add(18, 18, 18)))
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jComboBox2, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jComboBox1, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jTextField1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                            .add(jComboBox3, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, verticalAxisComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, horizontalAxisComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, chartTitleTextField, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                            .add(chartTypeComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -118,86 +120,62 @@ public class EditChartFrame extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(chartTitleLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(chartTitleTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 28, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(12, 12, 12)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel2))
+                    .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(horizontalAxisLabel))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel3))
+                    .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(verticalAxisLabel))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel4))
+                    .add(chartTypeComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(chartTypeLabel))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jButton1)
-                    .add(jButton2))
+                    .add(saveButton)
+                    .add(cancelButton))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        this.setVisible(false);
+        MongoCollection chartsCollection = database.getCollection("charts");
+        Chart chart = new Chart(
+                chartTitleTextField.getText(),
+                ((Field) horizontalAxisComboBox.getSelectedItem()).getKey().toString(),
+                ((Field) verticalAxisComboBox.getSelectedItem()).getKey().toString(),
+                (ChartType) chartTypeComboBox.getSelectedItem(),
+                game.getKey().toString()
+        );
+        chartsCollection.save(chart);
+        ((ChartTableModel) chartTable.getModel()).update(chart);
+    }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
+        verticalAxisComboBox.setEnabled(chartTypeComboBox.getSelectedItem() != ChartType.PIE);
+    }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            UIManager.setLookAndFeel(
-                    UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditChartFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditChartFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditChartFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditChartFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditChartFrame().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton cancelButton;
+    private javax.swing.JLabel chartTitleLabel;
+    private javax.swing.JTextField chartTitleTextField;
+    private javax.swing.JComboBox chartTypeComboBox;
+    private javax.swing.JLabel chartTypeLabel;
+    private javax.swing.JComboBox horizontalAxisComboBox;
+    private javax.swing.JLabel horizontalAxisLabel;
+    private javax.swing.JButton saveButton;
+    private javax.swing.JComboBox verticalAxisComboBox;
+    private javax.swing.JLabel verticalAxisLabel;
     // End of variables declaration//GEN-END:variables
 }

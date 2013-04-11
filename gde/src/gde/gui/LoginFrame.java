@@ -123,10 +123,10 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String command = evt.getActionCommand();
-        Developer developer = null;
         if (command.equals("Login")) {
             String username = usernameTextField.getText();
             String password = new String(passwordTextField.getPassword());
+            Developer developer;
             if ((developer = getDeveloper(username, password)) != null) {
                 usernameTextField.setEnabled(false);
                 passwordTextField.setEnabled(false);
@@ -148,8 +148,7 @@ public class LoginFrame extends javax.swing.JFrame {
         } else if (command.equals("Choose Game")) {
             Game game = (Game) gameComboBox.getSelectedItem();
             this.setVisible(false);
-            new MainMenu(game, developer).setVisible(true);
-            
+            new MainMenu(game).setVisible(true);            
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

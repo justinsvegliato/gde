@@ -6,6 +6,8 @@ import com.mongodb.WriteResult;
 import gde.service.RequestHandler;
 import gde.models.CapturedData;
 import gde.models.Developer;
+import gde.models.Field;
+import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
 import java.net.UnknownHostException;
@@ -38,10 +40,17 @@ public class Data {
 
     public static void main(String[] args) {
         MongoCollection developers = jongo.getCollection("developers");
+        MongoCollection games = jongo.getCollection("games");
+        MongoCollection instances = jongo.getCollection("instances");
+        MongoCollection fields = jongo.getCollection("fields");
+        developers.drop();
+        games.drop();
+        instances.drop();
+        fields.drop();
+        
         Developer developer = new Developer("justin", "svegliato", "Svegabytes", "revulsion", "password");
         developers.save(developer);
 
-        MongoCollection games = jongo.getCollection("games");
         List<String> developersList = new LinkedList<String>();
         developersList.add(developer.getKey().toString());
         Game game = new Game("Diablo 3", "ARPG", developersList);
@@ -49,9 +58,13 @@ public class Data {
         game = new Game("World of Warcraft", "MMORPG", developersList);
         games.save(game);
 
-        MongoCollection instances = jongo.getCollection("instances");
         for (int i = 0; i < 100; i++) {
             instances.save(new Instance("Lancelot" + i, game.getKey().toString()));
         }
+        
+        Field field = new Field("Strength" , FieldType.INTEGER, game.getKey().toString());
+        fields.save(field);
+        field = new Field("Vitality" , FieldType.INTEGER, game.getKey().toString());
+        fields.save(field);
     }
 }

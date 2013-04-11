@@ -10,16 +10,14 @@ public class Field extends Entry {
 
     /** an enumerated field containing the types supported by the system */
     public enum FieldType {
-        INTEGER("Integer"), DECIMAL("Decimal"), TEXT("Text"), BOOLEAN("Boolean");
+        INTEGER, 
+        DECIMAL, 
+        TEXT, 
+        BOOLEAN;
         
-        private String value; 
-        
-        private FieldType(String value) {
-            this.value = value;
-        }
-        
-        private String getValue() {
-            return value;
+        @Override
+        public String toString() {
+            return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase(); 
         }
     }
     
@@ -103,5 +101,10 @@ public class Field extends Entry {
      */
     public void setGameId(String gameId) {
         this.gameId = gameId;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
     }
 }
