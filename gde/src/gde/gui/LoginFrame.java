@@ -124,7 +124,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String command = evt.getActionCommand();
         if (command.equals("Login")) {
-            String username = usernameTextField.getText();
+            String username = usernameTextField.getText().toLowerCase();
             String password = new String(passwordTextField.getPassword());
             Developer developer;
             if ((developer = getDeveloper(username, password)) != null) {

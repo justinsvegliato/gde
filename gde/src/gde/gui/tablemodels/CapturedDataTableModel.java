@@ -13,33 +13,46 @@ import java.util.List;
 import org.jongo.MongoCollection;
 
 public class CapturedDataTableModel extends TableModel<CapturedData> {
+    private static final String COLLECTION = "captureddata";
 
     public CapturedDataTableModel(Game game) {
-        super(game, getTypes(game), getTitles(game));
+        super(game, getTypes(game), getTitles(game), COLLECTION);
     }
 
     @Override
-    public void populate() {
-        setRowCount(0);
-        MongoCollection capturedDataCollection = database.getCollection("captureddata");
-        String dataQuery = String.format("");
-        Iterable<CapturedData> capturedData = capturedDataCollection.find(dataQuery).as(CapturedData.class);
+    public void populate(String query) {
+        setRowCount(0);       
+        Iterable<CapturedData> capturedData = collection.find(query).as(CapturedData.class);
         for (CapturedData capturedDatum : capturedData) {
             addRow(capturedDatum);
         }
     }  
     
     @Override
-    public void update(CapturedData entry) {
-        addRow(entry);
+    public void populate() {
+        populate("");
+    }
+       
+    @Override
+    public CapturedData getEntryAt(int rowId) {
+        return collection.findOne(ids.get(rowId)).as(CapturedData.class);
     }
     
-    private void addRow(CapturedData data) {
+    @Override
+    public void setEntryAt(int rowId, CapturedData entry) {
+        for (int i = 0; i < titles.length; i++) {
+            setValueAt(entry.getData().get(titles[i].toLowerCase()), rowId, i);
+        }
+    }
+    
+    @Override
+    protected void addRow(CapturedData data) {
         Object[] objects = new Object[titles.length];
         for (int i = 0; i < titles.length; i++) {
             objects[i] = data.getData().get(titles[i].toLowerCase());
         }
         addRow(objects);
+        ids.add(data.getKey());
     }
 
     private static Class convertToType(Field.FieldType type) {
@@ -77,4 +90,5 @@ public class CapturedDataTableModel extends TableModel<CapturedData> {
         }
         return types.toArray(new Class[types.size() - 1]);
     }
+
 }

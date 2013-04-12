@@ -1,34 +1,45 @@
 package gde.gui.tablemodels;
 
-import static gde.gui.tablemodels.TableModel.database;
-import gde.models.Field;
 import gde.models.Game;
 import gde.models.Instance;
-import org.bson.types.ObjectId;
-import org.jongo.MongoCollection;
 
 public class InstanceTableModel extends TableModel<Instance> {
-    private static final Class[] TYPES = {Boolean.class, String.class};
-    private static final String[] TITLES = {"Select", "Identifier"};
-
+    private static final Class[] TYPES = {String.class};
+    private static final String[] TITLES = {"Identifier"};
+    private static final String COLLECTION = "instances";
+    
     public InstanceTableModel(Game game) {
-        super(game, TYPES, TITLES);
+        super(game, TYPES, TITLES, COLLECTION);
     }
 
     @Override
-    public void populate() {
+    public void populate(String query) {
         setRowCount(0);
-        MongoCollection instancesCollection = database.getCollection("instances");
-        String instancesQuery = String.format("{gameId: '%s'}", game.getKey().toString());
-        Iterable<Instance> instances = instancesCollection.find(instancesQuery).as(Instance.class);
+        Iterable<Instance> instances = collection.find(query).as(Instance.class);
         for (Instance instance : instances) {
-            this.addRow(new Object[]{false, instance.getIdentifier()});
+            addRow(instance);
         }
     }
-
+    
     @Override
-    public void update(Instance entry) {
-        addRow(new Object[] {false, entry.getIdentifier()});
+    public void populate() {
+        String query = String.format("{gameId: '%s'}", game.getKey().toString());
+        populate(query);
+    }
+    
+    @Override
+    public Instance getEntryAt(int rowId) {
+        return collection.findOne(ids.get(rowId)).as(Instance.class);
     }
 
+    @Override
+    public void setEntryAt(int rowId, Instance entry) {
+        setValueAt(entry.getIdentifier(), rowId, 0);
+    }
+
+    @Override
+    protected void addRow(Instance entry) {
+        addRow(new Object[] {entry.getIdentifier()});
+        ids.add(entry.getKey());
+    }
 }

@@ -36,7 +36,7 @@ public class Chart extends Entry {
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
     public String getxAxisFieldId() {
         return xAxisFieldId;
     }
