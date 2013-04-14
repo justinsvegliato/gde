@@ -1,6 +1,6 @@
 package gde.gui.tablemodels;
 
-import com.mongodb.WriteResult;
+
 import gde.gui.util.DatabaseHandler;
 import gde.models.Entry;
 import gde.models.Game;

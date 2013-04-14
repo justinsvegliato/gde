@@ -18,10 +18,6 @@ import org.jongo.MongoCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- *
- * @author justinsvegliato
- */
 public class Data {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
@@ -43,13 +39,17 @@ public class Data {
         MongoCollection games = jongo.getCollection("games");
         MongoCollection instances = jongo.getCollection("instances");
         MongoCollection fields = jongo.getCollection("fields");
+        MongoCollection captureddata = jongo.getCollection("captureddata");
         developers.drop();
         games.drop();
         instances.drop();
         fields.drop();
+        captureddata.drop();
         
-        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "revulsion", "password");
-        developers.save(developer);
+        for (int i = 0; i < 100; i++) {
+            Developer developer = new Developer("name" + i, "svegliato", "Svegabytes", "revulsion" + i, "password");
+            developers.save(developer);   
+        }
 
         List<String> developersList = new LinkedList<String>();
         developersList.add(developer.getKey().toString());
