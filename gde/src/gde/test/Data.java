@@ -1,5 +1,6 @@
 package gde.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.WriteResult;
@@ -10,9 +11,12 @@ import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
+import gde.service.util.Request;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.slf4j.Logger;
@@ -35,36 +39,50 @@ public class Data {
     }
 
     public static void main(String[] args) {
-        MongoCollection developers = jongo.getCollection("developers");
-        MongoCollection games = jongo.getCollection("games");
-        MongoCollection instances = jongo.getCollection("instances");
-        MongoCollection fields = jongo.getCollection("fields");
-        MongoCollection captureddata = jongo.getCollection("captureddata");
-        developers.drop();
-        games.drop();
-        instances.drop();
-        fields.drop();
-        captureddata.drop();
+        MongoCollection developersCollection = jongo.getCollection("developers");
+        MongoCollection gamesCollection = jongo.getCollection("games");
+        MongoCollection instancesCollection = jongo.getCollection("instances");
+        MongoCollection fieldsCollection = jongo.getCollection("fields");
+        MongoCollection capturedDataCollection = jongo.getCollection("captureddata");
+        developersCollection.drop();
+        gamesCollection.drop();
+        instancesCollection.drop();
+        fieldsCollection.drop();
+        capturedDataCollection.drop();
         
-        for (int i = 0; i < 100; i++) {
-            Developer developer = new Developer("name" + i, "svegliato", "Svegabytes", "revulsion" + i, "password");
-            developers.save(developer);   
-        }
-
-        List<String> developersList = new LinkedList<String>();
-        developersList.add(developer.getKey().toString());
-        Game game = new Game("Diablo 3", "ARPG", developersList);
-        games.save(game);
-        game = new Game("World of Warcraft", "MMORPG", developersList);
-        games.save(game);
-
-        for (int i = 0; i < 100; i++) {
-            instances.save(new Instance("Lancelot" + i, game.getKey().toString()));
-        }
+        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "revulsion", "password");
+        developersCollection.save(developer);  
+        List<String> developers = new LinkedList<String>();
+        developers.add(developer.getKey().toString());
+        
+        Game game = new Game("Diablo 2", "ARPG", developers);
+        gamesCollection.save(game);
         
         Field field = new Field("Strength" , FieldType.INTEGER, game.getKey().toString());
-        fields.save(field);
+        fieldsCollection.save(field);
+        field = new Field("Dextarity" , FieldType.INTEGER, game.getKey().toString());
+        fieldsCollection.save(field);
         field = new Field("Vitality" , FieldType.INTEGER, game.getKey().toString());
-        fields.save(field);
+        fieldsCollection.save(field);
+        field = new Field("Energy" , FieldType.INTEGER, game.getKey().toString());
+        fieldsCollection.save(field);
+//        field = new Field("Class" , FieldType.TEXT, game.getKey().toString());
+//        fieldsCollection.save(field);
+        
+        for (int i = 0; i < 100; i++) {
+            Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
+            instancesCollection.save(instance);
+            for (int j = 0; j < (Math.random() * 100) + 1; j++) {
+                Map<String, String> data = new HashMap<String, String>();
+                data.put("strength", ((int) (Math.random() * 50 + 1)) + "");
+                data.put("dextarity", ((int) (Math.random() * 50 + 1)) + "");
+                data.put("vitality", ((int) (Math.random() * 50 + 1)) + "");
+                data.put("energy", ((int) (Math.random() * 50 + 1)) + "");
+//                data.put("class", "Assassin");          
+                CapturedData capturedData = new CapturedData(data, instance.getKey().toString());
+                capturedDataCollection.save(capturedData);
+                
+            }
+        }
     }
 }
