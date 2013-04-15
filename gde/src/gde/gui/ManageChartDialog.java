@@ -32,8 +32,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
         String query = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
         for (Field field : fields) {
-            horizontalAxisComboBox.addItem(field);
             verticalAxisComboBox.addItem(field);
+            horizontalAxisComboBox.addItem(field);
         }
         for (Chart.ChartType fieldType : Chart.ChartType.values()) {
             chartTypeComboBox.addItem(fieldType);
@@ -45,8 +45,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
             Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
             titleLabel.setText(isCreated ? "Edit Chart" : "New Chart");
-            horizontalAxisComboBox.setSelectedItem(xAxisField);
             verticalAxisComboBox.setSelectedItem(yAxisField);
+            horizontalAxisComboBox.setSelectedItem(xAxisField);
             chartTypeComboBox.setSelectedItem(chart.getChartType());
         }       
     }
@@ -61,8 +61,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         horizontalAxisLabel = new javax.swing.JLabel();
-        horizontalAxisComboBox = new javax.swing.JComboBox();
         verticalAxisComboBox = new javax.swing.JComboBox();
+        horizontalAxisComboBox = new javax.swing.JComboBox();
         chartTypeComboBox = new javax.swing.JComboBox();
         chartTypeLabel = new javax.swing.JLabel();
         verticalAxisLabel = new javax.swing.JLabel();
@@ -73,7 +73,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
 
-        horizontalAxisLabel.setText("Horizontal Axis");
+        horizontalAxisLabel.setText("Vertical Axis");
 
         chartTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -83,7 +83,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
         chartTypeLabel.setText("Chart Type");
 
-        verticalAxisLabel.setText("Vertical Axis");
+        verticalAxisLabel.setText("Horizontal Axis");
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -121,8 +121,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
                                 .add(chartTypeLabel))
                             .add(18, 18, 18)
                             .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(chartTypeComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                     .add(titleLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 338, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -135,11 +135,11 @@ public class ManageChartDialog extends javax.swing.JDialog {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(horizontalAxisLabel)
-                    .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(verticalAxisLabel)
-                    .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(chartTypeComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -155,16 +155,19 @@ public class ManageChartDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
-        verticalAxisComboBox.setEnabled(chartTypeComboBox.getSelectedItem() != ChartType.PIE);
+        horizontalAxisComboBox.setEnabled(chartTypeComboBox.getSelectedItem() != ChartType.PIE);
     }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         this.setVisible(false);
 
-        Field horizontalAxis = ((Field) horizontalAxisComboBox.getSelectedItem());
         Field verticalAxis = ((Field) verticalAxisComboBox.getSelectedItem());
+        Field horizontalAxis = ((Field) horizontalAxisComboBox.getSelectedItem());
+        ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
+        
         Chart newChart = new Chart(
-                verticalAxis.getName() + " vs. " + horizontalAxis.getName(),
+                String.format(verticalAxis.getName() + "%s",
+                    (chartType != Chart.ChartType.PIE ? " vs. " + horizontalAxis.getName(): " Distribution")),
                 horizontalAxis.getKey().toString(),
                 verticalAxis.getKey().toString(),
                 (ChartType) chartTypeComboBox.getSelectedItem(),

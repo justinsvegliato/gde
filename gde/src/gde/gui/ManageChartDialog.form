@@ -41,8 +41,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="horizontalAxisComboBox" min="-2" pref="222" max="-2" attributes="0"/>
-                              <Component id="verticalAxisComboBox" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="verticalAxisComboBox" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="horizontalAxisComboBox" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
                               <Component id="chartTypeComboBox" min="-2" pref="222" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -61,12 +61,12 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="horizontalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="horizontalAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="verticalAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="verticalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="verticalAxisComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="horizontalAxisComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -86,17 +86,17 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="horizontalAxisLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Horizontal Axis"/>
+        <Property name="text" type="java.lang.String" value="Vertical Axis"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="horizontalAxisComboBox">
+    <Component class="javax.swing.JComboBox" name="verticalAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="verticalAxisComboBox">
+    <Component class="javax.swing.JComboBox" name="horizontalAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -120,7 +120,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="verticalAxisLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Vertical Axis"/>
+        <Property name="text" type="java.lang.String" value="Horizontal Axis"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="saveButton">

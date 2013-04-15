@@ -25,12 +25,14 @@ public class MainMenu extends javax.swing.JFrame {
 
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
+    private JFreeChart dataChart;
+    
     public MainMenu(Game game) {
         initComponents();
         this.game = game;
         
-        JFreeChart chart = ChartFactory.createXYLineChart(
-            "XY Chart", // Title
+        dataChart = ChartFactory.createBarChart(
+            "Bar Chart", // Title
             "x-axis", // x-axis Label
             "y-axis", // y-axis Label
             null, // Dataset
@@ -41,7 +43,7 @@ public class MainMenu extends javax.swing.JFrame {
          );
         
         jPanel1.setLayout(new java.awt.BorderLayout());
-        ChartPanel chartPanel = new ChartPanel(chart);
+        ChartPanel chartPanel = new ChartPanel(dataChart);
         jPanel1.add(chartPanel,BorderLayout.CENTER);
         jPanel1.validate();
     }
@@ -499,7 +501,11 @@ public class MainMenu extends javax.swing.JFrame {
             new ManageChartDialog(game, chartTable, true).setVisible(true);
         }
         else if (evt.getClickCount() == 1) {
-            //update chart here
+            int selectedRow = (chartTable.getSelectedRows())[0];
+            ChartTableModel chartTableModel = ((ChartTableModel) instanceTable.getModel());
+            Chart chart = chartTableModel.getEntryAt(selectedRow);
+            
+            dataChart.setTitle(chart.getTitle());
         }
     }//GEN-LAST:event_chartTableMouseClicked
 
