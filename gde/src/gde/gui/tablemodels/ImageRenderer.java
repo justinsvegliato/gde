@@ -9,9 +9,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class ImageRenderer extends DefaultTableCellRenderer {
 
-    private final ImageIcon iconPie = new ImageIcon(getClass().getResource("icon1.jpg"));
-    private final ImageIcon iconLine = new ImageIcon(getClass().getResource("icon2.jpg"));
-    private final ImageIcon iconBar = new ImageIcon(getClass().getResource("icon3.jpg"));
+    private final ImageIcon iconPie = new ImageIcon(getClass().getResource("pie_graph.png"));
+    private final ImageIcon iconLine = new ImageIcon(getClass().getResource("line_graph.png"));
+    private final ImageIcon iconBar = new ImageIcon(getClass().getResource("bar_graph.png"));
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,

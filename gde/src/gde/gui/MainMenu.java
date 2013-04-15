@@ -9,8 +9,15 @@ import gde.gui.util.DatabaseHandler;
 import gde.models.Chart;
 import gde.models.Game;
 import gde.models.Instance;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
@@ -18,10 +25,25 @@ public class MainMenu extends javax.swing.JFrame {
 
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
-
     public MainMenu(Game game) {
         initComponents();
         this.game = game;
+        
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            "XY Chart", // Title
+            "x-axis", // x-axis Label
+            "y-axis", // y-axis Label
+            null, // Dataset
+            PlotOrientation.VERTICAL, // Plot Orientation
+            true, // Show Legend
+            true, // Use tooltips
+            false // Configure chart to generate URLs?
+         );
+        
+        jPanel1.setLayout(new java.awt.BorderLayout());
+        ChartPanel chartPanel = new ChartPanel(chart);
+        jPanel1.add(chartPanel,BorderLayout.CENTER);
+        jPanel1.validate();
     }
 
     /**
@@ -70,7 +92,7 @@ public class MainMenu extends javax.swing.JFrame {
         createChartButton = new javax.swing.JButton();
         deleteChartButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
-        chartCanvas1 = new gde.gui.ChartCanvas();
+        jPanel1 = new javax.swing.JPanel();
         viewChartsPanel = new javax.swing.JPanel();
         canvas1 = new java.awt.Canvas();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -284,6 +306,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         ));
         chartTable.setEditingRow(0);
+        chartTable.setRowHeight(36);
         chartTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         chartTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -313,6 +336,17 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 699, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout manageChartPanelLayout = new javax.swing.GroupLayout(manageChartPanel);
         manageChartPanel.setLayout(manageChartPanelLayout);
         manageChartPanelLayout.setHorizontalGroup(
@@ -327,15 +361,14 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(manageChartPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartCanvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         manageChartPanelLayout.setVerticalGroup(
             manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageChartPanelLayout.createSequentialGroup()
-                .addGroup(manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(chartCanvas1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteChartButton)
@@ -421,24 +454,6 @@ public class MainMenu extends javax.swing.JFrame {
         capturedDataTableModel.populate(query);
     }//GEN-LAST:event_retrieveButtonActionPerformed
 
-    private void createChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButtonActionPerformed
-        new ManageChartDialog(game, chartTable, false).setVisible(true);
-    }//GEN-LAST:event_createChartButtonActionPerformed
-
-    private void chartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chartTableMouseClicked
-        if (evt.getClickCount() == 2) {
-            new ManageChartDialog(game, chartTable, true).setVisible(true);
-        }
-    }//GEN-LAST:event_chartTableMouseClicked
-
-    private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your selection?", "Confirm Deletion",
-            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            ((ChartTableModel) chartTable.getModel()).remove(chartTable.getSelectedRows());
-        }
-    }//GEN-LAST:event_deleteChartButtonActionPerformed
-
     private void tabbedPaneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabbedPaneFocusGained
         if (tabbedPane.getSelectedIndex() == 1 && capturedDataTable.getRowCount() == 0) {
             InstanceTableModel instanceTableModel = new InstanceTableModel(game);
@@ -467,10 +482,30 @@ public class MainMenu extends javax.swing.JFrame {
         new ManageChartDialog(game, chartTable, true).setVisible(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
+    private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your selection?", "Confirm Deletion",
+            JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            ((ChartTableModel) chartTable.getModel()).remove(chartTable.getSelectedRows());
+        }
+    }//GEN-LAST:event_deleteChartButtonActionPerformed
+
+    private void createChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButtonActionPerformed
+        new ManageChartDialog(game, chartTable, false).setVisible(true);
+    }//GEN-LAST:event_createChartButtonActionPerformed
+
+    private void chartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chartTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            new ManageChartDialog(game, chartTable, true).setVisible(true);
+        }
+        else if (evt.getClickCount() == 1) {
+            //update chart here
+        }
+    }//GEN-LAST:event_chartTableMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Canvas canvas1;
     private javax.swing.JTable capturedDataTable;
-    private gde.gui.ChartCanvas chartCanvas1;
     private javax.swing.JTable chartTable;
     private javax.swing.JButton createChartButton;
     private javax.swing.JButton deleteChartButton;
@@ -486,6 +521,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
