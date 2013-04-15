@@ -6,6 +6,9 @@ import gde.models.Chart;
 import gde.models.Chart.ChartType;
 import gde.models.Field;
 import gde.models.Game;
+import gde.service.Listener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.bson.types.ObjectId;
@@ -24,7 +27,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         this.game = game;
         this.chartTable = chartTable;
         this.isCreated = isCreated;
-
+                
         MongoCollection fieldsCollection = database.getCollection("fields");
         String query = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
@@ -35,17 +38,17 @@ public class ManageChartDialog extends javax.swing.JDialog {
         for (Chart.ChartType fieldType : Chart.ChartType.values()) {
             chartTypeComboBox.addItem(fieldType);
         }
-
+       
         if (isCreated) {
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
             Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            titleTextField.setText(chart.getTitle());
+            titleLabel.setText(isCreated ? "Edit Chart" : "New Chart");
             horizontalAxisComboBox.setSelectedItem(xAxisField);
             verticalAxisComboBox.setSelectedItem(yAxisField);
             chartTypeComboBox.setSelectedItem(chart.getChartType());
-        }
+        }       
     }
 
     /**
@@ -66,7 +69,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
         saveButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
-        titleTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -97,7 +99,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
             }
         });
 
-        titleLabel.setText("Title");
+        titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        titleLabel.setText("New Chart");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,50 +108,47 @@ public class ManageChartDialog extends javax.swing.JDialog {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(159, 159, 159)
-                        .add(saveButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(cancelButton))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, layout.createSequentialGroup()
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(horizontalAxisLabel)
-                            .add(titleLabel)
-                            .add(verticalAxisLabel)
-                            .add(chartTypeLabel))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, verticalAxisComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, horizontalAxisComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(chartTypeComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, titleTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                        .add(layout.createSequentialGroup()
+                            .add(saveButton)
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(cancelButton))
+                        .add(layout.createSequentialGroup()
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                .add(horizontalAxisLabel)
+                                .add(verticalAxisLabel)
+                                .add(chartTypeLabel))
+                            .add(18, 18, 18)
+                            .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(chartTypeComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 222, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                    .add(titleLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 338, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(4, 4, 4)
+                .add(titleLabel)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(titleLabel)
-                    .add(titleTextField, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(horizontalAxisLabel)
+                    .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(horizontalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(horizontalAxisLabel))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(verticalAxisLabel))
+                    .add(verticalAxisLabel)
+                    .add(verticalAxisComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(chartTypeComboBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(chartTypeLabel))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(saveButton)
                     .add(cancelButton))
-                .add(6, 6, 6))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -163,11 +163,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
         Field horizontalAxis = ((Field) horizontalAxisComboBox.getSelectedItem());
         Field verticalAxis = ((Field) verticalAxisComboBox.getSelectedItem());
-        String title = titleTextField.getText().isEmpty()
-                ? verticalAxis.getName() + " vs. " + horizontalAxis.getName()
-                : titleTextField.getText();
         Chart newChart = new Chart(
-                title,
+                verticalAxis.getName() + " vs. " + horizontalAxis.getName(),
                 horizontalAxis.getKey().toString(),
                 verticalAxis.getKey().toString(),
                 (ChartType) chartTypeComboBox.getSelectedItem(),
@@ -175,17 +172,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
         ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
         if (isCreated) {
-            int rowId = chartTable.getSelectedRow();
-            Chart oldChart = chartTableModel.getEntryAt(rowId);
-            MongoCollection fieldsCollection = database.getCollection("fields");
-            Field oldHorizontalAxis = fieldsCollection.findOne(new ObjectId(oldChart.getxAxisFieldId())).as(Field.class);
-            Field oldVerticalAxis = fieldsCollection.findOne(new ObjectId(oldChart.getyAxisFieldId())).as(Field.class);
-            if (newChart.getTitle().equals(verticalAxis.getName() + " vs. " + horizontalAxis.getName())) {
-                if (oldChart.getTitle().equals(String.format("%s vs. %s", oldVerticalAxis.getName(), oldHorizontalAxis.getName()))) {
-                    newChart.setTitle(String.format("%s vs. %s", verticalAxis.getName(), horizontalAxis.getName()));
-                }
-            }
-            chartTableModel.update(newChart, rowId);
+            chartTableModel.update(newChart, chartTable.getSelectedRow());
         } else {
             chartTableModel.add(newChart);
         }
@@ -202,6 +189,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
             this.setVisible(false);
         }
     }//GEN-LAST:event_cancelButtonActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JComboBox chartTypeComboBox;
@@ -210,7 +198,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
     private javax.swing.JLabel horizontalAxisLabel;
     private javax.swing.JButton saveButton;
     private javax.swing.JLabel titleLabel;
-    private javax.swing.JTextField titleTextField;
     private javax.swing.JComboBox verticalAxisComboBox;
     private javax.swing.JLabel verticalAxisLabel;
     // End of variables declaration//GEN-END:variables
