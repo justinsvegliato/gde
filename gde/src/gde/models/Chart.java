@@ -4,7 +4,8 @@ public class Chart extends Entry {
 
     public enum ChartType {
         LINE,
-        PIE;
+        PIE,
+        BAR;
         
         @Override
         public String toString() {

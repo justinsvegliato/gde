@@ -4,15 +4,21 @@ import static gde.gui.tablemodels.TableModel.database;
 import gde.models.Chart;
 import gde.models.Field;
 import gde.models.Game;
+import gde.gui.tablemodels.ChartHeader;
+import java.awt.Component;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
 public class ChartTableModel extends TableModel<Chart> {
 
-    private static final Class[] TYPES = {String.class, String.class, String.class, String.class};
-    private static final String[] TITLES = {"Title", "Horizontal Axis", "Vertical Axis", "Chart Type"};
+    private static final Class[] TYPES = {ChartHeader.class};
+    private static final String[] TITLES = {"Title"};
     private static final String COLLECTION = "charts";
 
     public ChartTableModel(Game game) {
@@ -44,10 +50,10 @@ public class ChartTableModel extends TableModel<Chart> {
         MongoCollection fieldsCollection = database.getCollection("fields");
         Field xAxisField = fieldsCollection.findOne(new ObjectId(entry.getxAxisFieldId())).as(Field.class);
         Field yAxisField = fieldsCollection.findOne(new ObjectId(entry.getyAxisFieldId())).as(Field.class);
-        setValueAt(entry.getTitle(), rowId, 0);
-        setValueAt(xAxisField.getName(), rowId, 1);
-        setValueAt(yAxisField.getName(), rowId, 2);
-        setValueAt(entry.getChartType(), rowId, 3);
+        setValueAt(new ChartHeader(entry.getTitle(), entry.getChartType()), rowId, 0);
+        //setValueAt(xAxisField.getName(), rowId, 1);
+        //setValueAt(yAxisField.getName(), rowId, 2);
+        //setValueAt(entry.getChartType(), rowId, 3);
     }
 
     @Override
@@ -55,12 +61,13 @@ public class ChartTableModel extends TableModel<Chart> {
         MongoCollection fieldsCollection = database.getCollection("fields");
         Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
         Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
+        //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon1.jpg"));
+        //setValueAt(icon, 0, 0);
+        
         addRow(new Object[]{
-            chart.getTitle(),
-            xAxisField.getName(),
-            yAxisField.getName(),
-            chart.getChartType()
+            new ChartHeader(chart.getTitle(), chart.getChartType())
         });
+        
         ids.add(chart.getKey());
     }
 }
