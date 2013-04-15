@@ -47,27 +47,15 @@ public class ChartTableModel extends TableModel<Chart> {
 
     @Override
     public void setEntryAt(int rowId, Chart entry) {
-        MongoCollection fieldsCollection = database.getCollection("fields");
-        Field xAxisField = fieldsCollection.findOne(new ObjectId(entry.getxAxisFieldId())).as(Field.class);
-        Field yAxisField = fieldsCollection.findOne(new ObjectId(entry.getyAxisFieldId())).as(Field.class);
         setValueAt(new ChartHeader(entry.getTitle(), entry.getChartType()), rowId, 0);
-        //setValueAt(xAxisField.getName(), rowId, 1);
-        //setValueAt(yAxisField.getName(), rowId, 2);
-        //setValueAt(entry.getChartType(), rowId, 3);
     }
 
     @Override
     protected void addRow(Chart chart) {
-        MongoCollection fieldsCollection = database.getCollection("fields");
-        Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
-        Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-        //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("icon1.jpg"));
-        //setValueAt(icon, 0, 0);
-        
         addRow(new Object[]{
             new ChartHeader(chart.getTitle(), chart.getChartType())
         });
-        
+
         ids.add(chart.getKey());
     }
 }

@@ -1,6 +1,5 @@
 package gde.gui.tablemodels;
 
-
 import gde.gui.util.DatabaseHandler;
 import gde.models.Entry;
 import gde.models.Game;

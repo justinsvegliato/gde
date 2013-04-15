@@ -5,6 +5,7 @@ import gde.models.Game;
 import gde.gui.util.DatabaseHandler;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import org.jongo.Jongo;
@@ -16,12 +17,12 @@ import org.jongo.MongoCollection;
 public class LoginFrame extends javax.swing.JFrame {
     
     private static final Jongo database = DatabaseHandler.getDatabase();
-    
     /**
      * Creates new form LoginFrame
      */
     public LoginFrame() {
         initComponents();
+        getRootPane().setDefaultButton(loginButton);
     }
 
     /**
