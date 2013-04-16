@@ -534,6 +534,9 @@ public class MainMenu extends javax.swing.JFrame {
                         false // Configure chart to generate URLs?
                     );
             }
+            
+            dataChart.setBackgroundPaint(getBackground());
+            
             jPanel1.removeAll();
             ChartPanel chartPanel = new ChartPanel(dataChart);
             jPanel1.add(chartPanel,BorderLayout.CENTER);
