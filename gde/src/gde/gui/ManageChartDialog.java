@@ -9,6 +9,7 @@ import gde.models.Game;
 import gde.service.Listener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.bson.types.ObjectId;
@@ -21,9 +22,12 @@ public class ManageChartDialog extends javax.swing.JDialog {
     private final Game game;
     private final JTable chartTable;
     private final boolean isCreated;
+    private final ImageIcon appIcon = new ImageIcon(getClass().getResource("gde_icon1.png"));
 
     public ManageChartDialog(Game game, JTable chartTable, boolean isCreated) {
         initComponents();
+        setLocationRelativeTo(null);
+        setIconImage(appIcon.getImage());
         this.game = game;
         this.chartTable = chartTable;
         this.isCreated = isCreated;
@@ -167,7 +171,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         
         Chart newChart = new Chart(
                 String.format(verticalAxis.getName() + "%s",
-                    (chartType != Chart.ChartType.PIE ? " vs. " + horizontalAxis.getName(): " Distribution")),
+                    (chartType != Chart.ChartType.PIE ? " vs. " + horizontalAxis.getName() : " Distribution")),
                 horizontalAxis.getKey().toString(),
                 verticalAxis.getKey().toString(),
                 (ChartType) chartTypeComboBox.getSelectedItem(),

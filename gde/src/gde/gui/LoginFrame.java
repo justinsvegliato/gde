@@ -6,6 +6,7 @@ import gde.gui.util.DatabaseHandler;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import org.jongo.Jongo;
@@ -17,12 +18,15 @@ import org.jongo.MongoCollection;
 public class LoginFrame extends javax.swing.JFrame {
     
     private static final Jongo database = DatabaseHandler.getDatabase();
+    private final ImageIcon appIcon = new ImageIcon(getClass().getResource("gde_icon1.png"));
     /**
      * Creates new form LoginFrame
      */
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(loginButton);
+        setLocationRelativeTo(null);
+        setIconImage(appIcon.getImage());
     }
 
     /**

@@ -10,6 +10,10 @@ import gde.models.Chart;
 import gde.models.Game;
 import gde.models.Instance;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.List;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.jfree.chart.ChartFactory;
@@ -18,6 +22,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.DefaultKeyedValues;
+import org.jfree.data.KeyedValues;
+import org.jfree.data.general.DatasetChangeListener;
+import org.jfree.data.general.DatasetGroup;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
@@ -25,22 +34,16 @@ public class MainMenu extends javax.swing.JFrame {
 
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
+    private final ImageIcon appIcon = new ImageIcon(getClass().getResource("gde_icon1.png"));
     private JFreeChart dataChart;
     
     public MainMenu(Game game) {
         initComponents();
+        setLocationRelativeTo(null);
+        setIconImage(appIcon.getImage());
         this.game = game;
         
-        dataChart = ChartFactory.createBarChart(
-            "Bar Chart", // Title
-            "x-axis", // x-axis Label
-            "y-axis", // y-axis Label
-            null, // Dataset
-            PlotOrientation.VERTICAL, // Plot Orientation
-            true, // Show Legend
-            true, // Use tooltips
-            false // Configure chart to generate URLs?
-         );
+        dataChart = ChartFactory.createPieChart ("", null, true, true, false);
         
         jPanel1.setLayout(new java.awt.BorderLayout());
         ChartPanel chartPanel = new ChartPanel(dataChart);
@@ -500,13 +503,42 @@ public class MainMenu extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             new ManageChartDialog(game, chartTable, true).setVisible(true);
         }
-        else if (evt.getClickCount() == 1) {
-            int selectedRow = (chartTable.getSelectedRows())[0];
-            ChartTableModel chartTableModel = ((ChartTableModel) instanceTable.getModel());
+        if (evt.getClickCount() >= 1) {
+            int selectedRow = chartTable.getSelectedRow();
+            ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(selectedRow);
+            Chart.ChartType chartType = chart.getChartType();
             
             dataChart.setTitle(chart.getTitle());
-        }
+            
+            switch (chartType) {
+                case PIE:
+                    DefaultKeyedValues keyedValues = new DefaultKeyedValues();
+
+                    //this needs to pull the data from the collection and
+                    //update the keyed values appropriately
+                    
+                    //example bullshit:
+                    keyedValues.addValue("Red", 4);
+                    keyedValues.addValue("Blue", 3);
+                    keyedValues.addValue("One", 6);
+                    keyedValues.addValue("Two", 2);
+                    
+                    DefaultPieDataset pieData = new DefaultPieDataset(keyedValues);
+                    
+                    dataChart = ChartFactory.createPieChart(
+                        chart.getTitle(), // Title
+                        pieData, // Dataset
+                        true, // Show Legend
+                        true, // Use tooltips
+                        false // Configure chart to generate URLs?
+                    );
+            }
+            jPanel1.removeAll();
+            ChartPanel chartPanel = new ChartPanel(dataChart);
+            jPanel1.add(chartPanel,BorderLayout.CENTER);
+            jPanel1.validate();
+        } 
     }//GEN-LAST:event_chartTableMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
