@@ -8,6 +8,7 @@ import gde.gui.util.DatabaseHandler;
 import gde.models.CapturedData;
 
 import gde.models.Chart;
+import static gde.models.Chart.ChartType.PIE;
 import gde.models.Entry;
 import gde.models.Field;
 import gde.models.Game;
@@ -56,6 +57,10 @@ public class MainMenu extends javax.swing.JFrame {
         ChartPanel chartPanel = new ChartPanel(dataChart);
         jPanel1.add(chartPanel,BorderLayout.CENTER);
         jPanel1.validate();
+        
+        InstanceTableModel instanceTableModel = new InstanceTableModel(game);
+        instanceTable.setModel(instanceTableModel);
+        instanceTableModel.populate();
     }
 
     /**
@@ -89,9 +94,6 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         instancesPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSpinner1 = new javax.swing.JSpinner();
-        retrieveButton = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         capturedDataTable = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
@@ -102,8 +104,6 @@ public class MainMenu extends javax.swing.JFrame {
         deleteChartButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        viewChartsPanel = new javax.swing.JPanel();
-        canvas1 = new java.awt.Canvas();
         jScrollPane3 = new javax.swing.JScrollPane();
         instanceTable = new javax.swing.JTable();
         selectCheckBox = new javax.swing.JCheckBox();
@@ -150,13 +150,17 @@ public class MainMenu extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
 
+        tabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabbedPaneStateChanged(evt);
+            }
+        });
         tabbedPane.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 tabbedPaneFocusGained(evt);
             }
         });
 
-        summaryPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Overview"));
         summaryPanel.setPreferredSize(new java.awt.Dimension(800, 181));
 
         instanceSummaryTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -188,7 +192,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -206,7 +210,7 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -227,19 +231,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         tabbedPane.addTab("Summary", jPanel2);
 
-        instancesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Instances"));
-
-        jLabel1.setText("Age (in months)");
-
-        jSpinner1.setModel(new javax.swing.SpinnerNumberModel(12, 1, 999, 1));
-
-        retrieveButton.setText("Retrieve");
-        retrieveButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                retrieveButtonActionPerformed(evt);
-            }
-        });
-
         capturedDataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -256,32 +247,16 @@ public class MainMenu extends javax.swing.JFrame {
             instancesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(instancesPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(instancesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
-                    .addGroup(instancesPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(retrieveButton)))
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 834, Short.MAX_VALUE)
                 .addContainerGap())
         );
         instancesPanelLayout.setVerticalGroup(
             instancesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(instancesPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(instancesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, instancesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(retrieveButton)))
-                .addGap(4, 4, 4))
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
         );
 
         tabbedPane.addTab("Detailed Data Analysis", instancesPanel);
 
-        manageChartPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Charts"));
         manageChartPanel.setPreferredSize(new java.awt.Dimension(800, 181));
 
         chartTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -327,11 +302,11 @@ public class MainMenu extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 627, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGap(0, 534, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout manageChartPanelLayout = new javax.swing.GroupLayout(manageChartPanel);
@@ -354,7 +329,7 @@ public class MainMenu extends javax.swing.JFrame {
             manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, manageChartPanelLayout.createSequentialGroup()
                 .addGroup(manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(manageChartPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -377,25 +352,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         tabbedPane.addTab("Graphical Analysis", jPanel4);
 
-        javax.swing.GroupLayout viewChartsPanelLayout = new javax.swing.GroupLayout(viewChartsPanel);
-        viewChartsPanel.setLayout(viewChartsPanelLayout);
-        viewChartsPanelLayout.setHorizontalGroup(
-            viewChartsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewChartsPanelLayout.createSequentialGroup()
-                .addGap(291, 291, 291)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(563, Short.MAX_VALUE))
-        );
-        viewChartsPanelLayout.setVerticalGroup(
-            viewChartsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(viewChartsPanelLayout.createSequentialGroup()
-                .addGap(186, 186, 186)
-                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(383, Short.MAX_VALUE))
-        );
-
-        tabbedPane.addTab("Analyze", viewChartsPanel);
-
         instanceTable.setAutoCreateRowSorter(true);
         instanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -406,6 +362,11 @@ public class MainMenu extends javax.swing.JFrame {
             }
         ));
         instanceTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        instanceTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                instanceTableMouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(instanceTable);
 
         selectCheckBox.setText("Select All/None");
@@ -443,7 +404,7 @@ public class MainMenu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 597, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(tabbedPane)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3)
@@ -452,32 +413,31 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tabbedPane.getAccessibleContext().setAccessibleName("Summary");
+        tabbedPane.getAccessibleContext().setAccessibleName("tabbedPane");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void retrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retrieveButtonActionPerformed
-        InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
-        StringBuilder filter = new StringBuilder();
-        int[] selectedRows = instanceTable.getSelectedRows();
-        for (int i = 0; i < selectedRows.length; i++) {
-            Instance instance = instanceTableModel.getEntryAt(selectedRows[i]);
-            String divider = (i < selectedRows.length - 1) ? ", " : "";
-            filter.append(String.format("'%s'%s", instance.getKey().toString(), divider));
+    private void selectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCheckBoxActionPerformed
+        if (selectCheckBox.isSelected()) {
+            instanceTable.selectAll();
+        } else {
+            instanceTable.clearSelection();
         }
+        updateTabs();
+    }//GEN-LAST:event_selectCheckBoxActionPerformed
 
-        CapturedDataTableModel capturedDataTableModel = ((CapturedDataTableModel) capturedDataTable.getModel());
-        String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
-        capturedDataTableModel.populate(query);
-    }//GEN-LAST:event_retrieveButtonActionPerformed
+    private void instanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instanceTableMouseReleased
+        updateTabs();
+    }//GEN-LAST:event_instanceTableMouseReleased
 
     private void tabbedPaneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tabbedPaneFocusGained
-        if (tabbedPane.getSelectedIndex() == 1 && capturedDataTable.getRowCount() == 0) {
-            InstanceTableModel instanceTableModel = new InstanceTableModel(game);
-            instanceTable.setModel(instanceTableModel);
-            instanceTableModel.populate();
 
+    }//GEN-LAST:event_tabbedPaneFocusGained
+
+    private void tabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPaneStateChanged
+        if (tabbedPane.getSelectedIndex() == 1 && capturedDataTable.getRowCount() == 0) {
+            //System.out.println("meow");
             CapturedDataTableModel capturedDataTableModel = new CapturedDataTableModel(game);
             capturedDataTable.setModel(capturedDataTableModel);
         } else if (tabbedPane.getSelectedIndex() == 2 && chartTable.getRowCount() == 0) {
@@ -486,22 +446,14 @@ public class MainMenu extends javax.swing.JFrame {
             chartTableModel.populate();
             chartTable.getColumnModel().getColumn(0).setCellRenderer(new ImageRenderer());
         }
-    }//GEN-LAST:event_tabbedPaneFocusGained
-
-    private void selectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCheckBoxActionPerformed
-        if (selectCheckBox.isSelected()) {
-            instanceTable.selectAll();
-        } else {
-            instanceTable.clearSelection();
-        }
-    }//GEN-LAST:event_selectCheckBoxActionPerformed
+    }//GEN-LAST:event_tabbedPaneStateChanged
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
         new ManageChartDialog(game, chartTable, true).setVisible(true);
     }//GEN-LAST:event_editButtonActionPerformed
 
     private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete your selection?", "Confirm Deletion",
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this chart?", "Confirm Deletion",
             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             ((ChartTableModel) chartTable.getModel()).remove(chartTable.getSelectedRows());
@@ -517,56 +469,79 @@ public class MainMenu extends javax.swing.JFrame {
             new ManageChartDialog(game, chartTable, true).setVisible(true);
         }
         if (evt.getClickCount() >= 1) {
-            int selectedRow = chartTable.getSelectedRow();
+            updateChart();
+        }
+    }//GEN-LAST:event_chartTableMouseClicked
+
+    
+    private void updateTabs() {
+        //Instance Data Tab
+        InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
+        StringBuilder filter = new StringBuilder();
+        int[] selectedRows = instanceTable.getSelectedRows();
+        for (int i = 0; i < selectedRows.length; i++) {
+            Instance instance = instanceTableModel.getEntryAt(selectedRows[i]);
+            String divider = (i < selectedRows.length - 1) ? ", " : "";
+            filter.append(String.format("'%s'%s", instance.getKey().toString(), divider));
+        }
+
+        CapturedDataTableModel capturedDataTableModel = ((CapturedDataTableModel) capturedDataTable.getModel());
+        String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
+        capturedDataTableModel.populate(query);
+        
+        if (chartTable.getSelectedRow() != 0) {
+            updateChart();
+        }
+    }
+    
+    private void updateChart() {
+        int selectedRow = chartTable.getSelectedRow();
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(selectedRow);
             Chart.ChartType chartType = chart.getChartType();
-            
+
             dataChart.setTitle(chart.getTitle());
-            
+
             switch (chartType) {
                 case PIE:
-                    DefaultKeyedValues keyedValues = new DefaultKeyedValues();
-                    MongoCollection capturedDataCollection = database.getCollection("captureddata");
-                    MongoCollection fieldCollection = database.getCollection("fields");
-                    Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-                    for (int i : instanceTable.getSelectedRows()) {
-                        System.out.println("kuwhfdkwfew");
-                        Instance instance = ((InstanceTableModel) instanceTable.getModel()).getEntryAt(i);      
-                        String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                        Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
-                        for (CapturedData capturedDatum : capturedData ) {
-                            String stat = capturedDatum.getData().get(field.getName().toLowerCase());
-                            if (keyedValues.getKeys().contains(stat)) {
-                                keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
-                            }
-                            else {
-                                keyedValues.setValue(stat, 1);
-                            }
+                DefaultKeyedValues keyedValues = new DefaultKeyedValues();
+                MongoCollection capturedDataCollection = database.getCollection("captureddata");
+                MongoCollection fieldCollection = database.getCollection("fields");
+                Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
+                for (int i : instanceTable.getSelectedRows()) {
+                    Instance instance = ((InstanceTableModel) instanceTable.getModel()).getEntryAt(i);
+                    String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
+                    Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
+                    for (CapturedData capturedDatum : capturedData ) {
+                        String stat = capturedDatum.getData().get(field.getName().toLowerCase());
+                        if (keyedValues.getKeys().contains(stat)) {
+                            keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
+                        }
+                        else {
+                            keyedValues.setValue(stat, 1);
                         }
                     }
-                    
-                    DefaultPieDataset pieData = new DefaultPieDataset(keyedValues);
-                    
-                    dataChart = ChartFactory.createPieChart(
-                        chart.getTitle(), // Title
-                        pieData, // Dataset
-                        true, // Show Legend
-                        true, // Use tooltips
-                        false // Configure chart to generate URLs?
-                    );
+                }
+
+                DefaultPieDataset pieData = new DefaultPieDataset(keyedValues);
+
+                dataChart = ChartFactory.createPieChart(
+                    chart.getTitle(), // Title
+                    pieData, // Dataset
+                    true, // Show Legend
+                    true, // Use tooltips
+                    false // Configure chart to generate URLs?
+                );
             }
-            
+
             jPanel1.removeAll();
             ChartPanel chartPanel = new ChartPanel(dataChart);
             jPanel1.add(chartPanel,BorderLayout.CENTER);
             jPanel1.validate();
-        } 
-    }//GEN-LAST:event_chartTableMouseClicked
-
+    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Canvas canvas1;
     private javax.swing.JTable capturedDataTable;
     private javax.swing.JTable chartTable;
     private javax.swing.JButton createChartButton;
@@ -575,7 +550,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JTable instanceSummaryTable;
     private javax.swing.JTable instanceTable;
     private javax.swing.JPanel instancesPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -591,7 +565,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JPanel manageChartPanel;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
@@ -605,10 +578,8 @@ public class MainMenu extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar2;
     private java.awt.MenuBar menuBar3;
     private java.awt.MenuBar menuBar4;
-    private javax.swing.JButton retrieveButton;
     private javax.swing.JCheckBox selectCheckBox;
     private javax.swing.JPanel summaryPanel;
     private javax.swing.JTabbedPane tabbedPane;
-    private javax.swing.JPanel viewChartsPanel;
     // End of variables declaration//GEN-END:variables
 }
