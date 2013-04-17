@@ -489,7 +489,7 @@ public class MainMenu extends javax.swing.JFrame {
         String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
         capturedDataTableModel.populate(query);
         
-        if (chartTable.getSelectedRow() != 0) {
+        if (chartTable.getSelectedRow() != -1) {
             updateChart();
         }
     }
