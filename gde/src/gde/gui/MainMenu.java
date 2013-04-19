@@ -463,9 +463,7 @@ public class MainMenu extends javax.swing.JFrame {
             String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
             capturedDataTableModel.populate(query);
 
-            System.out.println("Update Chart Check");
             if (chartTable.getSelectedRow() != -1) {
-                System.out.println("Update Chart Start");
                 updateChart();
             }
         }
@@ -478,18 +476,15 @@ public class MainMenu extends javax.swing.JFrame {
         Chart.ChartType chartType = chart.getChartType();
 
         if (chartType == ChartType.PIE) {
-            System.out.println("Inside pie!");
             DefaultKeyedValues keyedValues = new DefaultKeyedValues();
             MongoCollection capturedDataCollection = database.getCollection("captureddata");
             MongoCollection fieldCollection = database.getCollection("fields");
             Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
             for (int i : instanceTable.getSelectedRows()) {
-                System.out.println("Iteration 1");
                 Instance instance = ((InstanceTableModel) instanceTable.getModel()).getEntryAt(i);
                 String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
                 Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
                 for (CapturedData capturedDatum : capturedData) {
-                    System.out.println("Iteration 2");
                     String stat = capturedDatum.getData().get(field.getName().toLowerCase());
                     if (keyedValues.getKeys().contains(stat)) {
                         keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
