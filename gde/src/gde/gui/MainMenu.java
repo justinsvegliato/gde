@@ -4,6 +4,7 @@ import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
 import gde.gui.tablemodels.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
+import gde.gui.tablemodels.TableModel;
 import gde.gui.util.DatabaseHandler;
 import gde.models.CapturedData;
 import gde.models.Chart;
@@ -16,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 import org.bson.types.ObjectId;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -45,7 +47,6 @@ public class MainMenu extends javax.swing.JFrame {
         dataChart.setBackgroundPaint(getBackground());
 
         chartContainerPanel.setLayout(new java.awt.BorderLayout());
-        ChartPanel chartPanel = new ChartPanel(dataChart);
         chartContainerPanel.add(new ChartPanel(dataChart), BorderLayout.CENTER);
         chartContainerPanel.validate();
 
@@ -55,8 +56,9 @@ public class MainMenu extends javax.swing.JFrame {
 
         CapturedDataTableModel capturedDataTableModel = new CapturedDataTableModel(game);
         capturedDataTable.setModel(capturedDataTableModel);
+        TableRowSorter<CapturedDataTableModel> sorter = new TableRowSorter<CapturedDataTableModel>((CapturedDataTableModel) capturedDataTable.getModel());
+        capturedDataTable.setRowSorter(sorter);
 
-        System.out.println("Chart Table Population");
         ChartTableModel chartTableModel = new ChartTableModel(game);
         chartTable.setModel(chartTableModel);
         chartTable.getColumnModel().getColumn(0).setCellRenderer(new ChartTableCellRenderer());
@@ -366,11 +368,11 @@ public class MainMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(selectCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(instanceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(selectCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(instanceScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,7 +382,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(selectCheckBox)
                 .addContainerGap())
-            .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         tabbedPane.getAccessibleContext().setAccessibleName("tabbedPane");

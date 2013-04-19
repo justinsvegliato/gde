@@ -1,5 +1,6 @@
 package gde.gui.tablemodels;
 
+import com.sun.jmx.snmp.Timestamp;
 import static gde.gui.tablemodels.DatabaseTableModel.database;
 import gde.models.CapturedData;
 import gde.models.Field;
@@ -8,8 +9,11 @@ import static gde.models.Field.FieldType.DECIMAL;
 import static gde.models.Field.FieldType.INTEGER;
 import static gde.models.Field.FieldType.TEXT;
 import gde.models.Game;
+import gde.models.Instance;
+import java.text.DateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
 public class CapturedDataTableModel extends DatabaseTableModel<CapturedData> {
@@ -48,7 +52,12 @@ public class CapturedDataTableModel extends DatabaseTableModel<CapturedData> {
     @Override
     protected void addRow(CapturedData data) {
         Object[] objects = new Object[titles.length];
-        for (int i = 0; i < titles.length; i++) {
+        DateFormat shortDf = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+        objects[0] = shortDf.format(new Timestamp(data.getKey().getTime()).getDate());
+        MongoCollection instanceCollection = database.getCollection("instances");
+        Instance instance = instanceCollection.findOne(new ObjectId(data.getInstanceId())).as(Instance.class);
+        objects[1] = instance.getIdentifier();
+        for (int i = 2; i < titles.length; i++) {
             objects[i] = data.getData().get(titles[i].toLowerCase());
         }
         addRow(objects);
@@ -70,18 +79,22 @@ public class CapturedDataTableModel extends DatabaseTableModel<CapturedData> {
     }
     
     private static String[] getTitles(Game game) {
-        List<String> titles = new LinkedList<String>();
+        List<String> titles = new LinkedList<String>();        
+        titles.add("Date");
+        titles.add("Identifier");
         MongoCollection fieldsCollection = database.getCollection("fields");
         String fieldQuery = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(fieldQuery).as(Field.class);
         for (Field field : fields) {
             titles.add(field.getName());
-        }
-        return titles.toArray(new String[titles.size() - 1]);
+        } 
+       return titles.toArray(new String[titles.size() - 1]);
     }
     
     private static Class[] getTypes(Game game) {
-        List<Class> types = new LinkedList<Class>();
+        List<Class> types = new LinkedList<Class>();        
+        types.add(Timestamp.class);
+        types.add(String.class);
         MongoCollection fieldsCollection = database.getCollection("fields");
         String fieldQuery = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(fieldQuery).as(Field.class);
