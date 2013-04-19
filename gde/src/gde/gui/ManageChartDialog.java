@@ -26,12 +26,12 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     public ManageChartDialog(Game game, JTable chartTable, boolean isCreated) {
         initComponents();
-        setLocationRelativeTo(null);
         setIconImage(appIcon.getImage());
+        
         this.game = game;
         this.chartTable = chartTable;
         this.isCreated = isCreated;
-                
+
         MongoCollection fieldsCollection = database.getCollection("fields");
         String query = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
@@ -42,7 +42,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         for (Chart.ChartType fieldType : Chart.ChartType.values()) {
             chartTypeComboBox.addItem(fieldType);
         }
-       
+
         if (isCreated) {
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
@@ -52,7 +52,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
             verticalAxisComboBox.setSelectedItem(yAxisField);
             horizontalAxisComboBox.setSelectedItem(xAxisField);
             chartTypeComboBox.setSelectedItem(chart.getChartType());
-        }       
+        }
     }
 
     /**
@@ -156,6 +156,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
@@ -168,10 +169,9 @@ public class ManageChartDialog extends javax.swing.JDialog {
         Field verticalAxis = ((Field) verticalAxisComboBox.getSelectedItem());
         Field horizontalAxis = ((Field) horizontalAxisComboBox.getSelectedItem());
         ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
-        
+
         Chart newChart = new Chart(
-                String.format(verticalAxis.getName() + "%s",
-                    (chartType != Chart.ChartType.PIE ? " vs. " + horizontalAxis.getName() : " Distribution")),
+                String.format("%s%s", verticalAxis.getName(), (chartType != Chart.ChartType.PIE ? " vs. " + horizontalAxis.getName() : " Distribution")),
                 horizontalAxis.getKey().toString(),
                 verticalAxis.getKey().toString(),
                 (ChartType) chartTypeComboBox.getSelectedItem(),
@@ -196,7 +196,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
             this.setVisible(false);
         }
     }//GEN-LAST:event_cancelButtonActionPerformed
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JComboBox chartTypeComboBox;

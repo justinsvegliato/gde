@@ -2,12 +2,12 @@ package gde.gui.tablemodels;
 
 import gde.models.Chart.ChartType;
 
-public class ChartHeader {
+public class ChartTableCellData {
 
     private final String title;
     private final ChartType type;
 
-    public ChartHeader(String title, ChartType type) {
+    public ChartTableCellData(String title, ChartType type) {
         this.title = title;
         this.type = type;
     }

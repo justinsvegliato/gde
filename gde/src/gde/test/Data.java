@@ -1,9 +1,7 @@
 package gde.test;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
-import com.mongodb.WriteResult;
 import gde.service.RequestHandler;
 import gde.models.CapturedData;
 import gde.models.Developer;
@@ -11,7 +9,6 @@ import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
-import gde.service.util.Request;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -66,19 +63,17 @@ public class Data {
         fieldsCollection.save(field);
         field = new Field("Energy" , FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-//        field = new Field("Class" , FieldType.TEXT, game.getKey().toString());
-//        fieldsCollection.save(field);
         
         for (int i = 0; i < 100; i++) {
             Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
             instancesCollection.save(instance);
+            double scaleFactor = Math.random();
             for (int j = 0; j < (Math.random() * 100) + 1; j++) {
                 Map<String, String> data = new HashMap<String, String>();
-                data.put("strength", ((int) (Math.random() * 50 + 1)) + "");
-                data.put("dextarity", ((int) (Math.random() * 50 + 1)) + "");
-                data.put("vitality", ((int) (Math.random() * 50 + 1)) + "");
-                data.put("energy", ((int) (Math.random() * 50 + 1)) + "");
-//                data.put("class", "Assassin");          
+                data.put("strength", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("dextarity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + (j * 5) + "");
+                data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");   
                 CapturedData capturedData = new CapturedData(data, instance.getKey().toString());
                 capturedDataCollection.save(capturedData);
                 

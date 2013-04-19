@@ -3,7 +3,7 @@ package gde.gui.tablemodels;
 import gde.models.Game;
 import gde.models.Instance;
 
-public class InstanceTableModel extends TableModel<Instance> {
+public class InstanceTableModel extends DatabaseTableModel<Instance> {
     private static final Class[] TYPES = {String.class};
     private static final String[] TITLES = {"Identifier"};
     private static final String COLLECTION = "instances";

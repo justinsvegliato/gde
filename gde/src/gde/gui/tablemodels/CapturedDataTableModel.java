@@ -1,6 +1,6 @@
 package gde.gui.tablemodels;
 
-import static gde.gui.tablemodels.TableModel.database;
+import static gde.gui.tablemodels.DatabaseTableModel.database;
 import gde.models.CapturedData;
 import gde.models.Field;
 import static gde.models.Field.FieldType.BOOLEAN;
@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.jongo.MongoCollection;
 
-public class CapturedDataTableModel extends TableModel<CapturedData> {
+public class CapturedDataTableModel extends DatabaseTableModel<CapturedData> {
     private static final String COLLECTION = "captureddata";
 
     public CapturedDataTableModel(Game game) {

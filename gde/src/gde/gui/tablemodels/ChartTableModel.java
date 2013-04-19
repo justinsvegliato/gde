@@ -1,23 +1,11 @@
 package gde.gui.tablemodels;
 
-import static gde.gui.tablemodels.TableModel.database;
 import gde.models.Chart;
-import gde.models.Field;
 import gde.models.Game;
-import gde.gui.tablemodels.ChartHeader;
-import java.awt.Component;
-import java.util.LinkedList;
-import java.util.List;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-import org.bson.types.ObjectId;
-import org.jongo.MongoCollection;
 
-public class ChartTableModel extends TableModel<Chart> {
+public class ChartTableModel extends DatabaseTableModel<Chart> {
 
-    private static final Class[] TYPES = {ChartHeader.class};
+    private static final Class[] TYPES = {String.class};
     private static final String[] TITLES = {"Title"};
     private static final String COLLECTION = "charts";
 
@@ -47,13 +35,13 @@ public class ChartTableModel extends TableModel<Chart> {
 
     @Override
     public void setEntryAt(int rowId, Chart entry) {
-        setValueAt(new ChartHeader(entry.getTitle(), entry.getChartType()), rowId, 0);
+        setValueAt(new ChartTableCellData(entry.getTitle(), entry.getChartType()), rowId, 0);
     }
 
     @Override
     protected void addRow(Chart chart) {
         addRow(new Object[]{
-            new ChartHeader(chart.getTitle(), chart.getChartType())
+            new ChartTableCellData(chart.getTitle(), chart.getChartType())
         });
 
         ids.add(chart.getKey());
