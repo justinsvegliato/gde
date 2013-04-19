@@ -7,12 +7,12 @@ public class FieldSummary {
     private final double maximum;
     private final double minimum;
 
-    public FieldSummary(String field, String mode, double average, double maximum, double minimum) {
+    public FieldSummary(String field, double average, String mode, double minimum, double maximum) {
         this.field = field;
-        this.mode = mode;
         this.average = average;
-        this.maximum = maximum;
+        this.mode = mode;
         this.minimum = minimum;
+        this.maximum = maximum;
     }
 
     public String getField() {

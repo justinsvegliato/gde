@@ -4,6 +4,7 @@ import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
 import gde.gui.tablemodels.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
+import gde.gui.tablemodels.SummaryTableModel;
 import gde.gui.tablemodels.TableModel;
 import gde.gui.util.DatabaseHandler;
 import gde.models.CapturedData;
@@ -63,6 +64,10 @@ public class MainMenu extends javax.swing.JFrame {
         chartTable.setModel(chartTableModel);
         chartTable.getColumnModel().getColumn(0).setCellRenderer(new ChartTableCellRenderer());
         chartTableModel.populate();
+        
+        SummaryTableModel summaryTableModel = new SummaryTableModel(game);
+        summaryTable.setModel(summaryTableModel);
+        //summaryTableModel.populate();
     }
 
     /**
@@ -155,14 +160,14 @@ public class MainMenu extends javax.swing.JFrame {
 
         summaryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Name", "--", "--", "--", "--"},
-                {"Level", "34", "32.24", "3", "90"},
-                {"Race", "Elf", null, null, null},
-                {"Class", "Warrior", null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Field", "Mode", "Average", "Lowest", "Highest"
+
             }
         ));
         summaryScrollPane.setViewportView(summaryTable);
@@ -463,6 +468,11 @@ public class MainMenu extends javax.swing.JFrame {
             String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
             capturedDataTableModel.populate(query);
 
+            SummaryTableModel summaryTableModel = ((SummaryTableModel) summaryTable.getModel());
+            query = String.format("{instanceId: {$in: [%s]}, ", filter.toString());
+            summaryTableModel.populate(query);
+            
+            
             if (chartTable.getSelectedRow() != -1) {
                 updateChart();
             }
