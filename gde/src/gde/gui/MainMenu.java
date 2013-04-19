@@ -173,13 +173,13 @@ public class MainMenu extends javax.swing.JFrame {
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
                 .addContainerGap())
         );
         summaryPanelLayout.setVerticalGroup(
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -187,15 +187,15 @@ public class MainMenu extends javax.swing.JFrame {
         summaryContainerPanel.setLayout(summaryContainerPanelLayout);
         summaryContainerPanelLayout.setHorizontalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 855, Short.MAX_VALUE)
+            .addGap(0, 871, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE))
         );
         summaryContainerPanelLayout.setVerticalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGap(0, 587, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Summary", summaryContainerPanel);
@@ -216,13 +216,13 @@ public class MainMenu extends javax.swing.JFrame {
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 843, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
                 .addContainerGap())
         );
         detailedAnalysisContainerPanelLayout.setVerticalGroup(
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -244,6 +244,11 @@ public class MainMenu extends javax.swing.JFrame {
         chartTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 chartTableMouseClicked(evt);
+            }
+        });
+        chartTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                chartTableKeyReleased(evt);
             }
         });
         chartScrollPane.setViewportView(chartTable);
@@ -273,11 +278,11 @@ public class MainMenu extends javax.swing.JFrame {
         chartContainerPanel.setLayout(chartContainerPanelLayout);
         chartContainerPanelLayout.setHorizontalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 633, Short.MAX_VALUE)
+            .addGap(0, 634, Short.MAX_VALUE)
         );
         chartContainerPanelLayout.setVerticalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
+            .addGap(0, 552, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout graphicalAnalysisPanelLayout = new javax.swing.GroupLayout(graphicalAnalysisPanel);
@@ -287,17 +292,18 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(chartScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
-                .addGroup(graphicalAnalysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(graphicalAnalysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(chartContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graphicalAnalysisPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteChartButton))
-                    .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
-                        .addComponent(chartContainerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(deleteChartButton)))
+                .addContainerGap())
         );
         graphicalAnalysisPanelLayout.setVerticalGroup(
             graphicalAnalysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +316,7 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(editButton))
                 .addGap(6, 6, 6))
             .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
-                .addComponent(chartScrollPane)
+                .addComponent(chartScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -318,15 +324,16 @@ public class MainMenu extends javax.swing.JFrame {
         graphicalAnalysisContainerPanel.setLayout(graphicalAnalysisContainerPanelLayout);
         graphicalAnalysisContainerPanelLayout.setHorizontalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 855, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
         );
         graphicalAnalysisContainerPanelLayout.setVerticalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
         );
 
         tabbedPane.addTab("Graphical Analysis", graphicalAnalysisContainerPanel);
 
+        instanceTable.setAutoCreateRowSorter(true);
         instanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -335,11 +342,15 @@ public class MainMenu extends javax.swing.JFrame {
 
             }
         ));
-        instanceTable.setAutoCreateRowSorter(true);
         instanceTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         instanceTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 instanceTableMouseReleased(evt);
+            }
+        });
+        instanceTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                instanceTableKeyReleased(evt);
             }
         });
         instanceScrollPane.setViewportView(instanceTable);
@@ -429,6 +440,14 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chartTableMouseClicked
 
+    private void instanceTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_instanceTableKeyReleased
+        updateTabs();
+    }//GEN-LAST:event_instanceTableKeyReleased
+
+    private void chartTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chartTableKeyReleased
+        updateChart();
+    }//GEN-LAST:event_chartTableKeyReleased
+
     private void updateTabs() {
         if (instanceTable.getSelectedRows().length >= 0) {
             InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
@@ -457,8 +476,6 @@ public class MainMenu extends javax.swing.JFrame {
         ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
         Chart chart = chartTableModel.getEntryAt(selectedRow);
         Chart.ChartType chartType = chart.getChartType();
-
-        dataChart.setTitle(chart.getTitle());
 
         if (chartType == ChartType.PIE) {
             System.out.println("Inside pie!");
@@ -511,15 +528,17 @@ public class MainMenu extends javax.swing.JFrame {
             }
 
             dataChart = ChartFactory.createXYLineChart(
-                    "Line Chart Demo 6",
-                    "X",
-                    "Y",
+                    chart.getTitle(),
+                    field2.getName(),
+                    field1.getName(),
                     dataset,
                     PlotOrientation.VERTICAL,
                     true,
                     true,
                     false);
         }
+        
+        dataChart.setBackgroundPaint(getBackground());
 
         chartContainerPanel.removeAll();
         ChartPanel chartPanel = new ChartPanel(dataChart);
