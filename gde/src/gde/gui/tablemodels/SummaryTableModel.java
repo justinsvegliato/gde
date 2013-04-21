@@ -97,21 +97,21 @@ public class SummaryTableModel extends TableModel {
                                 minEntry = entry;
                             }
                         }
-                        least = String.format("%s (%s%%)", minEntry.getKey(), round(minEntry.getValue() / sum) * 100);
-                        most = String.format("%s (%s%%)", maxEntry.getKey(), round(maxEntry.getValue() / sum) * 100);     
+                        least = String.format("%s (%s%%)", minEntry.getKey(), Math.round((minEntry.getValue() / sum) * 100));
+                        most = String.format("%s (%s%%)", maxEntry.getKey(), Math.round((maxEntry.getValue() / sum) * 100));     
                     }
                 } else if (field.getType() == FieldType.INTEGER || field.getType() == FieldType.DECIMAL) {
-                    List<Double> doubleStats = new LinkedList<Double>();
+                    List<Integer> integerStats = new LinkedList<Integer>();
                     for (String stat : stats) {
-                        doubleStats.add(Double.valueOf(stat));
+                        integerStats.add(Integer.valueOf(stat));
                     }
-                    minimum = Collections.min(doubleStats).toString();
-                    maximum = Collections.max(doubleStats).toString();
+                    minimum = Collections.min(integerStats).toString();
+                    maximum = Collections.max(integerStats).toString();
                     double sum = 0;
-                    for (double stat : doubleStats) {
+                    for (double stat : integerStats) {
                         sum += stat;
                     }
-                    average = String.valueOf(round(sum / doubleStats.size()));
+                    average = String.valueOf(Math.round(sum / integerStats.size()));
                 }
                 addRow(new Object[]{
                     field,
@@ -122,9 +122,5 @@ public class SummaryTableModel extends TableModel {
                     maximum,});
             }
         }
-    }
-    
-    private double round(Double x) {
-        return Math.round(x * 100.0) / 100.0;
     }
 }
