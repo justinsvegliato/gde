@@ -40,9 +40,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
         populateFieldComboBoxes(null);
         populateChartComboBox();
-        if (editMode) {
-            fillSelections(true);
-        }
+        fillSelections(true);
     }
 
     /**
@@ -172,16 +170,18 @@ public class ManageChartDialog extends javax.swing.JDialog {
     }
 
     private void fillSelections(boolean changeChart) {
-        MongoCollection fieldsCollection = database.getCollection("fields");
-        ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
-        Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
-        Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
-        Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-        titleLabel.setText(editMode ? "Edit Chart" : "New Chart");
-        yAxisComboBox.setSelectedItem(yAxisField);
-        xAxisComboBox.setSelectedItem(xAxisField);
-        if (changeChart) {
-            chartTypeComboBox.setSelectedItem(chart.getChartType());
+        if (editMode) {
+            MongoCollection fieldsCollection = database.getCollection("fields");
+            ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
+            Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
+            Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
+            Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
+            titleLabel.setText(editMode ? "Edit Chart" : "New Chart");
+            yAxisComboBox.setSelectedItem(yAxisField);
+            xAxisComboBox.setSelectedItem(xAxisField);
+            if (changeChart) {
+                chartTypeComboBox.setSelectedItem(chart.getChartType());
+            }
         }
     }
     

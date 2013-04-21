@@ -48,7 +48,7 @@ public class LoginFrame extends javax.swing.JFrame {
         logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/logo_small.png"))); // NOI18N
         logoLabel.setPreferredSize(new java.awt.Dimension(300, 190));
 
-        nameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/title-text.png"))); // NOI18N
+        nameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/title_text.png"))); // NOI18N
 
         usernameLabel.setText("Username");
 
