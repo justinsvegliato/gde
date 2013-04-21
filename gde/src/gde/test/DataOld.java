@@ -19,7 +19,7 @@ import org.jongo.MongoCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Data {
+public class DataOld {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
     private static final String DATABASE = "gde";
