@@ -6,6 +6,7 @@ public class Chart extends Entry {
         LINE,
         PIE,
         BAR,
+        MAP,
         SCATTER;
         
         @Override

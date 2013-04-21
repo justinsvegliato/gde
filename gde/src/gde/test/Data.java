@@ -80,7 +80,7 @@ public class Data {
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("level", String.valueOf(j));
                 data.put("strength", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("dextarity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("dexterity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("class", clss);

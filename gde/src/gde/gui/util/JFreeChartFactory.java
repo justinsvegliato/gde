@@ -7,6 +7,7 @@ import gde.models.Chart;
 import gde.models.Field;
 import gde.models.Instance;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,13 +20,23 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.axis.AxisLocation;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.GrayPaintScale;
+import org.jfree.chart.renderer.LookupPaintScale;
+import org.jfree.chart.renderer.PaintScale;
+import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.title.PaintScaleLegend;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleEdge;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 import org.jfree.util.ShapeUtilities;
 
@@ -46,6 +57,8 @@ public enum JFreeChartFactory {
                 return getJFreeLineChart(chart, selectedRows, instanceTableModel);
             case SCATTER:
                 return getJFreeScatterPlot(chart, selectedRows, instanceTableModel);
+            case MAP:
+                return getJFreePositionMap(chart, selectedRows, instanceTableModel);
             default:
                 return ChartFactory.createLineChart(
                         null,
@@ -150,6 +163,42 @@ public enum JFreeChartFactory {
 
         return jFreeChart;
     }
+    
+    private JFreeChart getJFreePositionMap(Chart chart, int[] selectedRows, InstanceTableModel model) {
+        Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
+        Field yAxisField = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        for (int i : selectedRows) {
+            Instance instance = model.getEntryAt(i);
+            String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
+            Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
+            XYSeries series = new XYSeries(instance.getIdentifier());
+            for (CapturedData capturedDatum : capturedData) {
+                Integer x = Integer.parseInt(capturedDatum.getData().get(xAxisField.getName().toLowerCase()));
+                Integer y = Integer.parseInt(capturedDatum.getData().get(yAxisField.getName().toLowerCase()));
+                series.add(x, y);
+            }
+            dataset.addSeries(series);
+        }
+        
+        JFreeChart jFreeChart = ChartFactory.createScatterPlot(
+                chart.getTitle(),
+                xAxisField.getName(),
+                yAxisField.getName(),
+                dataset,
+                PlotOrientation.VERTICAL,
+                false,
+                false,
+                false);
+        
+        XYPlot plot = (XYPlot) jFreeChart.getPlot();
+        XYItemRenderer renderer = plot.getRenderer();
+        Shape shape = ShapeUtilities.createDiamond(4);
+        renderer.setSeriesShape(0, shape);
+
+        return jFreeChart;
+    }
+
 
 //    private JFreeChart getJFreeBarGraph(Chart chart, int[] selectedRows, InstanceTableModel model) {
 //        Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
