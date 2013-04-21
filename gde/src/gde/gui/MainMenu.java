@@ -91,8 +91,10 @@ public class MainMenu extends javax.swing.JFrame {
         instanceScrollPane = new javax.swing.JScrollPane();
         instanceTable = new javax.swing.JTable();
         selectCheckBox = new javax.swing.JCheckBox();
+        refreshButton = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -154,7 +156,7 @@ public class MainMenu extends javax.swing.JFrame {
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
                 .addContainerGap())
         );
         summaryPanelLayout.setVerticalGroup(
@@ -168,9 +170,9 @@ public class MainMenu extends javax.swing.JFrame {
         summaryContainerPanel.setLayout(summaryContainerPanelLayout);
         summaryContainerPanelLayout.setHorizontalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 879, Short.MAX_VALUE)
+            .addGap(0, 872, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
         );
         summaryContainerPanelLayout.setVerticalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +199,7 @@ public class MainMenu extends javax.swing.JFrame {
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
                 .addContainerGap())
         );
         detailedAnalysisContainerPanelLayout.setVerticalGroup(
@@ -261,7 +263,7 @@ public class MainMenu extends javax.swing.JFrame {
         chartContainerPanel.setLayout(chartContainerPanelLayout);
         chartContainerPanelLayout.setHorizontalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 634, Short.MAX_VALUE)
+            .addGap(0, 643, Short.MAX_VALUE)
         );
         chartContainerPanelLayout.setVerticalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +282,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(chartContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graphicalAnalysisPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 415, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 408, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editChartButton)
@@ -307,7 +309,7 @@ public class MainMenu extends javax.swing.JFrame {
         graphicalAnalysisContainerPanel.setLayout(graphicalAnalysisContainerPanelLayout);
         graphicalAnalysisContainerPanelLayout.setHorizontalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
         );
         graphicalAnalysisContainerPanelLayout.setVerticalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +347,18 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
+
+        jMenuItem1.setText("Refresh");
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -361,12 +374,16 @@ public class MainMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(selectCheckBox, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                    .addComponent(instanceScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(instanceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(refreshButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(selectCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,7 +391,9 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(instanceScrollPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(selectCheckBox)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selectCheckBox)
+                    .addComponent(refreshButton))
                 .addContainerGap())
             .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -445,6 +464,12 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chartTableKeyReleased
 
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        ((InstanceTableModel) instanceTable.getModel()).populate();
+        updateTabs();
+        
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
     private void updateTabs() {
         updateTables();
         updateChart();
@@ -499,6 +524,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel3;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
@@ -512,6 +538,7 @@ public class MainMenu extends javax.swing.JFrame {
     private java.awt.MenuBar menuBar2;
     private java.awt.MenuBar menuBar3;
     private java.awt.MenuBar menuBar4;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JCheckBox selectCheckBox;
     private javax.swing.JPanel summaryContainerPanel;
     private javax.swing.JPanel summaryPanel;

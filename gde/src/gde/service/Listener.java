@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
@@ -39,7 +40,7 @@ public final class Listener {
     private static void listen() {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(LOCAL_PORT);
+            serverSocket = new ServerSocket(LOCAL_PORT, -1, InetAddress.getByName("10.0.0.3"));
             LOGGER.debug("Opened ServerSocket on port [" + LOCAL_PORT + "]");
         } catch (IOException ioe) {
             LOGGER.error("Failed to open ServerSocket on port [" + LOCAL_PORT + "]", ioe);
@@ -59,6 +60,7 @@ public final class Listener {
                 while ((clientRequest = bufferedReader.readLine()) != null) {
                     LOGGER.debug("Received a request from the game client");
                     requestHandler.handleRequest(clientRequest);
+                    LOGGER.debug("Finished handling frequest from game client");
                 }
             }
         } catch (IOException e) {
