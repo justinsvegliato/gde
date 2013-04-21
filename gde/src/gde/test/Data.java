@@ -59,7 +59,7 @@ public class Data {
         fieldsCollection.save(field);
         field = new Field("Strength", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-        field = new Field("Dextarity", FieldType.INTEGER, game.getKey().toString());
+        field = new Field("Dexterity", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
         field = new Field("Vitality", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);

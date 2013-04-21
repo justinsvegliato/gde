@@ -86,7 +86,7 @@ public class MainMenu extends javax.swing.JFrame {
         chartTable = new javax.swing.JTable();
         createChartButton = new javax.swing.JButton();
         deleteChartButton = new javax.swing.JButton();
-        editButton = new javax.swing.JButton();
+        editChartButton = new javax.swing.JButton();
         chartContainerPanel = new javax.swing.JPanel();
         instanceScrollPane = new javax.swing.JScrollPane();
         instanceTable = new javax.swing.JTable();
@@ -242,16 +242,18 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         deleteChartButton.setText("Delete");
+        deleteChartButton.setEnabled(false);
         deleteChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteChartButtonActionPerformed(evt);
             }
         });
 
-        editButton.setText("Edit");
-        editButton.addActionListener(new java.awt.event.ActionListener() {
+        editChartButton.setText("Edit");
+        editChartButton.setEnabled(false);
+        editChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editButtonActionPerformed(evt);
+                editChartButtonActionPerformed(evt);
             }
         });
 
@@ -281,7 +283,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 415, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editButton)
+                        .addComponent(editChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(deleteChartButton)))
                 .addContainerGap())
@@ -294,7 +296,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(graphicalAnalysisPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(deleteChartButton)
                     .addComponent(createChartButton)
-                    .addComponent(editButton))
+                    .addComponent(editChartButton))
                 .addGap(6, 6, 6))
             .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
                 .addComponent(chartScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
@@ -399,9 +401,9 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_instanceTableMouseReleased
 
-    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+    private void editChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editChartButtonActionPerformed
         new ManageChartDialog(game, chartTable, true).setVisible(true);
-    }//GEN-LAST:event_editButtonActionPerformed
+    }//GEN-LAST:event_editChartButtonActionPerformed
 
     private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this chart?", "Confirm Deletion",
@@ -409,6 +411,8 @@ public class MainMenu extends javax.swing.JFrame {
         if (response == JOptionPane.YES_OPTION) {
             ((ChartTableModel) chartTable.getModel()).remove(chartTable.getSelectedRows());
         }
+        deleteChartButton.setEnabled(false);
+        editChartButton.setEnabled(false);
     }//GEN-LAST:event_deleteChartButtonActionPerformed
 
     private void createChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButtonActionPerformed
@@ -421,6 +425,8 @@ public class MainMenu extends javax.swing.JFrame {
         }
         if (evt.getClickCount() >= 1) {
             updateChart();
+            editChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
+            deleteChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
         }
     }//GEN-LAST:event_chartTableMouseClicked
 
@@ -484,7 +490,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton deleteChartButton;
     private javax.swing.JPanel detailedAnalysisContainerPanel;
     private javax.swing.JScrollPane detailedAnalysisPanel;
-    private javax.swing.JButton editButton;
+    private javax.swing.JButton editChartButton;
     private javax.swing.JPanel graphicalAnalysisContainerPanel;
     private javax.swing.JPanel graphicalAnalysisPanel;
     private javax.swing.JScrollPane instanceScrollPane;

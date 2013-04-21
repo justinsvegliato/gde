@@ -332,7 +332,7 @@
                                   <EmptySpace pref="415" max="32767" attributes="0"/>
                                   <Component id="createChartButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="editButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="editChartButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="deleteChartButton" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -349,7 +349,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="deleteChartButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="createChartButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="editButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="editChartButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
@@ -403,17 +403,19 @@
                 <Component class="javax.swing.JButton" name="deleteChartButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Delete"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteChartButtonActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="editButton">
+                <Component class="javax.swing.JButton" name="editChartButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Edit"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editButtonActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editChartButtonActionPerformed"/>
                   </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="chartContainerPanel">
