@@ -5,6 +5,7 @@ import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
 import gde.models.Chart;
 import gde.models.Chart.ChartType;
+import static gde.models.Chart.ChartType.LINE;
 import gde.models.Field;
 import gde.models.Field.FieldType;
 import static gde.models.Field.FieldType.BOOLEAN;
@@ -27,19 +28,20 @@ public class ManageChartDialog extends javax.swing.JDialog {
     private static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
     private final JTable chartTable;
-    private final boolean isCreated;
-
-    public ManageChartDialog(Game game, JTable chartTable, boolean isCreated) {
+    private final boolean editMode;
+    
+    public ManageChartDialog(Game game, JTable chartTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
 
         this.game = game;
         this.chartTable = chartTable;
-        this.isCreated = isCreated;
+        this.editMode = editMode;
 
-        populateComboBoxes();
-        if (isCreated) {
-            fillSelections();
+        populateFieldComboBoxes(null);
+        populateChartComboBox();
+        if (editMode) {
+            fillSelections(true);
         }
     }
 
@@ -149,9 +151,43 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
         ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
+        populateFieldComboBoxes(chartType);
         xAxisComboBox.setEnabled(chartType != ChartType.PIE);
+        fillSelections(false);
+    }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
+
+    private String getChoiceFilter(ChartType chartType) {
+        String template = ", type: {$in:[%s]}";
+        String filter;
+        switch (chartType) {
+            case PIE:
+                filter = "'" + FieldType.TEXT.name() + "'";
+                return String.format(template, filter);
+            case LINE:
+            case SCATTER:
+                filter = String.format("'%s', '%s'", FieldType.INTEGER.name(), FieldType.DECIMAL.name());
+                return String.format(template, filter);
+        }
+        return "";
+    }
+
+    private void fillSelections(boolean changeChart) {
         MongoCollection fieldsCollection = database.getCollection("fields");
-        String query = String.format("{gameId: '%s'%s}", game.getKey().toString(), getChoiceFilter(chartType));
+        ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
+        Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
+        Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
+        Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
+        titleLabel.setText(editMode ? "Edit Chart" : "New Chart");
+        yAxisComboBox.setSelectedItem(yAxisField);
+        xAxisComboBox.setSelectedItem(xAxisField);
+        if (changeChart) {
+            chartTypeComboBox.setSelectedItem(chart.getChartType());
+        }
+    }
+    
+    private void populateFieldComboBoxes(ChartType chartType) {
+        MongoCollection fieldsCollection = database.getCollection("fields");
+        String query = String.format("{gameId: '%s'%s}", game.getKey().toString(), chartType == null ? "" : getChoiceFilter(chartType));
         Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
         yAxisComboBox.removeAllItems();
         xAxisComboBox.removeAllItems();
@@ -159,43 +195,10 @@ public class ManageChartDialog extends javax.swing.JDialog {
             yAxisComboBox.addItem(field);
             xAxisComboBox.addItem(field);
         }
-    }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
-
-    private String getChoiceFilter(ChartType type) {
-        String template = ", type: {$in:[%s]}";
-        String filter;
-        switch (type) {
-            case PIE:
-                filter = "'" + FieldType.TEXT.name() + "'";
-                return String.format(template, filter);
-            case LINE:
-                filter = String.format("'%s', '%s'", FieldType.INTEGER.name(), FieldType.DECIMAL.name());
-                return String.format(template, filter);
-        }
-        return "";
     }
-
-    private void fillSelections() {
-        MongoCollection fieldsCollection = database.getCollection("fields");
-        ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
-        Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
-        Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
-        Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-        titleLabel.setText(isCreated ? "Edit Chart" : "New Chart");
-        yAxisComboBox.setSelectedItem(yAxisField);
-        xAxisComboBox.setSelectedItem(xAxisField);
-        chartTypeComboBox.setSelectedItem(chart.getChartType());
-    }
-
-    private void populateComboBoxes() {
-        MongoCollection fieldsCollection = database.getCollection("fields");
-        String query = String.format("{gameId: '%s'}", game.getKey().toString());
-        Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
-        for (Field field : fields) {
-            yAxisComboBox.addItem(field);
-            xAxisComboBox.addItem(field);
-        }
-        for (Chart.ChartType fieldType : Chart.ChartType.values()) {
+    
+    private void populateChartComboBox() {
+        for (ChartType fieldType : Chart.ChartType.values()) {
             chartTypeComboBox.addItem(fieldType);
         }
     }
@@ -215,7 +218,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
                 game.getKey().toString());
 
         ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
-        if (isCreated) {
+        if (editMode) {
             chartTableModel.update(newChart, chartTable.getSelectedRow());
         } else {
             chartTableModel.add(newChart);
@@ -223,7 +226,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        if (isCreated) {
+        if (editMode) {
             int response = JOptionPane.showConfirmDialog(null, "Are you sure you want cancel your changes?", "Confirm Cancellation",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
