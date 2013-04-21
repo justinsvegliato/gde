@@ -63,7 +63,7 @@ public class RequestHandler {
             }
             LOGGER.debug("Wrote the CapturedData object to the database");
         } catch (IOException ex) {
-            LOGGER.error("Received malformed request");
+            LOGGER.error("Received malformed request: " + clientRequest);
         }
     }
 }

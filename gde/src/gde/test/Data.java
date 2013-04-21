@@ -69,6 +69,14 @@ public class Data {
         fieldsCollection.save(field);
         field = new Field("Race", FieldType.TEXT, game.getKey().toString());
         fieldsCollection.save(field);
+        
+        Game game2 = new Game("Dragons [Alpha]", "ARPG", developers);
+        gamesCollection.save(game2);
+
+        field = new Field("X Position", FieldType.INTEGER, game2.getKey().toString());
+        fieldsCollection.save(field);
+        field = new Field("Y Position", FieldType.INTEGER, game2.getKey().toString());
+        fieldsCollection.save(field);
 
         for (int i = 0; i < 100; i++) {
             Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
@@ -80,7 +88,7 @@ public class Data {
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("level", String.valueOf(j));
                 data.put("strength", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("dextarity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("dexterity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("class", clss);
