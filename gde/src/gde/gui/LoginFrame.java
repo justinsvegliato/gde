@@ -3,6 +3,7 @@ package gde.gui;
 import gde.models.Developer;
 import gde.models.Game;
 import gde.gui.util.DatabaseHandler;
+import gde.gui.util.ImageLoader;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import org.jongo.Jongo;
@@ -11,12 +12,11 @@ import org.jongo.MongoCollection;
 public class LoginFrame extends javax.swing.JFrame {
     
     private static final Jongo database = DatabaseHandler.getDatabase();
-    private final ImageIcon appIcon = new ImageIcon(getClass().getResource("gde_icon1.png"));
 
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(loginButton);
-        setIconImage(appIcon.getImage());
+        setIconImage(ImageLoader.getAppIcon().getImage());
     }
 
     /**
@@ -42,14 +42,13 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
-        setMaximumSize(new java.awt.Dimension(596, 210));
         setMinimumSize(new java.awt.Dimension(596, 210));
         setResizable(false);
 
-        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/gui/logo-final1-small.png"))); // NOI18N
+        logoLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/logo_small.png"))); // NOI18N
         logoLabel.setPreferredSize(new java.awt.Dimension(300, 190));
 
-        nameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/gui/title-text-small.png"))); // NOI18N
+        nameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/title-text.png"))); // NOI18N
 
         usernameLabel.setText("Username");
 
@@ -79,25 +78,21 @@ public class LoginFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(nameLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(jPanel1Layout.createSequentialGroup()
-                .add(0, 0, 0)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(gameLabel)
-                            .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(usernameLabel)
-                                .add(passwordLabel)))
-                        .add(10, 10, 10)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, passwordTextField)
-                            .add(usernameTextField)
-                            .add(gameComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .add(0, 0, Short.MAX_VALUE)
-                        .add(loginButton)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(exitButton)))
-                .add(0, 0, 0))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(gameLabel)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(usernameLabel)
+                        .add(passwordLabel)))
+                .add(10, 10, 10)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, passwordTextField)
+                    .add(usernameTextField)
+                    .add(gameComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
+                .add(0, 0, Short.MAX_VALUE)
+                .add(loginButton)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(exitButton))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -140,7 +135,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .add(10, 10, 10)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(logoLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(logoLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
                 .add(10, 10, 10))
         );
 

@@ -35,14 +35,14 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="horizontalAxisLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="verticalAxisLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="yAxisLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="xAxisLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="chartTypeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="verticalAxisComboBox" min="-2" pref="222" max="-2" attributes="0"/>
-                              <Component id="horizontalAxisComboBox" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="yAxisComboBox" min="-2" pref="222" max="-2" attributes="0"/>
+                              <Component id="xAxisComboBox" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
                               <Component id="chartTypeComboBox" min="-2" pref="222" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -60,13 +60,13 @@
               <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="horizontalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="verticalAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="yAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="yAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="verticalAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="horizontalAxisComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="xAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="xAxisComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -84,19 +84,19 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="horizontalAxisLabel">
+    <Component class="javax.swing.JLabel" name="yAxisLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vertical Axis"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="verticalAxisComboBox">
+    <Component class="javax.swing.JComboBox" name="yAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JComboBox" name="horizontalAxisComboBox">
+    <Component class="javax.swing.JComboBox" name="xAxisComboBox">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="0"/>
@@ -118,7 +118,7 @@
         <Property name="text" type="java.lang.String" value="Chart Type"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="verticalAxisLabel">
+    <Component class="javax.swing.JLabel" name="xAxisLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Horizontal Axis"/>
       </Properties>

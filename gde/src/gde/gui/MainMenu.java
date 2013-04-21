@@ -1,54 +1,37 @@
 package gde.gui;
 
+import gde.gui.util.JFreeChartFactory;
 import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
-import gde.gui.tablemodels.ChartTableCellRenderer;
+import gde.gui.util.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
-import gde.gui.tablemodels.TableModel;
+import gde.gui.tablemodels.SummaryTableModel;
 import gde.gui.util.DatabaseHandler;
-import gde.models.CapturedData;
+import gde.gui.util.ImageLoader;
 import gde.models.Chart;
-import gde.models.Chart.ChartType;
-import gde.models.Field;
 import gde.models.Game;
 import gde.models.Instance;
 import java.awt.BorderLayout;
-import java.util.LinkedList;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
-import org.bson.types.ObjectId;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.DefaultKeyedValues;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.jongo.Jongo;
-import org.jongo.MongoCollection;
 
 public class MainMenu extends javax.swing.JFrame {
 
     protected static final Jongo database = DatabaseHandler.getDatabase();
-    private final ImageIcon appIcon = new ImageIcon(getClass().getResource("gde_icon1.png"));
     private final Game game;
-    private JFreeChart dataChart;
 
     public MainMenu(Game game) {
         this.game = game;
         initComponents();
-        setIconImage(appIcon.getImage());
-
-        dataChart = ChartFactory.createPieChart("", null, true, true, false);
-        dataChart.setBackgroundPaint(getBackground());
+        setIconImage(ImageLoader.getAppIcon().getImage());
 
         chartContainerPanel.setLayout(new java.awt.BorderLayout());
-        chartContainerPanel.add(new ChartPanel(dataChart), BorderLayout.CENTER);
-        chartContainerPanel.validate();
+        chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
 
         InstanceTableModel instanceTableModel = new InstanceTableModel(game);
         instanceTable.setModel(instanceTableModel);
@@ -63,6 +46,9 @@ public class MainMenu extends javax.swing.JFrame {
         chartTable.setModel(chartTableModel);
         chartTable.getColumnModel().getColumn(0).setCellRenderer(new ChartTableCellRenderer());
         chartTableModel.populate();
+
+        SummaryTableModel summaryTableModel = new SummaryTableModel(game);
+        summaryTable.setModel(summaryTableModel);
     }
 
     /**
@@ -155,14 +141,10 @@ public class MainMenu extends javax.swing.JFrame {
 
         summaryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Name", "--", "--", "--", "--"},
-                {"Level", "34", "32.24", "3", "90"},
-                {"Race", "Elf", null, null, null},
-                {"Class", "Warrior", null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Field", "Mode", "Average", "Lowest", "Highest"
+
             }
         ));
         summaryScrollPane.setViewportView(summaryTable);
@@ -173,13 +155,13 @@ public class MainMenu extends javax.swing.JFrame {
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
                 .addContainerGap())
         );
         summaryPanelLayout.setVerticalGroup(
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -216,13 +198,13 @@ public class MainMenu extends javax.swing.JFrame {
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 859, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
                 .addContainerGap())
         );
         detailedAnalysisContainerPanelLayout.setVerticalGroup(
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -297,7 +279,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(chartContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graphicalAnalysisPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 471, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 415, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editButton)
@@ -316,7 +298,7 @@ public class MainMenu extends javax.swing.JFrame {
                     .addComponent(editButton))
                 .addGap(6, 6, 6))
             .addGroup(graphicalAnalysisPanelLayout.createSequentialGroup()
-                .addComponent(chartScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
+                .addComponent(chartScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -413,6 +395,9 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void instanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instanceTableMouseReleased
         updateTabs();
+        if (instanceTable.getSelectedRowCount() != instanceTable.getRowCount()) {
+            selectCheckBox.setSelected(false);
+        }
     }//GEN-LAST:event_instanceTableMouseReleased
 
     private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
@@ -441,14 +426,26 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_chartTableMouseClicked
 
     private void instanceTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_instanceTableKeyReleased
-        updateTabs();
+        if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
+            updateTabs();
+            if (instanceTable.getSelectedRowCount() != instanceTable.getRowCount()) {
+                selectCheckBox.setSelected(false);
+            }
+        }
     }//GEN-LAST:event_instanceTableKeyReleased
 
     private void chartTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chartTableKeyReleased
-        updateChart();
+        if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
+            updateChart();
+        }
     }//GEN-LAST:event_chartTableKeyReleased
 
     private void updateTabs() {
+        updateTables();
+        updateChart();
+    }
+
+    private void updateTables() {
         if (instanceTable.getSelectedRows().length >= 0) {
             InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
             StringBuilder filter = new StringBuilder();
@@ -458,87 +455,25 @@ public class MainMenu extends javax.swing.JFrame {
                 String divider = (i < selectedRows.length - 1) ? ", " : "";
                 filter.append(String.format("'%s'%s", instance.getKey().toString(), divider));
             }
+            String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
 
             CapturedDataTableModel capturedDataTableModel = ((CapturedDataTableModel) capturedDataTable.getModel());
-            String query = String.format("{instanceId: {$in: [%s]}}", filter.toString());
             capturedDataTableModel.populate(query);
 
-            if (chartTable.getSelectedRow() != -1) {
-                updateChart();
-            }
+            SummaryTableModel summaryTableModel = ((SummaryTableModel) summaryTable.getModel());
+            summaryTableModel.populate(instanceTableModel.getIds(), instanceTable.getSelectedRows());
         }
     }
 
     private void updateChart() {
-        int selectedRow = chartTable.getSelectedRow();
-        ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
-        Chart chart = chartTableModel.getEntryAt(selectedRow);
-        Chart.ChartType chartType = chart.getChartType();
-
-        if (chartType == ChartType.PIE) {
-            DefaultKeyedValues keyedValues = new DefaultKeyedValues();
-            MongoCollection capturedDataCollection = database.getCollection("captureddata");
-            MongoCollection fieldCollection = database.getCollection("fields");
-            Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            for (int i : instanceTable.getSelectedRows()) {
-                Instance instance = ((InstanceTableModel) instanceTable.getModel()).getEntryAt(i);
-                String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
-                for (CapturedData capturedDatum : capturedData) {
-                    String stat = capturedDatum.getData().get(field.getName().toLowerCase());
-                    if (keyedValues.getKeys().contains(stat)) {
-                        keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
-                    } else {
-                        keyedValues.setValue(stat, 1);
-                    }
-                }
-            }
-
-            DefaultPieDataset pieData = new DefaultPieDataset(keyedValues);
-
-            dataChart = ChartFactory.createPieChart(
-                    chart.getTitle(),
-                    pieData,
-                    true,
-                    true,
-                    false);
-
-        } else if (chartType == ChartType.LINE) {
-            MongoCollection capturedDataCollection = database.getCollection("captureddata");
-            MongoCollection fieldCollection = database.getCollection("fields");
-            Field field1 = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            Field field2 = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
-            XYSeriesCollection dataset = new XYSeriesCollection();
-            for (int i : instanceTable.getSelectedRows()) {
-                Instance instance = ((InstanceTableModel) instanceTable.getModel()).getEntryAt(i);
-                String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                Iterable<CapturedData> capturedData = capturedDataCollection.find(query).as(CapturedData.class);
-                XYSeries series = new XYSeries(instance.getIdentifier());
-                for (CapturedData capturedDatum : capturedData) {
-                    Integer stat1 = Integer.parseInt(capturedDatum.getData().get(field1.getName().toLowerCase()));
-                    Integer stat2 = Integer.parseInt(capturedDatum.getData().get(field2.getName().toLowerCase()));
-                    series.add(stat1, stat2);
-                }
-                dataset.addSeries(series);
-            }
-
-            dataChart = ChartFactory.createXYLineChart(
-                    chart.getTitle(),
-                    field2.getName(),
-                    field1.getName(),
-                    dataset,
-                    PlotOrientation.VERTICAL,
-                    true,
-                    true,
-                    false);
+        if (chartTable.getSelectedRow() != -1) {
+            ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
+            Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
+            JFreeChart jFreeChart = JFreeChartFactory.INSTANCE.getChart(chart, instanceTable);
+            chartContainerPanel.removeAll();
+            chartContainerPanel.add(new ChartPanel(jFreeChart), BorderLayout.CENTER);
+            chartContainerPanel.validate();
         }
-        
-        dataChart.setBackgroundPaint(getBackground());
-
-        chartContainerPanel.removeAll();
-        ChartPanel chartPanel = new ChartPanel(dataChart);
-        chartContainerPanel.add(chartPanel, BorderLayout.CENTER);
-        chartContainerPanel.validate();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable capturedDataTable;

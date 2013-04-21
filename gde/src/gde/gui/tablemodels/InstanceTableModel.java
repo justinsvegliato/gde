@@ -2,8 +2,9 @@ package gde.gui.tablemodels;
 
 import gde.models.Game;
 import gde.models.Instance;
+import javax.swing.SwingUtilities;
 
-public class InstanceTableModel extends DatabaseTableModel<Instance> {
+public class InstanceTableModel extends CollectionTableModel<Instance> {
     private static final Class[] TYPES = {String.class};
     private static final String[] TITLES = {"Identifier"};
     private static final String COLLECTION = "instances";
@@ -16,8 +17,12 @@ public class InstanceTableModel extends DatabaseTableModel<Instance> {
     public void populate(String query) {
         setRowCount(0);
         Iterable<Instance> instances = collection.find(query).as(Instance.class);
-        for (Instance instance : instances) {
-            addRow(instance);
+        for (final Instance instance : instances) {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    addRow(instance);
+                }
+            });
         }
     }
     

@@ -2,6 +2,7 @@ package gde.gui.util;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
+import com.mongodb.MongoOptions;
 import java.net.UnknownHostException;
 import org.jongo.Jongo;
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ public class DatabaseHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
     private static final String DATABASE = "gde";
-    
     private static Jongo jongo;
 
     public static Jongo getDatabase() {

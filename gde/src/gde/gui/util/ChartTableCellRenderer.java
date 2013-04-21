@@ -1,4 +1,4 @@
-package gde.gui.tablemodels;
+package gde.gui.util;
 
 import gde.models.Chart;
 import java.awt.Component;
@@ -8,10 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 public class ChartTableCellRenderer extends DefaultTableCellRenderer {
-
-    private final ImageIcon iconPie = new ImageIcon(getClass().getResource("pie_graph.png"));
-    private final ImageIcon iconLine = new ImageIcon(getClass().getResource("line_graph.png"));
-    private final ImageIcon iconBar = new ImageIcon(getClass().getResource("bar_graph.png"));
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -33,11 +29,11 @@ public class ChartTableCellRenderer extends DefaultTableCellRenderer {
     private ImageIcon getIcon(Chart.ChartType type) {
         switch (type) {
             case PIE:
-                return iconPie;
+                return ImageLoader.getPieIcon();
             case LINE:
-                return iconLine;
+                return ImageLoader.getLineIcon();
             case BAR:
-                return iconBar;
+                return ImageLoader.getBarIcon();
         }
         return null;
     }

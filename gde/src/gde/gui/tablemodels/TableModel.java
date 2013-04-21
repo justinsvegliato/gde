@@ -2,12 +2,13 @@ package gde.gui.tablemodels;
 
 import gde.gui.util.DatabaseHandler;
 import gde.models.Game;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 
-public abstract class TableModel<T> extends DefaultTableModel {  
+public abstract class TableModel extends DefaultTableModel {  
     
     protected static final Jongo database = DatabaseHandler.getDatabase();
     protected final Game game;
@@ -20,8 +21,6 @@ public abstract class TableModel<T> extends DefaultTableModel {
         this.titles = titles;   
         setColumnIdentifiers(this.titles);
     }
-        
-    public abstract void populate();
     
     @Override
     public Class getColumnClass(int columnIndex) {
@@ -31,17 +30,5 @@ public abstract class TableModel<T> extends DefaultTableModel {
     @Override
     public boolean isCellEditable(int row, int col) {
         return false;
-    }   
-
-    public abstract void add(T entry);
-
-    public abstract void remove(int[] rowIds);
-
-    public abstract void update(T entry, int rowId);
-    
-    public abstract T getEntryAt(int rowId);
-
-    public abstract void setEntryAt(int rowId, T entry);
-    
-    protected abstract void addRow(T entry);
+    }      
 }

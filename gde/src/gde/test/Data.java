@@ -46,37 +46,47 @@ public class Data {
         instancesCollection.drop();
         fieldsCollection.drop();
         capturedDataCollection.drop();
-        
+
         Developer developer = new Developer("justin", "svegliato", "Svegabytes", "a", "a");
-        developersCollection.save(developer);  
+        developersCollection.save(developer);
         List<String> developers = new LinkedList<String>();
         developers.add(developer.getKey().toString());
-        
+
         Game game = new Game("Diablo 2", "ARPG", developers);
         gamesCollection.save(game);
-        
-        Field field = new Field("Strength" , FieldType.INTEGER, game.getKey().toString());
+
+        Field field = new Field("Level", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-        field = new Field("Dextarity" , FieldType.INTEGER, game.getKey().toString());
+        field = new Field("Strength", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-        field = new Field("Vitality" , FieldType.INTEGER, game.getKey().toString());
+        field = new Field("Dextarity", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-        field = new Field("Energy" , FieldType.INTEGER, game.getKey().toString());
+        field = new Field("Vitality", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
-        
+        field = new Field("Energy", FieldType.INTEGER, game.getKey().toString());
+        fieldsCollection.save(field);
+        field = new Field("Class", FieldType.TEXT, game.getKey().toString());
+        fieldsCollection.save(field);
+        field = new Field("Race", FieldType.TEXT, game.getKey().toString());
+        fieldsCollection.save(field);
+
         for (int i = 0; i < 100; i++) {
             Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
             instancesCollection.save(instance);
-            double scaleFactor = Math.random();
-            for (int j = 0; j < (Math.random() * 100) + 1; j++) {
+            double scaleFactor = (Math.random() * 30) + 5;
+            String race = (Math.random() > 0.5) ? "Elf" : "Human";
+            String clss = (Math.random() > 0.5) ? "Warrior" : "Rogue";
+            for (int j = 0; j < (Math.random() * 100) + 10; j++) {
                 Map<String, String> data = new HashMap<String, String>();
+                data.put("level", String.valueOf(j));
                 data.put("strength", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
                 data.put("dextarity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + (j * 5) + "");
-                data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");   
+                data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("class", clss);
+                data.put("race", race);
                 CapturedData capturedData = new CapturedData(data, instance.getKey().toString());
                 capturedDataCollection.save(capturedData);
-                
             }
         }
     }

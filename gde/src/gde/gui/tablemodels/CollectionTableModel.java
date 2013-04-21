@@ -7,26 +7,26 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
-public abstract class DatabaseTableModel<T extends Entry> extends TableModel<T> {
+public abstract class CollectionTableModel<T extends Entry> extends TableModel {
 
     protected final MongoCollection collection;
     protected final List<ObjectId> ids;
 
-    public DatabaseTableModel(Game game, Class[] types, String[] titles, String collection) {
+    public CollectionTableModel(Game game, Class[] types, String[] titles, String collection) {
         super(game, types, titles);
-        this.ids = new LinkedList<ObjectId>();
+        ids = new LinkedList<ObjectId>();
         this.collection = database.getCollection(collection);
     }
 
-    public abstract void populate(String query);
+    public abstract void populate();
 
-    @Override
+    public abstract void populate(String query);
+    
     public void add(T entry) {
         collection.save(entry);
         addRow(entry);
     }
 
-    @Override
     public void remove(int[] rowIds) {
         for (int i = 0; i < rowIds.length; i++) {
             collection.remove(ids.remove((int) rowIds[i] - i));
@@ -34,9 +34,18 @@ public abstract class DatabaseTableModel<T extends Entry> extends TableModel<T> 
         }
     }
 
-    @Override
     public void update(T entry, int rowId) {
         setEntryAt(rowId, entry);
         collection.update(ids.get(rowId)).merge(entry);
+    }
+    
+    public abstract T getEntryAt(int rowId);
+
+    public abstract void setEntryAt(int rowId, T entry);
+    
+    protected abstract void addRow(T data);
+    
+    public List<ObjectId> getIds() {
+        return ids;
     }
 }

@@ -1,4 +1,4 @@
-package gde.gui.tablemodels;
+package gde.gui.util;
 
 import gde.models.Chart.ChartType;
 
