@@ -12,7 +12,6 @@ import gde.models.Chart;
 import gde.models.Game;
 import gde.models.Instance;
 import java.awt.BorderLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import org.jfree.chart.ChartFactory;
@@ -475,6 +474,7 @@ public class MainMenu extends javax.swing.JFrame {
             chartContainerPanel.validate();
         }
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable capturedDataTable;
     private javax.swing.JPanel chartContainerPanel;
