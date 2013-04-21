@@ -8,6 +8,7 @@ public class ImageLoader {
     private static final ImageIcon PIE_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "pie_graph.png"));
     private static final ImageIcon LINE_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "line_graph.png"));
     private static final ImageIcon BAR_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "bar_graph.png"));
+    private static final ImageIcon MAP_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "map_graph.png"));
     private static final ImageIcon SCATTER_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "scatter_graph.png"));
     private static final ImageIcon APP_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "gde_icon.png"));
 
@@ -34,4 +35,8 @@ public class ImageLoader {
     public static ImageIcon getAppIcon() {
         return APP_ICON;
     }        
+
+    public static ImageIcon getMapIcon() {
+        return MAP_ICON;
+    }
 }
