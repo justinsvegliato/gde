@@ -79,6 +79,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Return to Login Screen"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
@@ -166,17 +176,17 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="879" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="887" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="summaryPanel" alignment="0" pref="879" max="32767" attributes="0"/>
+                      <Component id="summaryPanel" alignment="0" pref="887" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="592" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="597" max="32767" attributes="0"/>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                      <Component id="summaryPanel" alignment="0" pref="592" max="32767" attributes="0"/>
+                      <Component id="summaryPanel" alignment="0" pref="597" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -300,12 +310,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="graphicalAnalysisPanel" alignment="0" pref="879" max="32767" attributes="0"/>
+                  <Component id="graphicalAnalysisPanel" alignment="0" pref="887" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="graphicalAnalysisPanel" alignment="0" pref="592" max="32767" attributes="0"/>
+                  <Component id="graphicalAnalysisPanel" alignment="0" pref="597" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -329,7 +339,7 @@
                                   <Component id="chartContainerPanel" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="415" max="32767" attributes="0"/>
+                                  <EmptySpace pref="479" max="32767" attributes="0"/>
                                   <Component id="createChartButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="editChartButton" min="-2" max="-2" attributes="0"/>

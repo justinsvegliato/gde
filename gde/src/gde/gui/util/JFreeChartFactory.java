@@ -22,6 +22,7 @@ import org.jongo.MongoCollection;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
@@ -195,6 +196,14 @@ public enum JFreeChartFactory {
         XYItemRenderer renderer = plot.getRenderer();
         Shape shape = ShapeUtilities.createDiamond(4);
         renderer.setSeriesShape(0, shape);
+        
+        NumberAxis domain = (NumberAxis) plot.getDomainAxis();
+        domain.setRange(0.00, 10000);
+        domain.setTickUnit(new NumberTickUnit(1000));
+        domain.setVerticalTickLabels(true);
+        NumberAxis range = (NumberAxis) plot.getRangeAxis();
+        range.setRange(0.0, 8000);
+        range.setTickUnit(new NumberTickUnit(1000));
 
         return jFreeChart;
     }

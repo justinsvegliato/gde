@@ -47,7 +47,7 @@ public class Data {
         fieldsCollection.drop();
         capturedDataCollection.drop();
 
-        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "a", "a");
+        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "developer", "password");
         developersCollection.save(developer);
         List<String> developers = new LinkedList<String>();
         developers.add(developer.getKey().toString());

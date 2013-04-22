@@ -93,6 +93,7 @@ public class MainMenu extends javax.swing.JFrame {
         selectCheckBox = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -168,15 +169,15 @@ public class MainMenu extends javax.swing.JFrame {
         summaryContainerPanel.setLayout(summaryContainerPanelLayout);
         summaryContainerPanelLayout.setHorizontalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 879, Short.MAX_VALUE)
+            .addGap(0, 887, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE))
         );
         summaryContainerPanelLayout.setVerticalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addGap(0, 597, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Summary", summaryContainerPanel);
@@ -280,7 +281,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(chartContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graphicalAnalysisPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 415, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editChartButton)
@@ -307,11 +308,11 @@ public class MainMenu extends javax.swing.JFrame {
         graphicalAnalysisContainerPanel.setLayout(graphicalAnalysisContainerPanelLayout);
         graphicalAnalysisContainerPanelLayout.setHorizontalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 879, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 887, Short.MAX_VALUE)
         );
         graphicalAnalysisContainerPanelLayout.setVerticalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
         );
 
         tabbedPane.addTab("Graphical Analysis", graphicalAnalysisContainerPanel);
@@ -346,6 +347,15 @@ public class MainMenu extends javax.swing.JFrame {
         });
 
         jMenu1.setText("File");
+
+        jMenuItem1.setText("Return to Login Screen");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -445,6 +455,11 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_chartTableKeyReleased
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.setVisible(false);
+        new LoginFrame().setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     private void updateTabs() {
         updateTables();
         updateChart();
@@ -499,6 +514,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel3;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
