@@ -21,8 +21,8 @@ public class Client {
 //        }
 
 
-        for (int i = 0; i < 50; i++) {
-            socket = new Socket("localhost", 8746);
+        for (int i = 0; i < 2; i++) {
+            socket = new Socket("10.10.58.192", 8746);
             out = new PrintWriter(socket.getOutputStream(), true);
             String json = "{\"gameId\": \"5165e9fb0364836086aa17ed\", \"identifier\": \"Asteloth\", \"data\":{\"strength\": 20, \"vitality\": 10}}";
             out.write(json);
@@ -30,7 +30,5 @@ public class Client {
             out.close();
             socket.close();
         }
-
-
     }
 }

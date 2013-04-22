@@ -69,7 +69,7 @@ public class Data {
         fieldsCollection.save(field);
         field = new Field("Race", FieldType.TEXT, game.getKey().toString());
         fieldsCollection.save(field);
-        
+
         Game game2 = new Game("Dragons [Alpha]", "ARPG", developers);
         gamesCollection.save(game2);
 
@@ -81,21 +81,52 @@ public class Data {
         for (int i = 0; i < 100; i++) {
             Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
             instancesCollection.save(instance);
-            double scaleFactor = (Math.random() * 30) + 5;
-            String race = (Math.random() > 0.5) ? "Elf" : "Human";
-            String clss = (Math.random() > 0.5) ? "Warrior" : "Rogue";
-            for (int j = 0; j < (Math.random() * 100) + 10; j++) {
+            double scaleFactor = Math.random() + 2.5;
+            String race = getRaceName();
+            String clss = getClassName();
+            double exponent = Math.random() > .94 ? 1.5 : 1.2;
+            for (int j = 1; j < (Math.random() * 100) + 15; j++) {
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("level", String.valueOf(j));
-                data.put("strength", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("dexterity", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("vitality", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
-                data.put("energy", (int) ((((int) (Math.random() * 5)) + (j * 5)) * scaleFactor) + "");
+                data.put("strength", (int) (Math.pow(((Math.random() + j)), exponent) * scaleFactor) + "");
+                data.put("dexterity", (int) (Math.pow(((Math.random() + j)), exponent) * scaleFactor) + "");
+                data.put("vitality", (int) (Math.pow(((Math.random() + j)), exponent) * scaleFactor) + "");
+                data.put("energy", (int) (Math.pow(((Math.random() + j)), exponent) * scaleFactor) + "");
                 data.put("class", clss);
                 data.put("race", race);
                 CapturedData capturedData = new CapturedData(data, instance.getKey().toString());
                 capturedDataCollection.save(capturedData);
             }
+        }
+    }
+
+    private static String getRaceName() {
+        double random = Math.random();
+        if (random > 0.9) {
+            return "Elf";
+        } else if (random > 0.8) {
+            return "Troll";
+        } else if (random > 0.5) {
+            return "Human";
+        } else if (random > 0.3) {
+            return "Dwarf";
+        } else {
+            return "Gnome";
+        }
+    }
+
+    private static String getClassName() {
+        double random = Math.random();
+        if (random > 0.8) {
+            return "Rogue";
+        } else if (random > 0.7) {
+            return "Warrior";
+        } else if (random > 0.5) {
+            return "Monk";
+        } else if (random > 0.3) {
+            return "Hunter";
+        } else {
+            return "Necromancer";
         }
     }
 }

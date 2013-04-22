@@ -11,6 +11,7 @@ public class ImageLoader {
     private static final ImageIcon MAP_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "map_graph.png"));
     private static final ImageIcon SCATTER_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "scatter_graph.png"));
     private static final ImageIcon APP_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "gde_icon.png"));
+    private static final ImageIcon REFRESH_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "refresh_icon_small.png"));
 
     public static String getResourceRoot() {
         return RESOURCE_ROOT;
@@ -38,5 +39,9 @@ public class ImageLoader {
 
     public static ImageIcon getMapIcon() {
         return MAP_ICON;
+    }
+
+    public static ImageIcon getRefreshIcon() {
+        return REFRESH_ICON;
     }
 }
