@@ -467,7 +467,6 @@ public class MainMenu extends javax.swing.JFrame {
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         ((InstanceTableModel) instanceTable.getModel()).populate();
         updateTabs();
-        
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void updateTabs() {
