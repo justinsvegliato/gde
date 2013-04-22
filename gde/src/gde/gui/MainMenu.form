@@ -146,7 +146,7 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedPane" max="32767" attributes="0"/>
+              <Component id="tabbedPane" pref="893" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
