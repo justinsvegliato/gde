@@ -24,6 +24,7 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
 
     @Override
     public void populate(String query) {
+        ids.clear();
         setRowCount(0);
         Iterable<CapturedData> capturedData = collection.find(query).as(CapturedData.class);
         for (final CapturedData capturedDatum : capturedData) {
