@@ -15,6 +15,7 @@ public class InstanceTableModel extends CollectionTableModel<Instance> {
 
     @Override
     public void populate(String query) {
+        ids.clear();
         setRowCount(0);
         Iterable<Instance> instances = collection.find(query).as(Instance.class);
         for (final Instance instance : instances) {

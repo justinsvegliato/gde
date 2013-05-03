@@ -8,15 +8,7 @@ import gde.models.Chart.ChartType;
 import static gde.models.Chart.ChartType.LINE;
 import gde.models.Field;
 import gde.models.Field.FieldType;
-import static gde.models.Field.FieldType.BOOLEAN;
-import static gde.models.Field.FieldType.DECIMAL;
-import static gde.models.Field.FieldType.INTEGER;
-import static gde.models.Field.FieldType.TEXT;
 import gde.models.Game;
-import gde.service.Listener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.bson.types.ObjectId;
@@ -182,7 +174,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
             Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            titleLabel.setText(editMode ? "Edit Chart" : "New Chart");
+            // TODO
+            titleLabel.setText("Edit Chart");
             yAxisComboBox.setSelectedItem(yAxisField);
             xAxisComboBox.setSelectedItem(xAxisField);
             if (changeChart) {

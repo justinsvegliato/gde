@@ -1,6 +1,6 @@
 package gde.gui.util;
 
-import gde.models.Chart;
+import gde.models.Chart.ChartType;
 import java.awt.Component;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,7 +26,7 @@ public class ChartTableCellRenderer extends DefaultTableCellRenderer {
         return label;
     }
 
-    private ImageIcon getIcon(Chart.ChartType type) {
+    private ImageIcon getIcon(ChartType type) {
         switch (type) {
             case PIE:
                 return ImageLoader.getPieIcon();

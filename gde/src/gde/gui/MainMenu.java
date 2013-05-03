@@ -3,6 +3,7 @@ package gde.gui;
 import gde.gui.util.JFreeChartFactory;
 import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
+import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
 import gde.gui.tablemodels.SummaryTableModel;
@@ -49,6 +50,10 @@ public class MainMenu extends javax.swing.JFrame {
 
         SummaryTableModel summaryTableModel = new SummaryTableModel(game);
         summaryTable.setModel(summaryTableModel);
+
+        FieldTableModel fieldTableModel = new FieldTableModel(game);
+        fieldTable.setModel(fieldTableModel);
+        fieldTableModel.populate();
     }
 
     /**
@@ -89,6 +94,12 @@ public class MainMenu extends javax.swing.JFrame {
         deleteChartButton = new javax.swing.JButton();
         editChartButton = new javax.swing.JButton();
         chartContainerPanel = new javax.swing.JPanel();
+        administrationContainerPanel = new javax.swing.JPanel();
+        administrationPanel = new javax.swing.JScrollPane();
+        fieldTable = new javax.swing.JTable();
+        createChartButton1 = new javax.swing.JButton();
+        editFieldButton = new javax.swing.JButton();
+        deleteFieldButton = new javax.swing.JButton();
         instanceScrollPane = new javax.swing.JScrollPane();
         instanceTable = new javax.swing.JTable();
         selectCheckBox = new javax.swing.JCheckBox();
@@ -158,7 +169,7 @@ public class MainMenu extends javax.swing.JFrame {
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
                 .addContainerGap())
         );
         summaryPanelLayout.setVerticalGroup(
@@ -172,9 +183,9 @@ public class MainMenu extends javax.swing.JFrame {
         summaryContainerPanel.setLayout(summaryContainerPanelLayout);
         summaryContainerPanelLayout.setHorizontalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 872, Short.MAX_VALUE)
+            .addGap(0, 948, Short.MAX_VALUE)
             .addGroup(summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE))
+                .addComponent(summaryPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
         );
         summaryContainerPanelLayout.setVerticalGroup(
             summaryContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,7 +212,7 @@ public class MainMenu extends javax.swing.JFrame {
             detailedAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(detailedAnalysisContainerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE)
+                .addComponent(detailedAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
                 .addContainerGap())
         );
         detailedAnalysisContainerPanelLayout.setVerticalGroup(
@@ -265,11 +276,11 @@ public class MainMenu extends javax.swing.JFrame {
         chartContainerPanel.setLayout(chartContainerPanelLayout);
         chartContainerPanelLayout.setHorizontalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 643, Short.MAX_VALUE)
+            .addGap(0, 719, Short.MAX_VALUE)
         );
         chartContainerPanelLayout.setVerticalGroup(
             chartContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 552, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout graphicalAnalysisPanelLayout = new javax.swing.GroupLayout(graphicalAnalysisPanel);
@@ -284,7 +295,7 @@ public class MainMenu extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addComponent(chartContainerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, graphicalAnalysisPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 484, Short.MAX_VALUE)
                         .addComponent(createChartButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(editChartButton)
@@ -311,7 +322,7 @@ public class MainMenu extends javax.swing.JFrame {
         graphicalAnalysisContainerPanel.setLayout(graphicalAnalysisContainerPanelLayout);
         graphicalAnalysisContainerPanelLayout.setHorizontalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 872, Short.MAX_VALUE)
+            .addComponent(graphicalAnalysisPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
         );
         graphicalAnalysisContainerPanelLayout.setVerticalGroup(
             graphicalAnalysisContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +330,74 @@ public class MainMenu extends javax.swing.JFrame {
         );
 
         tabbedPane.addTab("Graphical Analysis", graphicalAnalysisContainerPanel);
+
+        fieldTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        fieldTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fieldTableMouseClicked(evt);
+            }
+        });
+        administrationPanel.setViewportView(fieldTable);
+
+        createChartButton1.setText("Create");
+        createChartButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createChartButton1ActionPerformed(evt);
+            }
+        });
+
+        editFieldButton.setText("Edit");
+        editFieldButton.setEnabled(false);
+        editFieldButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editFieldButtonActionPerformed(evt);
+            }
+        });
+
+        deleteFieldButton.setText("Delete");
+        deleteFieldButton.setEnabled(false);
+        deleteFieldButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteFieldButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout administrationContainerPanelLayout = new javax.swing.GroupLayout(administrationContainerPanel);
+        administrationContainerPanel.setLayout(administrationContainerPanelLayout);
+        administrationContainerPanelLayout.setHorizontalGroup(
+            administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(administrationContainerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(administrationContainerPanelLayout.createSequentialGroup()
+                        .addComponent(createChartButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(editFieldButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteFieldButton))
+                    .addComponent(administrationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(514, Short.MAX_VALUE))
+        );
+        administrationContainerPanelLayout.setVerticalGroup(
+            administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(administrationContainerPanelLayout.createSequentialGroup()
+                .addComponent(administrationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteFieldButton)
+                    .addComponent(createChartButton1)
+                    .addComponent(editFieldButton))
+                .addContainerGap())
+        );
+
+        tabbedPane.addTab("Administration", administrationContainerPanel);
 
         instanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -393,20 +472,21 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(instanceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(selectCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(instanceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE))
+                .addComponent(tabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(instanceScrollPane)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
+                .addComponent(instanceScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(selectCheckBox)
                     .addComponent(refreshButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -484,7 +564,7 @@ public class MainMenu extends javax.swing.JFrame {
         ((InstanceTableModel) instanceTable.getModel()).populate();
         updateTabs();
         selectCheckBox.setSelected(false);
-        
+
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void logoutMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuButtonActionPerformed
@@ -495,8 +575,36 @@ public class MainMenu extends javax.swing.JFrame {
     private void refreshMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshMenuButtonActionPerformed
         ((InstanceTableModel) instanceTable.getModel()).populate();
         updateTabs();
-        selectCheckBox.setSelected(false);        
+        selectCheckBox.setSelected(false);
     }//GEN-LAST:event_refreshMenuButtonActionPerformed
+
+    private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
+        if (evt.getClickCount() == 2) {
+            new ManageFieldDialog(game, fieldTable, true).setVisible(true);
+        }
+        if (evt.getClickCount() >= 1) {
+            editFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
+            deleteFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
+        }
+    }//GEN-LAST:event_fieldTableMouseClicked
+
+    private void createChartButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButton1ActionPerformed
+        new ManageFieldDialog(game, fieldTable, false).setVisible(true);
+    }//GEN-LAST:event_createChartButton1ActionPerformed
+
+    private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
+        new ManageFieldDialog(game, fieldTable, true).setVisible(true);
+    }//GEN-LAST:event_editFieldButtonActionPerformed
+
+    private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field?", "Confirm Deletion",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());
+        }
+        deleteFieldButton.setEnabled(false);
+        editFieldButton.setEnabled(false);
+    }//GEN-LAST:event_deleteFieldButtonActionPerformed
 
     private void updateTabs() {
         updateTables();
@@ -533,17 +641,22 @@ public class MainMenu extends javax.swing.JFrame {
             chartContainerPanel.validate();
         }
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel administrationContainerPanel;
+    private javax.swing.JScrollPane administrationPanel;
     private javax.swing.JTable capturedDataTable;
     private javax.swing.JPanel chartContainerPanel;
     private javax.swing.JScrollPane chartScrollPane;
     private javax.swing.JTable chartTable;
     private javax.swing.JButton createChartButton;
+    private javax.swing.JButton createChartButton1;
     private javax.swing.JButton deleteChartButton;
+    private javax.swing.JButton deleteFieldButton;
     private javax.swing.JPanel detailedAnalysisContainerPanel;
     private javax.swing.JScrollPane detailedAnalysisPanel;
     private javax.swing.JButton editChartButton;
+    private javax.swing.JButton editFieldButton;
+    private javax.swing.JTable fieldTable;
     private javax.swing.JPanel graphicalAnalysisContainerPanel;
     private javax.swing.JPanel graphicalAnalysisPanel;
     private javax.swing.JScrollPane instanceScrollPane;

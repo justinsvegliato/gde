@@ -2,7 +2,6 @@ package gde.gui.util;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
-import com.mongodb.MongoOptions;
 import java.net.UnknownHostException;
 import org.jongo.Jongo;
 import org.slf4j.Logger;

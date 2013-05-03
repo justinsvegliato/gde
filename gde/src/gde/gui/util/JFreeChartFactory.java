@@ -44,6 +44,7 @@ import org.jfree.util.ShapeUtilities;
 public enum JFreeChartFactory {
 
     INSTANCE;
+    
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private static final MongoCollection capturedDataCollection = database.getCollection("captureddata");
     private static final MongoCollection fieldCollection = database.getCollection("fields");

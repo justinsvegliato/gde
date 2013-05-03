@@ -2,10 +2,7 @@ package gde.gui.tablemodels;
 
 import gde.gui.util.DatabaseHandler;
 import gde.models.Game;
-import java.util.LinkedList;
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
-import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 
 public abstract class TableModel extends DefaultTableModel {  

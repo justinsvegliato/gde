@@ -1,7 +1,6 @@
 package gde.gui.tablemodels;
 
 import gde.gui.util.ChartTableCellData;
-import gde.models.CapturedData;
 import gde.models.Chart;
 import gde.models.Game;
 import javax.swing.SwingUtilities;
