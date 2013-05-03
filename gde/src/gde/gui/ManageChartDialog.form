@@ -70,7 +70,7 @@
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="yAxisComboBox" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="yAxisComboBox" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="yAxisLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>

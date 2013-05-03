@@ -17,6 +17,7 @@ public class ChartTableModel extends CollectionTableModel<Chart> {
 
     @Override
     public void populate(String query) {
+        ids.clear();
         setRowCount(0);
         Iterable<Chart> charts = collection.find(query).as(Chart.class);
         for (final Chart chart : charts) {
