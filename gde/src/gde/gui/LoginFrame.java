@@ -39,6 +39,7 @@ public class LoginFrame extends javax.swing.JFrame {
         gameComboBox = new javax.swing.JComboBox();
         loginButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        registerButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
@@ -72,6 +73,13 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
+        registerButton.setText("Register");
+        registerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registerButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -90,6 +98,8 @@ public class LoginFrame extends javax.swing.JFrame {
                     .add(gameComboBox, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
+                .add(registerButton)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(loginButton)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(exitButton))
@@ -114,7 +124,8 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(exitButton)
-                    .add(loginButton))
+                    .add(loginButton)
+                    .add(registerButton))
                 .add(0, 0, 0))
         );
 
@@ -178,6 +189,10 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
+        
+    }//GEN-LAST:event_registerButtonActionPerformed
+
     private Developer getDeveloper(String username, String password) {
         MongoCollection developersCollection = database.getCollection("developers");
         String query = String.format("{username: '%s', password: '%s'}", username, password);
@@ -194,6 +209,7 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JPasswordField passwordTextField;
+    private javax.swing.JButton registerButton;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextField;
     // End of variables declaration//GEN-END:variables

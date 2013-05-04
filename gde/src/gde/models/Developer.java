@@ -7,6 +7,10 @@ package gde.models;
  * @author Justin Svegliato and Andrew Evans
  */
 public class Developer extends Entry {
+    
+    public enum AccountType {
+        DEVELOPER, ADMINISTRATOR;
+    }
 
     /** the first name of the developer */
     private String firstName;
@@ -22,6 +26,8 @@ public class Developer extends Entry {
     
     /** the password of the developer's username */
     private String password;
+    
+    private AccountType accountType;
 
     /**
      * Instantiates a newly-created Developer object.
@@ -38,12 +44,13 @@ public class Developer extends Entry {
      * @param username the username of the developer
      * @param password the password of the developer's username
      */
-    public Developer(String firstName, String lastName, String company, String username, String password) {
+    public Developer(String firstName, String lastName, String company, String username, String password, AccountType accountType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.company = company;
         this.username = username;
         this.password = password;
+        this.accountType = accountType;
     }
 
     /**
@@ -116,5 +123,13 @@ public class Developer extends Entry {
      */
     public void setUsername(String username) {
         this.username = username;
+    }
+    
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 }

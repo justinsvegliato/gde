@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The implementation of the Game data structure that will be used by
- * MongoDB as well as the application.
- * 
+ * The implementation of the Game data structure that will be used by MongoDB as
+ * well as the application.
+ *
  * @author Justin Svegliato and Andrew Evans
  */
 public class Game extends Entry {
 
-    /** the title of the game */
+    /**
+     * the title of the game
+     */
     private String title;
-    
-    /** the genre of the game */
+    /**
+     * the genre of the game
+     */
     private String genre;
-    
-    /** the ids of the associated games */
+    /**
+     * the ids of the associated games
+     */
     private List<String> developerIds = new ArrayList<String>();
 
     /**
@@ -28,7 +32,7 @@ public class Game extends Entry {
 
     /**
      * Instantiates a newly-created Game object.
-     * 
+     *
      * @param title the title of the game
      * @param genre the genre of the game
      * @param developerIds the ids of the associated developers
@@ -41,7 +45,7 @@ public class Game extends Entry {
 
     /**
      * Gets the title of the game.
-     * 
+     *
      * @return the title of the game
      */
     public String getTitle() {
@@ -50,7 +54,7 @@ public class Game extends Entry {
 
     /**
      * Sets the title of the game.
-     * 
+     *
      * @param title the title of the game
      */
     public void setTitle(String title) {
@@ -59,7 +63,7 @@ public class Game extends Entry {
 
     /**
      * Gets the genre of the game.
-     * 
+     *
      * @return the genre of the game
      */
     public String getGenre() {
@@ -68,17 +72,23 @@ public class Game extends Entry {
 
     /**
      * Sets the genre of the game.
-     * 
+     *
      * @param genre the genre of the game
      */
     public void setGenre(String genre) {
         this.genre = genre;
     }
-    
+
+    public List<String> getDeveloperIds() {
+        return developerIds;
+    }
+
+    public void setDeveloperIds(List<String> developerIds) {
+        this.developerIds = developerIds;
+    }
+
     @Override
     public String toString() {
         return title;
     }
-    
-    
 }

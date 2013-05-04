@@ -1,7 +1,6 @@
 package gde.gui;
 
 import gde.gui.tablemodels.FieldTableModel;
-import gde.gui.tablemodels.InstanceTableModel;
 import gde.gui.util.ImageLoader;
 import gde.models.Field;
 import gde.models.Field.FieldType;
@@ -43,6 +42,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         nameTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setModal(true);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         titleLabel.setText("New Field");
@@ -115,7 +115,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         if (editMode) {
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
             Field field = fieldTableModel.getEntryAt(fieldTable.getSelectedRow());
-            titleLabel.setText("Edit Chart");
+            titleLabel.setText("Edit Field");
             nameTextField.setText(field.getName());
             typeComboBox.setSelectedItem(field.getType());
         }
@@ -140,7 +140,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (editMode) {
-            int response = JOptionPane.showConfirmDialog(null, "Are you sure you want cancel your changes?", "Confirm Cancellation",
+            int response = JOptionPane.showConfirmDialog(this, "Are you sure you want cancel your changes?", "Confirm Cancellation",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
                 this.setVisible(false);

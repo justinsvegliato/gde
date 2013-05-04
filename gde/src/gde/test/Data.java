@@ -5,6 +5,7 @@ import com.mongodb.Mongo;
 import gde.service.RequestHandler;
 import gde.models.CapturedData;
 import gde.models.Developer;
+import gde.models.Developer.AccountType;
 import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
@@ -47,10 +48,17 @@ public class Data {
         fieldsCollection.drop();
         capturedDataCollection.drop();
 
-        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "developer", "password");
+        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "a", "a", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);
         List<String> developers = new LinkedList<String>();
         developers.add(developer.getKey().toString());
+        
+        developer = new Developer("justin", "svegliato", "Svegabytes", "b", "b", AccountType.DEVELOPER);
+        developersCollection.save(developer);
+        developer = new Developer("justin", "svegliato", "Svegabytes", "c", "c", AccountType.DEVELOPER);
+        developersCollection.save(developer);
+        
+
 
         Game game = new Game("Diablo 2", "ARPG", developers);
         gamesCollection.save(game);

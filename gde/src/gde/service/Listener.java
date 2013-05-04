@@ -41,7 +41,6 @@ public final class Listener {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(LOCAL_PORT);
-            //serverSocket = new ServerSocket(LOCAL_PORT, -1, InetAddress.getByName("10.0.0.3"));
             LOGGER.debug("Opened ServerSocket on port [" + LOCAL_PORT + "]");
         } catch (IOException ioe) {
             LOGGER.error("Failed to open ServerSocket on port [" + LOCAL_PORT + "]", ioe);

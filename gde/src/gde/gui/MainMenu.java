@@ -3,7 +3,6 @@ package gde.gui;
 import gde.gui.util.JFreeChartFactory;
 import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
-import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
 import gde.gui.tablemodels.SummaryTableModel;
@@ -50,10 +49,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         SummaryTableModel summaryTableModel = new SummaryTableModel(game);
         summaryTable.setModel(summaryTableModel);
-
-        FieldTableModel fieldTableModel = new FieldTableModel(game);
-        fieldTable.setModel(fieldTableModel);
-        fieldTableModel.populate();
     }
 
     /**
@@ -65,19 +60,6 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menuBar1 = new java.awt.MenuBar();
-        menu1 = new java.awt.Menu();
-        menu2 = new java.awt.Menu();
-        menuBar2 = new java.awt.MenuBar();
-        menu3 = new java.awt.Menu();
-        menu4 = new java.awt.Menu();
-        menuBar3 = new java.awt.MenuBar();
-        menu5 = new java.awt.Menu();
-        menu6 = new java.awt.Menu();
-        menuBar4 = new java.awt.MenuBar();
-        menu7 = new java.awt.Menu();
-        menu8 = new java.awt.Menu();
-        jPanel3 = new javax.swing.JPanel();
         tabbedPane = new javax.swing.JTabbedPane();
         summaryContainerPanel = new javax.swing.JPanel();
         summaryPanel = new javax.swing.JPanel();
@@ -94,57 +76,17 @@ public class MainMenu extends javax.swing.JFrame {
         deleteChartButton = new javax.swing.JButton();
         editChartButton = new javax.swing.JButton();
         chartContainerPanel = new javax.swing.JPanel();
-        administrationContainerPanel = new javax.swing.JPanel();
-        administrationPanel = new javax.swing.JScrollPane();
-        fieldTable = new javax.swing.JTable();
-        createChartButton1 = new javax.swing.JButton();
-        editFieldButton = new javax.swing.JButton();
-        deleteFieldButton = new javax.swing.JButton();
         instanceScrollPane = new javax.swing.JScrollPane();
         instanceTable = new javax.swing.JTable();
         selectCheckBox = new javax.swing.JCheckBox();
         refreshButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        menu = new javax.swing.JMenu();
+        fileMenu = new javax.swing.JMenu();
         refreshMenuButton = new javax.swing.JMenuItem();
         logoutMenuButton = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-
-        menu1.setLabel("File");
-        menuBar1.add(menu1);
-
-        menu2.setLabel("Edit");
-        menuBar1.add(menu2);
-
-        menu3.setLabel("File");
-        menuBar2.add(menu3);
-
-        menu4.setLabel("Edit");
-        menuBar2.add(menu4);
-
-        menu5.setLabel("File");
-        menuBar3.add(menu5);
-
-        menu6.setLabel("Edit");
-        menuBar3.add(menu6);
-
-        menu7.setLabel("File");
-        menuBar4.add(menu7);
-
-        menu8.setLabel("Edit");
-        menuBar4.add(menu8);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 775, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
-        );
+        adminMenu = new javax.swing.JMenu();
+        configureMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Game Diagnostics Engine");
@@ -331,74 +273,6 @@ public class MainMenu extends javax.swing.JFrame {
 
         tabbedPane.addTab("Graphical Analysis", graphicalAnalysisContainerPanel);
 
-        fieldTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
-        fieldTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fieldTableMouseClicked(evt);
-            }
-        });
-        administrationPanel.setViewportView(fieldTable);
-
-        createChartButton1.setText("Create");
-        createChartButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                createChartButton1ActionPerformed(evt);
-            }
-        });
-
-        editFieldButton.setText("Edit");
-        editFieldButton.setEnabled(false);
-        editFieldButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editFieldButtonActionPerformed(evt);
-            }
-        });
-
-        deleteFieldButton.setText("Delete");
-        deleteFieldButton.setEnabled(false);
-        deleteFieldButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteFieldButtonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout administrationContainerPanelLayout = new javax.swing.GroupLayout(administrationContainerPanel);
-        administrationContainerPanel.setLayout(administrationContainerPanelLayout);
-        administrationContainerPanelLayout.setHorizontalGroup(
-            administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(administrationContainerPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(administrationContainerPanelLayout.createSequentialGroup()
-                        .addComponent(createChartButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(editFieldButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(deleteFieldButton))
-                    .addComponent(administrationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(514, Short.MAX_VALUE))
-        );
-        administrationContainerPanelLayout.setVerticalGroup(
-            administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(administrationContainerPanelLayout.createSequentialGroup()
-                .addComponent(administrationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(administrationContainerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteFieldButton)
-                    .addComponent(createChartButton1)
-                    .addComponent(editFieldButton))
-                .addContainerGap())
-        );
-
-        tabbedPane.addTab("Administration", administrationContainerPanel);
-
         instanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -437,7 +311,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        menu.setText("File");
+        fileMenu.setText("File");
 
         refreshMenuButton.setText("Refresh");
         refreshMenuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -445,7 +319,7 @@ public class MainMenu extends javax.swing.JFrame {
                 refreshMenuButtonActionPerformed(evt);
             }
         });
-        menu.add(refreshMenuButton);
+        fileMenu.add(refreshMenuButton);
 
         logoutMenuButton.setText("Logout");
         logoutMenuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -453,15 +327,24 @@ public class MainMenu extends javax.swing.JFrame {
                 logoutMenuButtonActionPerformed(evt);
             }
         });
-        menu.add(logoutMenuButton);
+        fileMenu.add(logoutMenuButton);
 
-        menuBar.add(menu);
+        menuBar.add(fileMenu);
 
-        jMenu2.setText("Edit");
-        menuBar.add(jMenu2);
+        adminMenu.setText("Admin");
 
-        jMenu3.setText("Help");
-        menuBar.add(jMenu3);
+        configureMenuItem.setText("Configure");
+        configureMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                configureMenuItemActionPerformed(evt);
+            }
+        });
+        adminMenu.add(configureMenuItem);
+
+        menuBar.add(adminMenu);
+
+        helpMenu.setText("Help");
+        menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
 
@@ -538,11 +421,9 @@ public class MainMenu extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             new ManageChartDialog(game, chartTable, true).setVisible(true);
         }
-        if (evt.getClickCount() >= 1) {
-            updateChart();
-            editChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
-            deleteChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
-        }
+        updateChart();
+        editChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
+        deleteChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
     }//GEN-LAST:event_chartTableMouseClicked
 
     private void instanceTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_instanceTableKeyReleased
@@ -578,33 +459,9 @@ public class MainMenu extends javax.swing.JFrame {
         selectCheckBox.setSelected(false);
     }//GEN-LAST:event_refreshMenuButtonActionPerformed
 
-    private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
-        if (evt.getClickCount() == 2) {
-            new ManageFieldDialog(game, fieldTable, true).setVisible(true);
-        }
-        if (evt.getClickCount() >= 1) {
-            editFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
-            deleteFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
-        }
-    }//GEN-LAST:event_fieldTableMouseClicked
-
-    private void createChartButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButton1ActionPerformed
-        new ManageFieldDialog(game, fieldTable, false).setVisible(true);
-    }//GEN-LAST:event_createChartButton1ActionPerformed
-
-    private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
-        new ManageFieldDialog(game, fieldTable, true).setVisible(true);
-    }//GEN-LAST:event_editFieldButtonActionPerformed
-
-    private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field?", "Confirm Deletion",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());
-        }
-        deleteFieldButton.setEnabled(false);
-        editFieldButton.setEnabled(false);
-    }//GEN-LAST:event_deleteFieldButtonActionPerformed
+    private void configureMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureMenuItemActionPerformed
+        new ConfigurationDialog(game).setVisible(true);
+    }//GEN-LAST:event_configureMenuItemActionPerformed
 
     private void updateTabs() {
         updateTables();
@@ -642,43 +499,25 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel administrationContainerPanel;
-    private javax.swing.JScrollPane administrationPanel;
+    private javax.swing.JMenu adminMenu;
     private javax.swing.JTable capturedDataTable;
     private javax.swing.JPanel chartContainerPanel;
     private javax.swing.JScrollPane chartScrollPane;
     private javax.swing.JTable chartTable;
+    private javax.swing.JMenuItem configureMenuItem;
     private javax.swing.JButton createChartButton;
-    private javax.swing.JButton createChartButton1;
     private javax.swing.JButton deleteChartButton;
-    private javax.swing.JButton deleteFieldButton;
     private javax.swing.JPanel detailedAnalysisContainerPanel;
     private javax.swing.JScrollPane detailedAnalysisPanel;
     private javax.swing.JButton editChartButton;
-    private javax.swing.JButton editFieldButton;
-    private javax.swing.JTable fieldTable;
+    private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel graphicalAnalysisContainerPanel;
     private javax.swing.JPanel graphicalAnalysisPanel;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JScrollPane instanceScrollPane;
     private javax.swing.JTable instanceTable;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JMenuItem logoutMenuButton;
-    private javax.swing.JMenu menu;
-    private java.awt.Menu menu1;
-    private java.awt.Menu menu2;
-    private java.awt.Menu menu3;
-    private java.awt.Menu menu4;
-    private java.awt.Menu menu5;
-    private java.awt.Menu menu6;
-    private java.awt.Menu menu7;
-    private java.awt.Menu menu8;
     private javax.swing.JMenuBar menuBar;
-    private java.awt.MenuBar menuBar1;
-    private java.awt.MenuBar menuBar2;
-    private java.awt.MenuBar menuBar3;
-    private java.awt.MenuBar menuBar4;
     private javax.swing.JButton refreshButton;
     private javax.swing.JMenuItem refreshMenuButton;
     private javax.swing.JCheckBox selectCheckBox;

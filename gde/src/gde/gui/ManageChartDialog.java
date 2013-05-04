@@ -174,7 +174,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
             Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            // TODO
             titleLabel.setText("Edit Chart");
             yAxisComboBox.setSelectedItem(yAxisField);
             xAxisComboBox.setSelectedItem(xAxisField);
