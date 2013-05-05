@@ -3,6 +3,7 @@ package gde.gui;
 import gde.gui.tablemodels.DeveloperTableModel;
 import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.DatabaseHandler;
+import gde.gui.util.ImageLoader;
 import gde.models.Developer;
 import gde.models.Developer.AccountType;
 import gde.models.Game;
@@ -17,6 +18,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     public ConfigurationDialog(Game game) {
         initComponents();
+        setIconImage(ImageLoader.getAppIcon().getImage());
 
         this.game = game;
 
@@ -47,6 +49,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         removeDeveloperButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Admin Configuration");
         setModal(true);
         setResizable(false);
 
@@ -96,7 +99,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(administrationScrollPane)
+                    .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, fieldPanelLayout.createSequentialGroup()
                         .add(0, 0, Short.MAX_VALUE)
                         .add(createFieldButton)
@@ -110,7 +113,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(editFieldButton)
@@ -169,7 +172,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)
