@@ -43,6 +43,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
+        setResizable(false);
 
         titleLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         titleLabel.setText("New Field");
@@ -122,7 +123,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
     }
     
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        this.setVisible(false);
+        dispose();
         
         Field newField = new Field(
                 nameTextField.getText(),
@@ -143,11 +144,10 @@ public class ManageFieldDialog extends javax.swing.JDialog {
             int response = JOptionPane.showConfirmDialog(this, "Are you sure you want cancel your changes?", "Confirm Cancellation",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                this.setVisible(false);
+                dispose();
             }
-        } else {
-            this.setVisible(false);
-        }
+        } 
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;

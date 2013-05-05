@@ -24,8 +24,9 @@ public class MainMenu extends javax.swing.JFrame {
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
 
-    public MainMenu(Game game) {
+    public MainMenu(Game game, boolean isAdmin) {
         this.game = game;
+        
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         refreshButton.setIcon(ImageLoader.getRefreshIcon());
@@ -49,6 +50,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         SummaryTableModel summaryTableModel = new SummaryTableModel(game);
         summaryTable.setModel(summaryTableModel);
+        
+        adminMenu.setVisible(isAdmin);
     }
 
     /**
@@ -449,7 +452,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void logoutMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuButtonActionPerformed
-        this.setVisible(false);
+        dispose();
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_logoutMenuButtonActionPerformed
 

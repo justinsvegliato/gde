@@ -20,6 +20,7 @@ public class InstanceTableModel extends CollectionTableModel<Instance> {
         Iterable<Instance> instances = collection.find(query).as(Instance.class);
         for (final Instance instance : instances) {
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     addRow(instance);
                 }

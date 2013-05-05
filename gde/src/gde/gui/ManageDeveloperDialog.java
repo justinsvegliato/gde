@@ -47,6 +47,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
+        setResizable(false);
 
         unassociatedDeveloperTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -104,7 +105,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
-        this.setVisible(false);
+        dispose();
         
         DeveloperTableModel developerTableModel = (DeveloperTableModel) unassociatedDeveloperTable.getModel();
         List<String> developerIds = game.getDeveloperIds();
@@ -127,11 +128,10 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
             int response = JOptionPane.showConfirmDialog(this, "Are you sure you want cancel your changes?", "Confirm Cancellation",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {
-                this.setVisible(false);
+                dispose();
             }
-        } else {
-            this.setVisible(false);
         }
+        dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
