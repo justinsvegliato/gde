@@ -1,12 +1,17 @@
 package gde.gui;
 
+import com.mongodb.WriteResult;
 import gde.gui.tablemodels.FieldTableModel;
+import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
 import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
+import gde.models.Instance;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import org.jongo.Find;
+import org.jongo.MongoCollection;
 
 public class ManageFieldDialog extends javax.swing.JDialog {
 
@@ -25,7 +30,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         for (FieldType type : Field.FieldType.values()) {
             typeComboBox.addItem(type);
         }
-        
+
         fillSelections(editMode);
     }
 
@@ -121,22 +126,36 @@ public class ManageFieldDialog extends javax.swing.JDialog {
             typeComboBox.setSelectedItem(field.getType());
         }
     }
-    
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        dispose();
-        
-        Field newField = new Field(
-                nameTextField.getText(),
-                (FieldType) typeComboBox.getSelectedItem(),
-                game.getKey().toString());
 
-        FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
-        if (editMode) {
-            fieldTableModel.update(newField, fieldTable.getSelectedRow());
-        } else {
-            fieldTableModel.add(newField);
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        String message = String.format("Are you sure to %s this field? Doing so will erase all data.", editMode ? "edit" : "create");
+        int response = JOptionPane.showConfirmDialog(this, message, "Confirm Cancellation",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (response == JOptionPane.YES_OPTION) {
+            dispose();
+            
+            MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
+            String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
+            Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
+            MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
+            for (Instance instance : instances) { 
+                String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
+                System.out.println(instanceQuery);
+                capturedDataCollection.remove(instanceQuery);
+            }
+
+            Field newField = new Field(
+                    nameTextField.getText(),
+                    (FieldType) typeComboBox.getSelectedItem(),
+                    game.getKey().toString());
+
+            FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
+            if (editMode) {
+                fieldTableModel.update(newField, fieldTable.getSelectedRow());
+            } else {
+                fieldTableModel.add(newField);
+            }
         }
-        
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -146,7 +165,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
             if (response == JOptionPane.YES_OPTION) {
                 dispose();
             }
-        } 
+        }
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables

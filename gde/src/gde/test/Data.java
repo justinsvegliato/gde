@@ -57,6 +57,8 @@ public class Data {
         developersCollection.save(developer);
         developer = new Developer("justin", "svegliato", "Svegabytes", "c", "c", AccountType.DEVELOPER);
         developersCollection.save(developer);
+        developer = new Developer("justin", "svegliato", "Svegabytes", "admin", "b", AccountType.ADMINISTRATOR);
+        developersCollection.save(developer);
         
 
 
