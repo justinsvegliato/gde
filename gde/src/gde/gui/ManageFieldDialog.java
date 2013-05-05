@@ -55,7 +55,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
         nameLabel.setText("Name");
 
-        typeLabel.setText("Vertical Axis");
+        typeLabel.setText("Type");
 
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {

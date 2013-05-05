@@ -100,7 +100,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="typeLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Vertical Axis"/>
+        <Property name="text" type="java.lang.String" value="Type"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="saveButton">
