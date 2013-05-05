@@ -118,7 +118,6 @@ public class AccountCreationDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
-        setPreferredSize(new java.awt.Dimension(330, 237));
         setResizable(false);
 
         registerLabel.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N

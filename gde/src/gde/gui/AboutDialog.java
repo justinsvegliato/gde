@@ -19,8 +19,11 @@ public class AboutDialog extends javax.swing.JDialog {
         super();
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        setLocationRelativeTo(null);
         
-        //aboutLabel.setText("Version 0.6\n\n\nwww.gamediagnostics.net\n\nCopyright 2013 [company name that isn't svegabytes =P]");
+        aboutLabel.setText("<html><center>Version 0.6<br><br><br>"
+                + "www.gamediagnostics.net<br>" 
+                + "Copyright 2013 [company name that isn't svegabytes =P]</center></html>");
     }
 
     /**
@@ -34,6 +37,8 @@ public class AboutDialog extends javax.swing.JDialog {
 
         logoLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
+        aboutLabel = new javax.swing.JLabel();
+        returnButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setModal(true);
@@ -45,14 +50,32 @@ public class AboutDialog extends javax.swing.JDialog {
         nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nameLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gde/resources/title_text.png"))); // NOI18N
 
+        aboutLabel.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+        aboutLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        aboutLabel.setText(org.openide.util.NbBundle.getMessage(AboutDialog.class, "AboutDialog.aboutLabel.text")); // NOI18N
+        aboutLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        returnButton.setText(org.openide.util.NbBundle.getMessage(AboutDialog.class, "AboutDialog.returnButton.text")); // NOI18N
+        returnButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returnButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(aboutLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(195, 195, 195)
+                .addComponent(returnButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -64,20 +87,30 @@ public class AboutDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(logoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(239, Short.MAX_VALUE))
+                .addGap(52, 52, 52)
+                .addComponent(aboutLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(returnButton)
+                .addContainerGap(18, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(195, 195, 195)
                     .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(212, Short.MAX_VALUE)))
+                    .addContainerGap(192, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_returnButtonActionPerformed
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel aboutLabel;
     private javax.swing.JLabel logoLabel;
     private javax.swing.JLabel nameLabel;
+    private javax.swing.JButton returnButton;
     // End of variables declaration//GEN-END:variables
 }
