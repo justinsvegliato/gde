@@ -20,12 +20,26 @@ import org.jongo.MongoCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The Data class merely serves to persist data to the database in order to ensure
+ * that the GUI application is working properly.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class Data {
 
+    /** the Logger object using for logging purposes */
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
+    
+    /** the name of the database to be connected to */
     private static final String DATABASE = "gde";
+    
+    /** the Jongo object which enables easy interaction with the database */
     private static Jongo jongo;
 
+    /** a static initializer that creates the database and thereafter instantiates
+     * the Jongo object.
+     */
     static {
         try {
             DB db = new Mongo().getDB(DATABASE);
@@ -36,6 +50,10 @@ public class Data {
         }
     }
 
+    /** 
+     * Drops all of the collections in the database and then persists random data
+     * for testing purposes.
+     */
     public static void main(String[] args) {
         MongoCollection developersCollection = jongo.getCollection("developers");
         MongoCollection gamesCollection = jongo.getCollection("games");
@@ -110,6 +128,12 @@ public class Data {
         }
     }
 
+    
+    /**
+     * Gets a random race name.
+     * 
+     * @return a random race name.
+     */
     private static String getRaceName() {
         double random = Math.random();
         if (random > 0.9) {
@@ -125,6 +149,11 @@ public class Data {
         }
     }
 
+    /**
+     * Gets a random class name.
+     * 
+     * @return a random class name.
+     */
     private static String getClassName() {
         double random = Math.random();
         if (random > 0.8) {

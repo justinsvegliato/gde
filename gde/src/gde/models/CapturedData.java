@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The implementation of the CapturedData data structure that will be used by
+ * The implementation of the CapturedData data structure that is used by
  * MongoDB as well as the application.
  *
  * @author Justin Svegliato and Andrew Evans

@@ -1,16 +1,14 @@
 package gde.models;
 
 /**
- * The implementation of the Field data structure that will be used by MongoDB
+ * The implementation of the Field data structure that is used by MongoDB
  * as well as the application.
  *
  * @author Justin Svegliato and Andrew Evans
  */
 public class Field extends Entry {
 
-    /**
-     * an enumerated field containing the types supported by the system
-     */
+    /** an enumerated field containing the types supported by the system */
     public enum FieldType {
 
         INTEGER,
@@ -23,17 +21,14 @@ public class Field extends Entry {
             return name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
         }
     }
-    /**
-     * the name of the field
-     */
+    
+    /** the name of the field */
     private String name;
-    /**
-     * the type of the field
-     */
+    
+    /** the type of the field */
     private FieldType type;
-    /**
-     * the id of the associated game
-     */
+    
+    /** the id of the associated game */
     private String gameId;
 
     /**
@@ -109,11 +104,24 @@ public class Field extends Entry {
         this.gameId = gameId;
     }
 
+    /**
+     * Gets the string representation, specifically the name, of the field.
+     * 
+     * @return the string representation, specifically the name, of the field
+     */
     @Override
     public String toString() {
         return name;
     }
-
+    
+    /**
+     * Returns true if the objects have the same exact values for the fields,
+     * otherwise false.
+     * 
+     * @param obj the object to be compared
+     * @return true if the objects have the same exact values for the fields,
+     * otherwise false.
+     */
     @Override
     public boolean equals(Object obj) {
         if ((obj == null) || (getClass() != obj.getClass())) {
@@ -124,6 +132,11 @@ public class Field extends Entry {
         return this.name.equals(other.name) && (this.type == other.type) && this.gameId.equals(other.gameId);
     }
 
+    /**
+     * Returns an unique identifier for this field based on the field members.
+     * 
+     * @return an unique identifier for this field based on the field members.
+     */
     @Override
     public int hashCode() {
         int hash = 5;

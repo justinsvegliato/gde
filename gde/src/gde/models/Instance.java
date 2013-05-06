@@ -1,7 +1,7 @@
 package gde.models;
 
 /**
- * The implementation of the Instance data structure that will be used by
+ * The implementation of the Instance data structure that is used by
  * MongoDB as well as the application.
  *
  * @author Justin Svegliato and Andrew Evans
@@ -14,9 +14,7 @@ public class Instance extends Entry {
     /** the id of the associated game */
     private String gameId;
 
-    /**
-     * Instantiates the newly-created Instance object.
-     */
+    /** Instantiates the newly-created Instance object. */
     public Instance() {
     }
 

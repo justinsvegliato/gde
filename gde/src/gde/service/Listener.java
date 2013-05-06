@@ -12,9 +12,18 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Listens on the specified port for connections from the game client. Upon 
+ * receiving a request, it sends the data to a handler object.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public final class Listener {
 
+    /** the object that will be used for logging purposes */
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
+    
+    /** the port that the application will listen on */
     private static final int LOCAL_PORT = 8746;
 
 //    static {
@@ -30,13 +39,22 @@ public final class Listener {
 //        }
 //    }
     
+    /** 
+     * Prevents the creation of an instance of this object.
+     */
     private Listener() {
+        throw new AssertionError();
     }
 
     public static void main(String[] args) {
         listen();
     }
 
+    /**
+     * Listens for an incoming connection from a game client. Upon opening up a 
+     * connection and subsequently receiving a request, the request is then sent
+     * to a handler object.
+     */
     private static void listen() {
         ServerSocket serverSocket = null;
         try {

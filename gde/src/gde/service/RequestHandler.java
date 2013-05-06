@@ -14,12 +14,28 @@ import org.jongo.MongoCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The RequestHandler receives requests and subsequently handles the request
+ * accordingly by persisting the data to the database and creating the associated
+ * instance if it does not yet exist.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class RequestHandler {
 
+    /** the Logger object that will be used for logging purposes */
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandler.class);
+    
+    /** the database the request handler to which will be wrote */
     private static final String DATABASE = "gde";
+    
+    /** an Jongo object that will be used to persist data */
     private static Jongo jongo;
 
+    /** 
+     * A static initializer that will create the database and subsequently 
+     * instantiate the Jongo object.
+     */
     static {
         try {
             DB db = new Mongo().getDB(DATABASE);
@@ -30,9 +46,18 @@ public class RequestHandler {
         }
     }
 
+    /**
+     * Creates a newly-instantiated RequestHandler object.
+     */
     RequestHandler() {
     }
     
+    /**
+     * Handles a request by creating an instance if it does not yet exist and 
+     * thereafter persisting the frame data associated with this instance to the database.
+     * 
+     * @param clientRequest the request to be handled.
+     */
     public void handleRequest(String clientRequest) {
         try {
             ObjectMapper mapper = new ObjectMapper();

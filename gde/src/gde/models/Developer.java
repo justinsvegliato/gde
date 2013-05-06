@@ -1,13 +1,14 @@
 package gde.models;
 
 /**
- * The implementation of the Developer data structure that will be used by
+ * The implementation of the Developer data structure that is used by
  * MongoDB as well as the application.
  * 
  * @author Justin Svegliato and Andrew Evans
  */
 public class Developer extends Entry {
     
+    /** the available account types */
     public enum AccountType {
         DEVELOPER, ADMINISTRATOR;
     }
@@ -125,10 +126,20 @@ public class Developer extends Entry {
         this.username = username;
     }
     
+    /** 
+     * Gets the account type of the developer.
+     * 
+     * @return the account type of the developer
+     */
     public AccountType getAccountType() {
         return accountType;
     }
 
+    /** 
+     * Sets the accounts type of the developer.
+     * 
+     * @param accountType the account type of the developer
+     */
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
     }

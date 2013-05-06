@@ -4,24 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The implementation of the Game data structure that will be used by MongoDB as
+ * The implementation of the Game data structure that is used by MongoDB as
  * well as the application.
  *
  * @author Justin Svegliato and Andrew Evans
  */
 public class Game extends Entry {
 
-    /**
-     * the title of the game
-     */
+    /** the title of the game */
     private String title;
-    /**
-     * the genre of the game
-     */
+    
+    /** the genre of the game */
     private String genre;
-    /**
-     * the ids of the associated games
-     */
+    
+    /** the ids of the associated games */
     private List<String> developerIds = new ArrayList<String>();
 
     /**
@@ -79,14 +75,29 @@ public class Game extends Entry {
         this.genre = genre;
     }
 
+    /**
+     * Gets the ids of the developer associated with the game.
+     * 
+     * @return the ids of the developer associated with the game
+     */
     public List<String> getDeveloperIds() {
         return developerIds;
     }
 
+    /**
+     * Sets the ids of the developers associated with the game.
+     * 
+     * @param developerIds the ids of the developers associated with the game
+     */
     public void setDeveloperIds(List<String> developerIds) {
         this.developerIds = developerIds;
     }
 
+    /**
+     * Gets the string representation, namely the title, of the game.
+     * 
+     * @return the string representation, namely the title, of the game
+     */
     @Override
     public String toString() {
         return title;

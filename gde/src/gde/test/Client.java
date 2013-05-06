@@ -3,24 +3,22 @@ package gde.test;
 import java.io.*;
 import java.net.*;
 
+/**
+ * The Client class merely serves to test the functionality of the Listener class.
+ * It essentially creates a connection with the Listener object and thereafter 
+ * sends requests.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class Client {
 
+    /**
+     * Checks if the Listener object is working properly by instantiating a
+     * connection and then sending a single request.
+     */
     public static void main(String[] args) throws IOException {
-        Socket socket = null;
-        PrintWriter out = null;
-
-//        try {
-//
-//
-//        } catch (UnknownHostException e) {
-//            System.err.println("Could not find host");
-//            System.exit(1);
-//        } catch (IOException e) {
-//            System.err.println("Could not retrieve output stream from socket");
-//            System.exit(1);
-//        }
-
-
+        Socket socket;
+        PrintWriter out;
         for (int i = 0; i < 2; i++) {
             socket = new Socket("10.10.58.192", 8746);
             out = new PrintWriter(socket.getOutputStream(), true);

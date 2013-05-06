@@ -8,14 +8,29 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * A utility class that provides an interface which allows for the destruction
+ * of various resources.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class SocketUtils {
 
+    /** the object that will be used for logging purposes */
     private static final Logger LOGGER = LoggerFactory.getLogger(SocketUtils.class);
 
+    /** 
+     * Prevents the creation of an instance of this object.
+     */
     private SocketUtils() {
         throw new AssertionError();
     }
 
+    /**
+     * Closes a server socket.
+     * 
+     * @param serverSocket the server socket to be closed
+     */
     public static void close(ServerSocket serverSocket) {
         try {
             if (serverSocket != null && !serverSocket.isClosed()) {
@@ -28,6 +43,11 @@ public class SocketUtils {
         }
     }
 
+    /**
+     * Closes a client socket.
+     * 
+     * @param socket the client socket to be closed
+     */
     public static void close(Socket socket) {
         try {
             if (socket != null && !socket.isClosed()) {
@@ -40,6 +60,11 @@ public class SocketUtils {
         }
     }
 
+    /**
+     * Closes an input stream.
+     * 
+     * @param inputStream the input stream to be closed
+     */
     public static void close(InputStream inputStream) {
         try {
             if (inputStream != null) {
@@ -51,7 +76,12 @@ public class SocketUtils {
             LOGGER.debug("IOException encountered while trying to close the InputStream", ioe);
         }
     }
-
+    
+    /**
+     * Closes a buffered reader.
+     * 
+     * @param bufferedReader the buffered reader to be closed
+     */
     public static void close(BufferedReader bufferedReader) {
         try {
             if (bufferedReader != null) {
