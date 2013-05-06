@@ -18,6 +18,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
 public class MainMenu extends javax.swing.JFrame {
 
@@ -552,8 +553,15 @@ public class MainMenu extends javax.swing.JFrame {
     }
     
     private void updateSummaryLabels() {
-        fieldCountLabel.setText("" + summaryTable.getRowCount());
-        instanceCountLabel.setText("" + instanceTable.getRowCount());
+        MongoCollection fieldCollection = database.getCollection("fields");
+        MongoCollection instanceCollection = database.getCollection("instances");
+        
+        String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
+        long friendCount = fieldCollection.count(gameQuery);
+        long instanceCount = instanceCollection.count(gameQuery);
+        
+        fieldCountLabel.setText("" + friendCount);
+        instanceCountLabel.setText("" + instanceCount);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
