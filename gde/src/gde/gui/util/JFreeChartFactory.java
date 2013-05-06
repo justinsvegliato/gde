@@ -92,12 +92,14 @@ public enum JFreeChartFactory {
         for (int i : selectedRows) {
             Instance instance = model.getEntryAt(i);
             String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
-            CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
-            String stat = capturedData.getData().get(field.getName().toLowerCase());
-            if (keyedValues.getKeys().contains(stat)) {
-                keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
-            } else {
-                keyedValues.setValue(stat, 1);
+            if (capturedDataCollection.count(query) > 0) {
+                CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
+                String stat = capturedData.getData().get(field.getName().toLowerCase());
+                if (keyedValues.getKeys().contains(stat)) {
+                    keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
+                } else {
+                    keyedValues.setValue(stat, 1);
+                }
             }
         }
 

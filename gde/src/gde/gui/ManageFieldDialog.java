@@ -139,8 +139,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
             MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
             for (Instance instance : instances) { 
-                String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                System.out.println(instanceQuery);
+                String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());                
                 capturedDataCollection.remove(instanceQuery);
             }
 

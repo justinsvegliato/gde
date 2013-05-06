@@ -252,7 +252,6 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
             for (Instance instance : instances) { 
                 String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                System.out.println(instanceQuery);
                 capturedDataCollection.remove(instanceQuery);
             }
         }
