@@ -19,12 +19,12 @@ public class InstanceTableModel extends CollectionTableModel<Instance> {
         setRowCount(0);
         Iterable<Instance> instances = collection.find(query).as(Instance.class);
         for (final Instance instance : instances) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
+//            /*SwingUtilities.invokeLater(new Runnable() {
+//                @Override
+//                public void run()*/ {
                     addRow(instance);
-                }
-            });
+//                }
+//            });
         }
     }
     

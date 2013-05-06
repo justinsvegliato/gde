@@ -30,26 +30,28 @@ public class MainMenu extends javax.swing.JFrame {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         refreshButton.setIcon(ImageLoader.getRefreshIcon());
-
+        
         chartContainerPanel.setLayout(new java.awt.BorderLayout());
         chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
-
+        
         InstanceTableModel instanceTableModel = new InstanceTableModel(game);
         instanceTable.setModel(instanceTableModel);
         instanceTableModel.populate();
-
+        
         CapturedDataTableModel capturedDataTableModel = new CapturedDataTableModel(game);
         capturedDataTable.setModel(capturedDataTableModel);
         TableRowSorter<CapturedDataTableModel> sorter = new TableRowSorter<CapturedDataTableModel>((CapturedDataTableModel) capturedDataTable.getModel());
         capturedDataTable.setRowSorter(sorter);
-
+        
         ChartTableModel chartTableModel = new ChartTableModel(game);
         chartTable.setModel(chartTableModel);
         chartTable.getColumnModel().getColumn(0).setCellRenderer(new ChartTableCellRenderer());
         chartTableModel.populate();
-
+        
         SummaryTableModel summaryTableModel = new SummaryTableModel(game);
         summaryTable.setModel(summaryTableModel);
+        
+        updateSummaryLabels();
         
         adminMenu.setVisible(isAdmin);
     }
@@ -68,6 +70,10 @@ public class MainMenu extends javax.swing.JFrame {
         summaryPanel = new javax.swing.JPanel();
         summaryScrollPane = new javax.swing.JScrollPane();
         summaryTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        fieldCountLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        instanceCountLabel = new javax.swing.JLabel();
         detailedAnalysisContainerPanel = new javax.swing.JPanel();
         detailedAnalysisPanel = new javax.swing.JScrollPane();
         capturedDataTable = new javax.swing.JTable();
@@ -109,19 +115,46 @@ public class MainMenu extends javax.swing.JFrame {
         ));
         summaryScrollPane.setViewportView(summaryTable);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setText("Number of Fields: ");
+
+        fieldCountLabel.setText("0");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel2.setText("Number of Instances:");
+
+        instanceCountLabel.setText("0");
+
         javax.swing.GroupLayout summaryPanelLayout = new javax.swing.GroupLayout(summaryPanel);
         summaryPanel.setLayout(summaryPanelLayout);
         summaryPanelLayout.setHorizontalGroup(
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(summaryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 936, Short.MAX_VALUE)
+                    .addGroup(summaryPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fieldCountLabel)
+                        .addGap(40, 40, 40)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(instanceCountLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         summaryPanelLayout.setVerticalGroup(
             summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, summaryPanelLayout.createSequentialGroup()
-                .addComponent(summaryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(summaryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(fieldCountLabel)
+                    .addComponent(jLabel2)
+                    .addComponent(instanceCountLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 14, Short.MAX_VALUE)
+                .addComponent(summaryScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 564, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -502,6 +535,8 @@ public class MainMenu extends javax.swing.JFrame {
 
             SummaryTableModel summaryTableModel = ((SummaryTableModel) summaryTable.getModel());
             summaryTableModel.populate(instanceTableModel.getIds(), instanceTable.getSelectedRows());
+            
+            updateSummaryLabels();
         }
     }
 
@@ -515,6 +550,12 @@ public class MainMenu extends javax.swing.JFrame {
             chartContainerPanel.validate();
         }
     }
+    
+    private void updateSummaryLabels() {
+        fieldCountLabel.setText("" + summaryTable.getRowCount());
+        instanceCountLabel.setText("" + instanceTable.getRowCount());
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu adminMenu;
@@ -528,12 +569,16 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel detailedAnalysisContainerPanel;
     private javax.swing.JScrollPane detailedAnalysisPanel;
     private javax.swing.JButton editChartButton;
+    private javax.swing.JLabel fieldCountLabel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JPanel graphicalAnalysisContainerPanel;
     private javax.swing.JPanel graphicalAnalysisPanel;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel instanceCountLabel;
     private javax.swing.JScrollPane instanceScrollPane;
     private javax.swing.JTable instanceTable;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuItem logoutMenuButton;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton refreshButton;
