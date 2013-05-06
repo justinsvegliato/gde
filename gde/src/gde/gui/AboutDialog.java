@@ -23,7 +23,7 @@ public class AboutDialog extends javax.swing.JDialog {
         
         aboutLabel.setText("<html><center>Version 0.6<br><br><br>"
                 + "www.gamediagnostics.com<br>" 
-                + "Copyright 2013 [company name that isn't svegabytes =P]</center></html>");
+                + "Copyright 2013 Team GDE</center></html>");
     }
 
     /**

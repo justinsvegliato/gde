@@ -57,7 +57,7 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
     protected void addRow(CapturedData data) {
         final Object[] objects = new Object[titles.length];
         DateFormat shortDf = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
-        objects[0] = shortDf.format(new Timestamp(data.getKey().getTime()).getDate());
+        objects[0] = shortDf.format(data.getCreateDate());
         MongoCollection instanceCollection = database.getCollection("instances");
         Instance instance = instanceCollection.findOne(new ObjectId(data.getInstanceId())).as(Instance.class);
         objects[1] = instance.getIdentifier();
