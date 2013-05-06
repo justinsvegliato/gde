@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 
 public class InstanceTableModel extends CollectionTableModel<Instance> {
     private static final Class[] TYPES = {String.class};
-    private static final String[] TITLES = {"Identifier"};
+    private static final String[] TITLES = {"Instances"};
     private static final String COLLECTION = "instances";
     
     public InstanceTableModel(Game game) {

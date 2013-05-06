@@ -42,11 +42,13 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         editFieldButton = new javax.swing.JButton();
         createFieldButton = new javax.swing.JButton();
         deleteFieldButton = new javax.swing.JButton();
+        fieldCancelButton = new javax.swing.JButton();
         developerPanel = new javax.swing.JPanel();
         developerTableScrollPane = new javax.swing.JScrollPane();
         developerTable = new javax.swing.JTable();
         addDeveloperButton = new javax.swing.JButton();
         removeDeveloperButton = new javax.swing.JButton();
+        developerCancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Admin Configuration");
@@ -92,6 +94,13 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }
         });
 
+        fieldCancelButton.setText("Cancel");
+        fieldCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCancelButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout fieldPanelLayout = new org.jdesktop.layout.GroupLayout(fieldPanel);
         fieldPanel.setLayout(fieldPanelLayout);
         fieldPanelLayout.setHorizontalGroup(
@@ -99,26 +108,29 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 454, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, fieldPanelLayout.createSequentialGroup()
+                    .add(fieldPanelLayout.createSequentialGroup()
                         .add(0, 0, Short.MAX_VALUE)
                         .add(createFieldButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(editFieldButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(deleteFieldButton)))
+                        .add(deleteFieldButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(fieldCancelButton))
+                    .add(administrationScrollPane))
                 .addContainerGap())
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(editFieldButton)
                     .add(deleteFieldButton)
-                    .add(createFieldButton))
+                    .add(createFieldButton)
+                    .add(fieldCancelButton))
                 .addContainerGap())
         );
 
@@ -154,6 +166,13 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }
         });
 
+        developerCancelButton.setText("Cancel");
+        developerCancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                developerCancelButtonActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout developerPanelLayout = new org.jdesktop.layout.GroupLayout(developerPanel);
         developerPanel.setLayout(developerPanelLayout);
         developerPanelLayout.setHorizontalGroup(
@@ -161,22 +180,25 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, developerTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 454, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 454, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, developerPanelLayout.createSequentialGroup()
                         .add(addDeveloperButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(removeDeveloperButton)))
+                        .add(removeDeveloperButton)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(developerCancelButton)))
                 .addContainerGap())
         );
         developerPanelLayout.setVerticalGroup(
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)
-                    .add(addDeveloperButton))
+                    .add(addDeveloperButton)
+                    .add(developerCancelButton))
                 .addContainerGap())
         );
 
@@ -188,8 +210,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationTabbedPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(administrationTabbedPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -270,16 +292,27 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         removeDeveloperButton.setEnabled((developerTable.getSelectedRow() > 0) 
                 &&  developerTableModel.getEntryAt(developerTable.getSelectedRow()).getAccountType() != AccountType.ADMINISTRATOR);
     }//GEN-LAST:event_developerTableMouseClicked
+
+    private void fieldCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCancelButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_fieldCancelButtonActionPerformed
+
+    private void developerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerCancelButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_developerCancelButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addDeveloperButton;
     private javax.swing.JScrollPane administrationScrollPane;
     private javax.swing.JTabbedPane administrationTabbedPanel;
     private javax.swing.JButton createFieldButton;
     private javax.swing.JButton deleteFieldButton;
+    private javax.swing.JButton developerCancelButton;
     private javax.swing.JPanel developerPanel;
     private javax.swing.JTable developerTable;
     private javax.swing.JScrollPane developerTableScrollPane;
     private javax.swing.JButton editFieldButton;
+    private javax.swing.JButton fieldCancelButton;
     private javax.swing.JPanel fieldPanel;
     private javax.swing.JTable fieldTable;
     private javax.swing.JButton removeDeveloperButton;

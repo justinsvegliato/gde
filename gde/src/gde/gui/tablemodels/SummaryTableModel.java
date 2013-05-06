@@ -33,14 +33,16 @@ public class SummaryTableModel extends TableModel {
         public void run() {
             MongoCollection capturedDataCollection = database.getCollection("captureddata");
             String query = String.format("{instanceId: '%s'}", id.toString());
-            CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
-            for (Entry<String, String> data : capturedData.getData().entrySet()) {
-                if (statsMap.containsKey(data.getKey())) {
-                    statsMap.get(data.getKey()).add(data.getValue());
-                } else {
-                    CopyOnWriteArrayList<String> stats = new CopyOnWriteArrayList<String>();
-                    stats.add(data.getValue());
-                    statsMap.put((String) data.getKey(), stats);
+            if (capturedDataCollection.count(query) > 0) {
+                CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
+                for (Entry<String, String> data : capturedData.getData().entrySet()) {
+                    if (statsMap.containsKey(data.getKey())) {
+                        statsMap.get(data.getKey()).add(data.getValue());
+                    } else {
+                        CopyOnWriteArrayList<String> stats = new CopyOnWriteArrayList<String>();
+                        stats.add(data.getValue());
+                        statsMap.put((String) data.getKey(), stats);
+                    }
                 }
             }
         }

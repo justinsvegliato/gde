@@ -489,10 +489,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_chartTableKeyReleased
 
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
-        ((InstanceTableModel) instanceTable.getModel()).populate();
-        updateTabs();
-        selectCheckBox.setSelected(false);
-
+        refreshInstancesTable();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
     private void logoutMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuButtonActionPerformed
@@ -501,13 +498,19 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMenuButtonActionPerformed
 
     private void refreshMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshMenuButtonActionPerformed
+        refreshInstancesTable();
+    }//GEN-LAST:event_refreshMenuButtonActionPerformed
+
+    public void refreshInstancesTable() {
         ((InstanceTableModel) instanceTable.getModel()).populate();
         updateTabs();
         selectCheckBox.setSelected(false);
-    }//GEN-LAST:event_refreshMenuButtonActionPerformed
-
+    }
+    
     private void configureMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureMenuItemActionPerformed
-        new ConfigurationDialog(game).setVisible(true);
+        new ConfigurationDialog(game).setVisible(true);       
+        updateTabs();
+        updateSummaryLabels();
     }//GEN-LAST:event_configureMenuItemActionPerformed
 
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
@@ -557,10 +560,10 @@ public class MainMenu extends javax.swing.JFrame {
         MongoCollection instanceCollection = database.getCollection("instances");
         
         String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
-        long friendCount = fieldCollection.count(gameQuery);
+        long fieldCount = fieldCollection.count(gameQuery);
         long instanceCount = instanceCollection.count(gameQuery);
         
-        fieldCountLabel.setText("" + friendCount);
+        fieldCountLabel.setText("" + fieldCount);
         instanceCountLabel.setText("" + instanceCount);
     }
     

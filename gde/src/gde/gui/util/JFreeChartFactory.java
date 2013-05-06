@@ -1,18 +1,12 @@
 package gde.gui.util;
 
 import gde.gui.tablemodels.InstanceTableModel;
-import gde.gui.util.DatabaseHandler;
 import gde.models.CapturedData;
 import gde.models.Chart;
 import gde.models.Field;
 import gde.models.Instance;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Shape;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JTable;
-import javax.swing.Timer;
 import org.bson.types.ObjectId;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.DefaultKeyedValues;
@@ -20,35 +14,45 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.GrayPaintScale;
-import org.jfree.chart.renderer.LookupPaintScale;
-import org.jfree.chart.renderer.PaintScale;
-import org.jfree.chart.renderer.xy.XYBlockRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.chart.title.PaintScaleLegend;
-import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 import org.jfree.util.ShapeUtilities;
 
+
+/**
+ * The JFreeChartFactory is a singleton object that produces a graph depending 
+ * on the Chart and JTable received.
+ * 
+ * @author Justin Svelgiato and Martin Mena
+ */
 public enum JFreeChartFactory {
 
+    /** the singleton */
     INSTANCE;
     
+    /** the Jongo object used to easily interact with the database */
     protected static final Jongo database = DatabaseHandler.getDatabase();
+    
+    /** the captureddata collection */
     private static final MongoCollection capturedDataCollection = database.getCollection("captureddata");
+    
+    /** the field collection */
     private static final MongoCollection fieldCollection = database.getCollection("fields");
 
+    /**
+     * Gets a chart depending on the chart type.
+     * 
+     * @param chart the chart data in question which dictates what chart will be produced
+     * @param instanceTable the table containing all of the instances
+     * @return a new chart which is contingent upon the chart type.
+     */
     public JFreeChart getChart(Chart chart, JTable instanceTable) {
         int[] selectedRows = instanceTable.getSelectedRows();
         InstanceTableModel instanceTableModel = (InstanceTableModel) instanceTable.getModel();
@@ -74,6 +78,14 @@ public enum JFreeChartFactory {
         }
     }
 
+    /**
+     * 
+     * 
+     * @param chart
+     * @param selectedRows
+     * @param model
+     * @return 
+     */
     private JFreeChart getJFreePieChart(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
         DefaultKeyedValues keyedValues = new DefaultKeyedValues();
