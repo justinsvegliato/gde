@@ -172,6 +172,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                 String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
                 capturedDataCollection.remove(instanceQuery);
             }
+            ((CapturedDataTableModel) capturedDataTable.getModel()).populate(); 
             
             Field newField = new Field(
                     nameTextField.getText(),
@@ -179,16 +180,10 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                     game.getKey().toString());
 
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
-            if (editMode) {
+            if (editMode) {                
                 Field editedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
                 String editedFieldKey = editedField.getKey().toString();
                 fieldTableModel.update(newField, fieldTable.getSelectedRow());               
-                
-                if (chartTable.getSelectedRow() == -1) {
-                    chartContainerPanel.removeAll();
-                    chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
-                    chartContainerPanel.validate();
-                }
                 
                 MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
                 String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", editedFieldKey, editedFieldKey);
@@ -196,12 +191,17 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                 ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
                 for (Chart chart : charts) {
                     chartTableModel.remove(new int[]{chartTableModel.getIds().indexOf(chart.getKey())});
-
                 }
+                
+                if (chartTable.getSelectedRow() == -1) {
+                    chartContainerPanel.removeAll();
+                    chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                    chartContainerPanel.validate();
+                }               
             } else {
                 fieldTableModel.add(newField);
-            }
-            
+            } 
+                                               
             capturedDataTable.setModel(new CapturedDataTableModel(game));
         }
     }//GEN-LAST:event_saveButtonActionPerformed

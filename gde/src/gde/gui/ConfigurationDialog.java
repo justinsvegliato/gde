@@ -138,14 +138,14 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                         .add(deleteFieldButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(fieldExitButton))
-                    .add(administrationScrollPane))
+                    .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 466, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(editFieldButton)
@@ -219,7 +219,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)
@@ -289,29 +289,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all data. MEOW", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            Field removedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
-            String removedFieldKey = removedField.getKey().toString();
-            ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());
-            
-            MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
-            String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", removedFieldKey, removedFieldKey);
-            Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
-            ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
-            for (Chart chart : charts) {
-                chartTableModel.remove(new int[] {chartTableModel.getIds().indexOf(chart.getKey())});
-            }            
-            
-            capturedDataTable.setModel(new CapturedDataTableModel(game));
-                                        
-            if (chartTable.getSelectedRow() == -1) {
-                chartContainerPanel.removeAll();
-                chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
-                chartContainerPanel.validate();
-                editButton.setEnabled(false);
-                deleteButton.setEnabled(false);
-            }
-            
+        
+        if (response == JOptionPane.YES_OPTION) {                                                   
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
@@ -320,6 +299,30 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                 String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
                 capturedDataCollection.remove(instanceQuery);
             }
+            ((CapturedDataTableModel) capturedDataTable.getModel()).populate();  
+            
+            Field removedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
+            String removedFieldKey = removedField.getKey().toString();
+            ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());  
+            
+            MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
+            String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", removedFieldKey, removedFieldKey);
+            Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
+            ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
+            for (Chart chart : charts) {
+                chartTableModel.remove(new int[] {chartTableModel.getIds().indexOf(chart.getKey())});
+            }       
+            
+            if (chartTable.getSelectedRow() == -1) {
+                chartContainerPanel.removeAll();
+                chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                chartContainerPanel.validate();
+                editButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+            }                        
+            
+            capturedDataTable.setModel(new CapturedDataTableModel(game));
+            
         }
         deleteFieldButton.setEnabled(false);
         editFieldButton.setEnabled(false);
@@ -377,28 +380,20 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private void developerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_developerTableMouseClicked
         enableRemoveDeveloperButton();
     }//GEN-LAST:event_developerTableMouseClicked
-
-    /**
-     * Dispose the window when the "cancel" button is clicked.
-     * @param evt The swing ActionEvent trigger.
-     */
-    private void fieldCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCancelButtonActionPerformed
-        dispose();
-    }//GEN-LAST:event_fieldExitButtonActionPerformed
-
-    /**
-     * Dispose the window when the "cancel" button is clicked.
-     * @param evt The swing ActionEvent trigger.
-     */
-    private void developerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerCancelButtonActionPerformed
-        dispose();
-    }//GEN-LAST:event_developerExitButtonActionPerformed
-
+                                            
     private void developerTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_developerTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
             enableRemoveDeveloperButton();
         }
     }//GEN-LAST:event_developerTableKeyReleased
+
+    private void fieldExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldExitButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_fieldExitButtonActionPerformed
+
+    private void developerExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerExitButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_developerExitButtonActionPerformed
 
     private void enableRemoveDeveloperButton() {
         DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
