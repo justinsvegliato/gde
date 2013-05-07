@@ -14,14 +14,30 @@ import javax.swing.SwingUtilities;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
+/**
+ * The CapturedDataTableModel class handles all interactions with the table that contains data types of this sort.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
 
+    /** the collection that will be operated upon */
     private static final String COLLECTION = "captureddata";
 
+    /**
+     * Creates newly-instantiated CapturedDataTableModel object.
+     * 
+     * @param game the game that this table will be associated to.
+     */
     public CapturedDataTableModel(Game game) {
         super(game, getTypes(game), getTitles(game), COLLECTION);
     }
 
+    /**
+     * Populates the table with all CapturedData in the collection that match the specified query.
+     * 
+     * @param query the query that will be used to retrieve the documents
+     */
     @Override
     public void populate(String query) {
         ids.clear();
@@ -37,16 +53,31 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         }
     }
 
+    /**
+     * Populates the table with all CapturedData in the collection.
+     */
     @Override
     public void populate() {
         populate("");
     }
 
+    /**
+     * Gets the CapturedData at the specified row.
+     * 
+     * @param rowId the row which contains the CapturedData
+     * @return the CapturedData at the specified row.
+     */
     @Override
     public CapturedData getEntryAt(int rowId) {
         return collection.findOne(ids.get(rowId)).as(CapturedData.class);
     }
 
+   /**
+     * Sets the CapturedData at the specified row with the specified CapturedData.
+     * 
+     * @param rowId the id of the row that will be updated.
+     * @param entry the CapturedData to be inserted into this position.
+     */
     @Override
     public void setEntryAt(int rowId, CapturedData entry) {
         for (int i = 0; i < titles.length; i++) {
@@ -54,6 +85,11 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         }
     }
 
+    /**
+     * Adds a row to the end of the table.
+     * 
+     * @param entry the CapturedData to be added.
+     */
     @Override
     protected void addRow(CapturedData data) {
         final Object[] objects = new Object[titles.length];
@@ -68,7 +104,13 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         addRow(objects);
         ids.add(data.getKey());
     }
-
+    
+    /**
+     * Gets the corresponding data type of the specified field type.
+     * 
+     * @param type the type to be converted
+     * @return the corresponding data type of the specified field type.
+     */
     private static Class convertToType(FieldType type) {
         switch (type) {
             case INTEGER:
@@ -83,6 +125,12 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         return null;
     }
 
+    /**
+     * Gets the titles of the table by checking the fields in the database
+     * 
+     * @param game the game that that we are getting the titles for 
+     * @return the titles of the table
+     */
     private static String[] getTitles(Game game) {
         List<String> titles = new LinkedList<String>();
         titles.add("Date");
@@ -96,6 +144,12 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         return titles.toArray(new String[titles.size() - 1]);
     }
 
+    /**
+     * Gets the types of the table by checking the fields in the database
+     * 
+     * @param game the game that that we are getting the types for 
+     * @return the types of the table
+     */
     private static Class[] getTypes(Game game) {
         List<Class> types = new LinkedList<Class>();
         types.add(Timestamp.class);

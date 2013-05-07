@@ -71,14 +71,14 @@ public class Data {
         capturedDataCollection.drop();
         chartCollection.drop();
 
-        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "a", "a", AccountType.ADMINISTRATOR);
+        Developer developer = new Developer("justin", "svegliato", "Svegabytes", "revulsion", "a9se3p2f", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);
         List<String> developers = new LinkedList<String>();
         developers.add(developer.getKey().toString());
         
-        developer = new Developer("justin", "svegliato", "Svegabytes", "b", "b", AccountType.DEVELOPER);
+        developer = new Developer("justin", "svegliato", "Svegabytes", "andrew", "jk14lol", AccountType.DEVELOPER);
         developersCollection.save(developer);
-        developer = new Developer("justin", "svegliato", "Svegabytes", "c", "c", AccountType.DEVELOPER);
+        developer = new Developer("justin", "svegliato", "Svegabytes", "caiti", "iscool", AccountType.DEVELOPER);
         developersCollection.save(developer);
         developer = new Developer("justin", "svegliato", "Svegabytes", "admin", "b", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);       

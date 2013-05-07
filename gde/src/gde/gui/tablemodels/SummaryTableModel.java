@@ -1,6 +1,5 @@
 package gde.gui.tablemodels;
 
-
 import static gde.gui.tablemodels.TableModel.database;
 import gde.models.CapturedData;
 import gde.models.Field;
@@ -19,16 +18,34 @@ import java.util.concurrent.Executors;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
+/**
+ * The SummaryTableModel class handles all interactions with the table that contains data types of this sort.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class SummaryTableModel extends TableModel {
+        
 
+    /**
+     * The DatabaseQueryRunnable class handles 
+     */
     class DatabaseQueryRunnable implements Runnable {
 
+        /** the object id associated with the instance */
         private final ObjectId id;
-
+        
+        /**
+         * Creates a newly-instantiated DatabaseQueryRunnable object
+         * 
+         * @param id the ObjectId of the said Instance
+         */
         DatabaseQueryRunnable(ObjectId id) {
             this.id = id;
         }
 
+        /**
+         * Collects the data for the most recent CapturedData for the given object id
+         */
         @Override
         public void run() {
             MongoCollection capturedDataCollection = database.getCollection("captureddata");
@@ -46,15 +63,33 @@ public class SummaryTableModel extends TableModel {
                 }
             }
         }
-    }
+    }   
+    
+    /** the types of the columns of this table */
     private static final Class[] TYPES = {String.class, String.class, String.class, String.class, String.class, String.class};
+    
+    /** the titles of the columns of this table */
     private static final String[] TITLES = {"Field", "Least", "Most", "Average", "Minimum", "Maximum"};
-    private final ConcurrentHashMap<String, CopyOnWriteArrayList<String>> statsMap = new ConcurrentHashMap<String, CopyOnWriteArrayList<String>>();
+    
+    /** the types of the columns of this table */
+    private final ConcurrentHashMap<String, CopyOnWriteArrayList<String>> statsMap;
 
+    /**
+     * Creates newly-instantiated CapturedDataTableModel object.
+     * 
+     * @param game the game that this table will be associated to.
+     */
     public SummaryTableModel(Game game) {
         super(game, TYPES, TITLES);
+        this.statsMap = new ConcurrentHashMap<String, CopyOnWriteArrayList<String>>();
     }
 
+    /**
+     * Populates the table retrieving information from the specified selected row ids.
+     * 
+     * @param ids the ids of the objects
+     * @param selectedRows the ids of the select rows
+     */
     public void populate(List<ObjectId> ids, int[] selectedRows) {
         setRowCount(0);
         statsMap.clear();
