@@ -146,7 +146,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
-        ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
+        ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();     
         populateFieldComboBoxes(chartType);
         fillSelections(false);
     }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
@@ -174,7 +174,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
             MongoCollection fieldsCollection = database.getCollection("fields");
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
-
             if (chart.getxAxisFieldId() != null) {
                 Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
                 xAxisComboBox.setSelectedItem(xAxisField);
