@@ -12,9 +12,14 @@ import gde.models.Developer.AccountType;
 import gde.models.Field;
 import gde.models.Game;
 import gde.models.Instance;
+import java.awt.BorderLayout;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
 public class ConfigurationDialog extends javax.swing.JDialog {
@@ -22,14 +27,20 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private final Game game;
     private final JTable chartTable;
     private final JTable capturedDataTable;
+    private final JPanel chartContainerPanel;
+    private final JButton editButton;
+    private final JButton deleteButton;
 
-    public ConfigurationDialog(Game game, JTable chartTable, JTable capturedDataTable) {
+    public ConfigurationDialog(Game game, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, JButton editButton, JButton deleteButton) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
 
         this.game = game;
         this.chartTable = chartTable;
         this.capturedDataTable = capturedDataTable;
+        this.chartContainerPanel = chartContainerPanel;
+        this.editButton = editButton;
+        this.deleteButton = deleteButton;
 
         FieldTableModel fieldTableModel = new FieldTableModel(game);
         fieldTable.setModel(fieldTableModel);
@@ -236,18 +247,18 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
         if (evt.getClickCount() == 2) {
-            new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, true).setVisible(true);
+            new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, true).setVisible(true);
         }
         editFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
         deleteFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
     }//GEN-LAST:event_fieldTableMouseClicked
 
     private void createFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFieldButtonActionPerformed
-        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, false).setVisible(true);
+        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, false).setVisible(true);
     }//GEN-LAST:event_createFieldButtonActionPerformed
 
     private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
-        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, true).setVisible(true);
+        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, true).setVisible(true);
     }//GEN-LAST:event_editFieldButtonActionPerformed
 
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
@@ -267,6 +278,14 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }            
             
             capturedDataTable.setModel(new CapturedDataTableModel(game));
+                                        
+            if (chartTable.getSelectedRow() == -1) {
+                chartContainerPanel.removeAll();
+                chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                chartContainerPanel.validate();
+                editButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+            }
             
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());

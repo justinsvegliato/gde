@@ -69,6 +69,7 @@ public class Data {
         instancesCollection.drop();
         fieldsCollection.drop();
         capturedDataCollection.drop();
+        chartCollection.drop();
 
         Developer developer = new Developer("justin", "svegliato", "Svegabytes", "a", "a", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);

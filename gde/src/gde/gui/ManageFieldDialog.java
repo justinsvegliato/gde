@@ -10,8 +10,12 @@ import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
 public class ManageFieldDialog extends javax.swing.JDialog {
@@ -21,8 +25,9 @@ public class ManageFieldDialog extends javax.swing.JDialog {
     private final JTable fieldTable;
     private final JTable chartTable;
     private final JTable capturedDataTable;
+    private final JPanel chartContainerPanel;
 
-    public ManageFieldDialog(Game game, JTable fieldTable, JTable chartTable, JTable capturedDataTable, boolean editMode) {
+    public ManageFieldDialog(Game game, JTable fieldTable, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         getRootPane().setDefaultButton(saveButton);
@@ -32,6 +37,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         this.editMode = editMode;
         this.chartTable = chartTable;
         this.capturedDataTable = capturedDataTable;
+        this.chartContainerPanel = chartContainerPanel;
 
         for (FieldType type : Field.FieldType.values()) {
             typeComboBox.addItem(type);
@@ -159,6 +165,12 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                 Field editedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
                 String editedFieldKey = editedField.getKey().toString();
                 fieldTableModel.update(newField, fieldTable.getSelectedRow());               
+                
+                if (chartTable.getSelectedRow() == -1) {
+                    chartContainerPanel.removeAll();
+                    chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                    chartContainerPanel.validate();
+                }
                 
                 MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
                 String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", editedFieldKey, editedFieldKey);
