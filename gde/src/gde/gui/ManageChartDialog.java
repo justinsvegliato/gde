@@ -25,6 +25,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
     public ManageChartDialog(Game game, JTable chartTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        getRootPane().setDefaultButton(saveButton);
 
         this.game = game;
         this.chartTable = chartTable;
@@ -156,9 +157,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
         String filter;
         switch (chartType) {
             case PIE:
-            case BAR:
-                filter = "'" + FieldType.TEXT.name() + "'";
-                return String.format(template, filter);
             case LINE:
             case SCATTER:
             case MAP:

@@ -1,31 +1,37 @@
 package gde.gui;
 
-import com.mongodb.WriteResult;
+import gde.gui.tablemodels.CapturedDataTableModel;
+import gde.gui.tablemodels.ChartTableModel;
 import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.models.Chart;
 import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import org.jongo.Find;
 import org.jongo.MongoCollection;
 
 public class ManageFieldDialog extends javax.swing.JDialog {
 
     private final Game game;
-    private final JTable fieldTable;
     private final boolean editMode;
+    private final JTable fieldTable;
+    private final JTable chartTable;
+    private final JTable capturedDataTable;
 
-    public ManageFieldDialog(Game game, JTable fieldTable, boolean editMode) {
+    public ManageFieldDialog(Game game, JTable fieldTable, JTable chartTable, JTable capturedDataTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        getRootPane().setDefaultButton(saveButton);
 
         this.game = game;
         this.fieldTable = fieldTable;
         this.editMode = editMode;
+        this.chartTable = chartTable;
+        this.capturedDataTable = capturedDataTable;
 
         for (FieldType type : Field.FieldType.values()) {
             typeComboBox.addItem(type);
@@ -133,16 +139,16 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             dispose();
-            
+
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
             MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
-            for (Instance instance : instances) { 
-                String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());                
+            for (Instance instance : instances) {
+                String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
                 capturedDataCollection.remove(instanceQuery);
             }
-
+            
             Field newField = new Field(
                     nameTextField.getText(),
                     (FieldType) typeComboBox.getSelectedItem(),
@@ -150,10 +156,23 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
             if (editMode) {
-                fieldTableModel.update(newField, fieldTable.getSelectedRow());
+                Field editedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
+                String editedFieldKey = editedField.getKey().toString();
+                fieldTableModel.update(newField, fieldTable.getSelectedRow());               
+                
+                MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
+                String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", editedFieldKey, editedFieldKey);
+                Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
+                ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
+                for (Chart chart : charts) {
+                    chartTableModel.remove(new int[]{chartTableModel.getIds().indexOf(chart.getKey())});
+
+                }
             } else {
                 fieldTableModel.add(newField);
             }
+            
+            capturedDataTable.setModel(new CapturedDataTableModel(game));
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 

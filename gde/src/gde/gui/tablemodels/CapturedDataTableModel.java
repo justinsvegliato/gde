@@ -29,6 +29,7 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
         Iterable<CapturedData> capturedData = collection.find(query).as(CapturedData.class);
         for (final CapturedData capturedDatum : capturedData) {
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     addRow(capturedDatum);
                 }

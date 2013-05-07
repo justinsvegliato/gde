@@ -27,33 +27,33 @@ public class MainMenu extends javax.swing.JFrame {
 
     public MainMenu(Game game, boolean isAdmin) {
         this.game = game;
-        
+
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         refreshButton.setIcon(ImageLoader.getRefreshIcon());
-        
+
         chartContainerPanel.setLayout(new java.awt.BorderLayout());
         chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
-        
+
         InstanceTableModel instanceTableModel = new InstanceTableModel(game);
         instanceTable.setModel(instanceTableModel);
         instanceTableModel.populate();
-        
+
         CapturedDataTableModel capturedDataTableModel = new CapturedDataTableModel(game);
         capturedDataTable.setModel(capturedDataTableModel);
         TableRowSorter<CapturedDataTableModel> sorter = new TableRowSorter<CapturedDataTableModel>((CapturedDataTableModel) capturedDataTable.getModel());
         capturedDataTable.setRowSorter(sorter);
-        
+
         ChartTableModel chartTableModel = new ChartTableModel(game);
         chartTable.setModel(chartTableModel);
         chartTable.getColumnModel().getColumn(0).setCellRenderer(new ChartTableCellRenderer());
         chartTableModel.populate();
-        
+
         SummaryTableModel summaryTableModel = new SummaryTableModel(game);
         summaryTable.setModel(summaryTableModel);
-        
+
         updateSummaryLabels();
-        
+
         adminMenu.setVisible(isAdmin);
     }
 
@@ -506,9 +506,9 @@ public class MainMenu extends javax.swing.JFrame {
         updateTabs();
         selectCheckBox.setSelected(false);
     }
-    
+
     private void configureMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureMenuItemActionPerformed
-        new ConfigurationDialog(game).setVisible(true);       
+        new ConfigurationDialog(game, chartTable, capturedDataTable).setVisible(true);
         updateTabs();
         updateSummaryLabels();
     }//GEN-LAST:event_configureMenuItemActionPerformed
@@ -539,7 +539,7 @@ public class MainMenu extends javax.swing.JFrame {
 
             SummaryTableModel summaryTableModel = ((SummaryTableModel) summaryTable.getModel());
             summaryTableModel.populate(instanceTableModel.getIds(), instanceTable.getSelectedRows());
-            
+
             updateSummaryLabels();
         }
     }
@@ -554,19 +554,18 @@ public class MainMenu extends javax.swing.JFrame {
             chartContainerPanel.validate();
         }
     }
-    
+
     private void updateSummaryLabels() {
         MongoCollection fieldCollection = database.getCollection("fields");
         MongoCollection instanceCollection = database.getCollection("instances");
-        
+
         String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
         long fieldCount = fieldCollection.count(gameQuery);
         long instanceCount = instanceCollection.count(gameQuery);
-        
+
         fieldCountLabel.setText("" + fieldCount);
         instanceCountLabel.setText("" + instanceCount);
     }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenu adminMenu;

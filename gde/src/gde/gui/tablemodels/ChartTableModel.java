@@ -22,6 +22,7 @@ public class ChartTableModel extends CollectionTableModel<Chart> {
         Iterable<Chart> charts = collection.find(query).as(Chart.class);
         for (final Chart chart : charts) {
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     addRow(chart);
                 }

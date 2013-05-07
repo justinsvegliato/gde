@@ -12,7 +12,6 @@ public class Chart extends Entry {
     public enum ChartType {
         LINE,
         PIE,
-        BAR,
         MAP,
         SCATTER;
         

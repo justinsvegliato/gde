@@ -34,7 +34,7 @@ import org.jfree.util.ShapeUtilities;
  */
 public enum JFreeChartFactory {
 
-    /** the singleton */
+    /** the singleton enum */
     INSTANCE;
     
     /** the Jongo object used to easily interact with the database */

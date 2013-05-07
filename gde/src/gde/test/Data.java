@@ -4,6 +4,8 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 import gde.service.RequestHandler;
 import gde.models.CapturedData;
+import gde.models.Chart;
+import gde.models.Chart.ChartType;
 import gde.models.Developer;
 import gde.models.Developer.AccountType;
 import gde.models.Field;
@@ -60,6 +62,8 @@ public class Data {
         MongoCollection instancesCollection = jongo.getCollection("instances");
         MongoCollection fieldsCollection = jongo.getCollection("fields");
         MongoCollection capturedDataCollection = jongo.getCollection("captureddata");
+        MongoCollection chartCollection = jongo.getCollection("charts");
+        
         developersCollection.drop();
         gamesCollection.drop();
         instancesCollection.drop();
@@ -76,28 +80,76 @@ public class Data {
         developer = new Developer("justin", "svegliato", "Svegabytes", "c", "c", AccountType.DEVELOPER);
         developersCollection.save(developer);
         developer = new Developer("justin", "svegliato", "Svegabytes", "admin", "b", AccountType.ADMINISTRATOR);
-        developersCollection.save(developer);
-        
-
+        developersCollection.save(developer);       
 
         Game game = new Game("Diablo 2", "ARPG", developers);
         gamesCollection.save(game);
 
-        Field field = new Field("Level", FieldType.INTEGER, game.getKey().toString());
-        fieldsCollection.save(field);
-        field = new Field("Strength", FieldType.INTEGER, game.getKey().toString());
-        fieldsCollection.save(field);
+        Field levelField = new Field("Level", FieldType.INTEGER, game.getKey().toString());
+        fieldsCollection.save(levelField);
+        
+        Field field = new Field("Strength", FieldType.INTEGER, game.getKey().toString());
+        fieldsCollection.save(field);     
+        Chart newChart = new Chart(
+                "Strength vs. Level",
+                levelField.getKey().toString(),
+                field.getKey().toString(),
+                ChartType.LINE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
+        
         field = new Field("Dexterity", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
+        newChart = new Chart(
+                "Dexterity vs. Level",
+                levelField.getKey().toString(),
+                field.getKey().toString(),
+                ChartType.LINE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
+        
         field = new Field("Vitality", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
+        newChart = new Chart(
+                "Vitality vs. Level",
+                levelField.getKey().toString(),
+                field.getKey().toString(),
+                ChartType.LINE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
         field = new Field("Energy", FieldType.INTEGER, game.getKey().toString());
         fieldsCollection.save(field);
+        newChart = new Chart(
+                "Energy vs. Level",
+                levelField.getKey().toString(),
+                field.getKey().toString(),
+                ChartType.LINE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
         field = new Field("Class", FieldType.TEXT, game.getKey().toString());
         fieldsCollection.save(field);
+        newChart = new Chart(
+                "Class Distribution",
+                null,
+                field.getKey().toString(),
+                ChartType.PIE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
         field = new Field("Race", FieldType.TEXT, game.getKey().toString());
         fieldsCollection.save(field);
-
+                newChart = new Chart(
+                "Race Distribution",
+                null,
+                field.getKey().toString(),
+                ChartType.PIE,
+                game.getKey().toString());
+        chartCollection.save(newChart);
+        
         Game game2 = new Game("Dragons [Alpha]", "ARPG", developers);
         gamesCollection.save(game2);
 
