@@ -20,6 +20,7 @@ public class FieldTableModel extends CollectionTableModel<Field> {
         Iterable<Field> fields = collection.find(query).as(Field.class);
         for (final Field field : fields) {
             SwingUtilities.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     addRow(field);
                 }

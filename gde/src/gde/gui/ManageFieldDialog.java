@@ -44,6 +44,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         }
 
         fillSelections(editMode);
+        saveButton.setEnabled(editMode);
     }
 
     @SuppressWarnings("unchecked")
@@ -80,6 +81,12 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
+            }
+        });
+
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyReleased(evt);
             }
         });
 
@@ -198,6 +205,11 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         }
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
+        saveButton.setEnabled(!nameTextField.getText().trim().isEmpty());
+    }//GEN-LAST:event_nameTextFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel nameLabel;

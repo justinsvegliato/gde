@@ -2,7 +2,6 @@ package gde.test;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
-import gde.service.RequestHandler;
 import gde.models.CapturedData;
 import gde.models.Chart;
 import gde.models.Chart.ChartType;
@@ -12,6 +11,7 @@ import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
+import gde.service.RequestHandler;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.LinkedList;

@@ -1,7 +1,7 @@
 package gde.gui.tablemodels;
 
 import com.sun.jmx.snmp.Timestamp;
-import static gde.gui.tablemodels.CollectionTableModel.database;
+import static gde.gui.tablemodels.TableModel.database;
 import gde.models.CapturedData;
 import gde.models.Field;
 import gde.models.Field.FieldType;

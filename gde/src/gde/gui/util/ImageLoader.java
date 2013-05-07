@@ -13,6 +13,9 @@ public class ImageLoader {
     private static final ImageIcon APP_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "gde_icon2.png"));
     private static final ImageIcon REFRESH_ICON = new ImageIcon(ImageLoader.class.getResource(RESOURCE_ROOT + "refresh_icon_small.png"));
 
+    private ImageLoader() {
+    }
+    
     public static String getResourceRoot() {
         return RESOURCE_ROOT;
     }

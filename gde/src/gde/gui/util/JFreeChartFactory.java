@@ -8,22 +8,22 @@ import gde.models.Instance;
 import java.awt.Shape;
 import javax.swing.JTable;
 import org.bson.types.ObjectId;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.DefaultKeyedValues;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.DefaultKeyedValues;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.Rotation;
 import org.jfree.util.ShapeUtilities;
+import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
 
 /**

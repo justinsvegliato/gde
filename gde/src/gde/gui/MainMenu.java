@@ -1,13 +1,13 @@
 package gde.gui;
 
-import gde.gui.util.JFreeChartFactory;
 import gde.gui.tablemodels.CapturedDataTableModel;
 import gde.gui.tablemodels.ChartTableModel;
-import gde.gui.util.ChartTableCellRenderer;
 import gde.gui.tablemodels.InstanceTableModel;
 import gde.gui.tablemodels.SummaryTableModel;
+import gde.gui.util.ChartTableCellRenderer;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.gui.util.JFreeChartFactory;
 import gde.models.Chart;
 import gde.models.Game;
 import gde.models.Instance;

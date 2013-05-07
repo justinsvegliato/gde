@@ -12,6 +12,9 @@ public class DatabaseHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
     private static final String DATABASE = "gde";
     private static Jongo jongo;
+    
+    private DatabaseHandler() {
+    }
 
     public static Jongo getDatabase() {
         if (jongo == null) {

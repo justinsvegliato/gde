@@ -1,10 +1,10 @@
 package gde.gui;
 
-import gde.models.Developer;
-import gde.models.Game;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.models.Developer;
 import gde.models.Developer.AccountType;
+import gde.models.Game;
 import javax.swing.JOptionPane;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
