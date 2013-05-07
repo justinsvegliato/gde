@@ -16,9 +16,14 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     private final Game game;
 
+    /**
+     * Creates new form ConfigurationDialog
+     * @param game The game instance with which the admin is associated.
+     */
     public ConfigurationDialog(Game game) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        setLocationRelativeTo(null);
 
         this.game = game;
 
@@ -117,14 +122,14 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                         .add(deleteFieldButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(fieldCancelButton))
-                    .add(administrationScrollPane))
+                    .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))
                 .addContainerGap())
         );
         fieldPanelLayout.setVerticalGroup(
             fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(editFieldButton)
@@ -148,6 +153,11 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         developerTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 developerTableMouseClicked(evt);
+            }
+        });
+        developerTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                developerTableKeyReleased(evt);
             }
         });
         developerTableScrollPane.setViewportView(developerTable);
@@ -178,7 +188,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         developerPanelLayout.setHorizontalGroup(
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 454, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, developerPanelLayout.createSequentialGroup()
@@ -193,7 +203,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)
@@ -225,6 +235,11 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * On a double click of a field in the table, opens a new ManageFieldDialog. 
+     * On double or single click, enables the "edit" and "delete" buttons.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
         if (evt.getClickCount() == 2) {
             new ManageFieldDialog(game, fieldTable, true).setVisible(true);
@@ -233,14 +248,28 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         deleteFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
     }//GEN-LAST:event_fieldTableMouseClicked
 
+    /**
+     * Opens a new ManageFieldDialog to create a field when the "create field" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void createFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFieldButtonActionPerformed
         new ManageFieldDialog(game, fieldTable, false).setVisible(true);
     }//GEN-LAST:event_createFieldButtonActionPerformed
 
+    /**
+     * Opens a new ManageFieldDialog to edit a field when the "edit field" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
         new ManageFieldDialog(game, fieldTable, true).setVisible(true);
     }//GEN-LAST:event_editFieldButtonActionPerformed
 
+    /**
+     * Deletes a field and makes appropriate corrections to the database and application
+     * after the "delete field" button has been clicked and the user has confirmed that
+     * they want to take this action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all data.", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -260,47 +289,87 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         editFieldButton.setEnabled(false);
     }//GEN-LAST:event_deleteFieldButtonActionPerformed
 
+    /**
+     * Opens and populates a new ManageDeveloperDialog window when the "add developer" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void addDeveloperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDeveloperButtonActionPerformed
         new ManageDeveloperDialog(game).setVisible(true);
         ((DeveloperTableModel) developerTable.getModel()).populate();
     }//GEN-LAST:event_addDeveloperButtonActionPerformed
 
+    /**
+     * Deletes a developer and makes appropriate corrections to the database and application 
+     * after the "remove developer" button has been clicked and the user has confirmed that 
+     * they want to take this action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void removeDeveloperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDeveloperButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this developer?", "Confirm Deletion",
-                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (response == JOptionPane.YES_OPTION) {
-            DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
-            List<String> developerIds = game.getDeveloperIds();
-            Developer developer = developerTableModel.getEntryAt(developerTable.getSelectedRow());
-            int index = developerIds.indexOf(developer.getKey().toString());
-            developerIds.remove(index);
-
-            Game newGame = new Game(
-                    game.getTitle(),
-                    game.getGenre(),
-                    developerIds);
-
-            MongoCollection collection = DatabaseHandler.getDatabase().getCollection("games");
-            collection.update(game.getKey()).merge(newGame);
-            developerTableModel.populate();
+        DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
+        List<String> developerIds = game.getDeveloperIds();
+        Developer developer = developerTableModel.getEntryAt(developerTable.getSelectedRow());
+        
+        if (developer.getAccountType() == AccountType.ADMINISTRATOR) {
+            JOptionPane.showMessageDialog(this, "This account is an administrator and cannot be removed.");
         }
-        removeDeveloperButton.setEnabled(false);
+        else {
+            int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this developer?", "Confirm Deletion",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.YES_OPTION) {
+
+                int index = developerIds.indexOf(developer.getKey().toString());
+                developerIds.remove(index);
+
+                Game newGame = new Game(
+                        game.getTitle(),
+                        game.getGenre(),
+                        developerIds);
+
+                MongoCollection collection = DatabaseHandler.getDatabase().getCollection("games");
+                collection.update(game.getKey()).merge(newGame);
+                developerTableModel.populate();
+            }
+            removeDeveloperButton.setEnabled(false);
+        }
     }//GEN-LAST:event_removeDeveloperButtonActionPerformed
 
+    /**
+     * Enable the "remove developer" button if a non-admin developer is selected in the 
+     * developer table.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void developerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_developerTableMouseClicked
-        DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
-        removeDeveloperButton.setEnabled((developerTable.getSelectedRow() > 0) 
-                &&  developerTableModel.getEntryAt(developerTable.getSelectedRow()).getAccountType() != AccountType.ADMINISTRATOR);
+        enableRemoveDeveloperButton();
     }//GEN-LAST:event_developerTableMouseClicked
 
+    /**
+     * Dispose the window when the "cancel" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void fieldCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCancelButtonActionPerformed
         dispose();
     }//GEN-LAST:event_fieldCancelButtonActionPerformed
 
+    /**
+     * Dispose the window when the "cancel" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void developerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerCancelButtonActionPerformed
         dispose();
     }//GEN-LAST:event_developerCancelButtonActionPerformed
 
+    private void developerTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_developerTableKeyReleased
+        if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
+            enableRemoveDeveloperButton();
+        }
+    }//GEN-LAST:event_developerTableKeyReleased
+
+    private void enableRemoveDeveloperButton() {
+        DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
+            removeDeveloperButton.setEnabled((developerTable.getSelectedRow() > 0) 
+                &&  developerTableModel.getEntryAt(developerTable.getSelectedRow()).getAccountType() != AccountType.ADMINISTRATOR);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addDeveloperButton;
     private javax.swing.JScrollPane administrationScrollPane;

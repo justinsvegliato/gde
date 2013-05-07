@@ -19,9 +19,17 @@ public class ManageFieldDialog extends javax.swing.JDialog {
     private final JTable fieldTable;
     private final boolean editMode;
 
+    /**
+     * Instantiates a new form ManageFieldDialog
+     * @param game The associated game.
+     * @param fieldTable The associated fieldTable.
+     * @param editMode Whether or not to open the form in edit mode; else it will
+     * be opened in field creation mode.
+     */
     public ManageFieldDialog(Game game, JTable fieldTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        setLocationRelativeTo(null);
 
         this.game = game;
         this.fieldTable = fieldTable;
@@ -117,6 +125,10 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Fills the selections in the form based on the selected field, if edit mode is enabled.
+     * @param editMode Whether or not the window is open in edit mode.
+     */
     private void fillSelections(boolean editMode) {
         if (editMode) {
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
@@ -127,8 +139,15 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * Creates or changes the selected field after the "save" button is clicked and the
+     * user confirms that they want to take this action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        String message = String.format("Are you sure to %s this field? Doing so will erase all data.", editMode ? "edit" : "create");
+        String message = String.format("Are you sure to %s this field? %s",
+                                        editMode ? "edit" : "create",
+                                        editMode ? "Doing so will erase all data currently stored in the field." : "");
         int response = JOptionPane.showConfirmDialog(this, message, "Confirm Cancellation",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
@@ -158,6 +177,11 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    /**
+     * Disposes the current window after the "cancel" button is clicked and the
+     * user confirms the action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (editMode) {
             int response = JOptionPane.showConfirmDialog(this, "Are you sure you want cancel your changes?", "Confirm Cancellation",

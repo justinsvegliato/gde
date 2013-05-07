@@ -17,10 +17,15 @@ import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
 public class AccountCreationDialog extends javax.swing.JDialog {
 
+    /**
+     * Creates new form AccountCreationDialog.
+     * @param parent The parent frame which creates the AccountCreationDialog
+     */
     public AccountCreationDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        setLocationRelativeTo(null);
 
         ValidationPanel validationPanel = new ValidationPanel();
         validationPanel.setInnerComponent(registerFormPanel);

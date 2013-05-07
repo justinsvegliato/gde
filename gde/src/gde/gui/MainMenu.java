@@ -25,6 +25,11 @@ public class MainMenu extends javax.swing.JFrame {
     protected static final Jongo database = DatabaseHandler.getDatabase();
     private final Game game;
 
+    /**
+     * Instantiates a new form MainMenu.
+     * @param game The game in the database from which data will be displayed
+     * @param isAdmin Whether or not the user who logged in is an admin user.
+     */
     public MainMenu(Game game, boolean isAdmin) {
         this.game = game;
         
@@ -430,6 +435,10 @@ public class MainMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Selects all/no cells in the instance table when the select all/none checkbox is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void selectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCheckBoxActionPerformed
         if (selectCheckBox.isSelected()) {
             instanceTable.selectAll();
@@ -439,6 +448,11 @@ public class MainMenu extends javax.swing.JFrame {
         updateTabs();
     }//GEN-LAST:event_selectCheckBoxActionPerformed
 
+    /**
+     * Updates the tabs based on the instance table selections when the user releases the mouse
+     * after making a selection.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void instanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instanceTableMouseReleased
         updateTabs();
         if (instanceTable.getSelectedRowCount() != instanceTable.getRowCount()) {
@@ -446,10 +460,19 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_instanceTableMouseReleased
 
+    /**
+     * Opens a new ManageChartDialog when the "edit chart" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void editChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editChartButtonActionPerformed
         new ManageChartDialog(game, chartTable, true).setVisible(true);
     }//GEN-LAST:event_editChartButtonActionPerformed
 
+    /**
+     * Prompts the user to confirm that they want to delete a chart after the 
+     * "delete chart" button is pressed.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this chart?", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -460,10 +483,20 @@ public class MainMenu extends javax.swing.JFrame {
         editChartButton.setEnabled(false);
     }//GEN-LAST:event_deleteChartButtonActionPerformed
 
+    /**
+     * Opens a new ManageChartDialog when the "create chart" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void createChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButtonActionPerformed
         new ManageChartDialog(game, chartTable, false).setVisible(true);
     }//GEN-LAST:event_createChartButtonActionPerformed
 
+    /**
+     * Opens a new ManageChartDialog when the user double clicks a cell in the 
+     * chart table. Regardless of click count, updates the chart view and enables
+     * the "edit" and "delete" buttons.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void chartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chartTableMouseClicked
         if (evt.getClickCount() == 2) {
             new ManageChartDialog(game, chartTable, true).setVisible(true);
@@ -473,6 +506,11 @@ public class MainMenu extends javax.swing.JFrame {
         deleteChartButton.setEnabled(chartTable.getSelectedRowCount() > 0);
     }//GEN-LAST:event_chartTableMouseClicked
 
+    /**
+     * Updates the tabs if the user changes the selected instances in the instance table
+     * via keyboard up and down keys.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void instanceTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_instanceTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
             updateTabs();
@@ -482,46 +520,82 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_instanceTableKeyReleased
 
+    /**
+     * Updates the chart view if the user changes the selected charts in the chart table
+     * via keyboard up and down keys.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void chartTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chartTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
             updateChart();
         }
     }//GEN-LAST:event_chartTableKeyReleased
 
+    /**
+     * Refreshes the instance table when the "refresh" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         refreshInstancesTable();
     }//GEN-LAST:event_refreshButtonActionPerformed
 
+    /**
+     * Disposes the current window and opens a new LoginFrame window when the 
+     * "logout" menu option is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void logoutMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuButtonActionPerformed
         dispose();
         new LoginFrame().setVisible(true);
     }//GEN-LAST:event_logoutMenuButtonActionPerformed
 
+    /**
+     * Refreshes the instance table when the "refresh" menu option is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void refreshMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshMenuButtonActionPerformed
         refreshInstancesTable();
     }//GEN-LAST:event_refreshMenuButtonActionPerformed
 
+    /**
+     * Re-populates the instance table and updates the tabs.
+     */
     public void refreshInstancesTable() {
         ((InstanceTableModel) instanceTable.getModel()).populate();
         updateTabs();
         selectCheckBox.setSelected(false);
     }
     
+    /**
+     * Opens a new ConfigurationDialog window and subsequently updates the tabs when the
+     * "configure" menu option is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void configureMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureMenuItemActionPerformed
         new ConfigurationDialog(game).setVisible(true);       
         updateTabs();
         updateSummaryLabels();
     }//GEN-LAST:event_configureMenuItemActionPerformed
 
+    /**
+     * Opens a new AboutDialog when the "about" menu option is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         new AboutDialog().setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    /**
+     * Updates the tables and the chart view in this form.
+     */
     private void updateTabs() {
         updateTables();
         updateChart();
     }
 
+    /**
+     * Re-populates the tables based on the instances selected in the instance table.
+     */
     private void updateTables() {
         if (instanceTable.getSelectedRows().length >= 0) {
             InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
@@ -544,6 +618,9 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Updates the chart view based on the selected chart in the chart table.
+     */
     private void updateChart() {
         if (chartTable.getSelectedRow() != -1) {
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
@@ -555,6 +632,9 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Updates the summary labels in the "summary" tab.
+     */
     private void updateSummaryLabels() {
         MongoCollection fieldCollection = database.getCollection("fields");
         MongoCollection instanceCollection = database.getCollection("instances");

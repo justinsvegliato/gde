@@ -102,6 +102,10 @@ public class AboutDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Disposes the dialog window when the "return" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void returnButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnButtonActionPerformed
         dispose();
     }//GEN-LAST:event_returnButtonActionPerformed

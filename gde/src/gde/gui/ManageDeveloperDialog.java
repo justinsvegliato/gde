@@ -12,8 +12,13 @@ import org.jongo.MongoCollection;
 public class ManageDeveloperDialog extends javax.swing.JDialog {
     private final Game game;
 
+    /**
+     * Instantiates a new form ManageDeveloperDialog
+     * @param game The game with which the form should be associated.
+     */
     public ManageDeveloperDialog(Game game) {
         initComponents();
+        setLocationRelativeTo(null);
 
         this.game = game;
         
@@ -99,6 +104,10 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Associates the selected user to the currently associated game and disposes the window.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         dispose();
         
@@ -118,6 +127,11 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
         collection.update(game.getKey()).merge(newGame);
     }//GEN-LAST:event_selectButtonActionPerformed
 
+    /**
+     * Cancels the action and disposes the windows after the "cancel" button is clicked
+     * and the user confirms that they want to take this action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (unassociatedDeveloperTable.getSelectedRows().length > 0) {
             int response = JOptionPane.showConfirmDialog(this, "Are you sure you want cancel your changes?", "Confirm Cancellation",

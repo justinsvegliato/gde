@@ -45,7 +45,7 @@
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="loginFormContainer" max="32767" attributes="0"/>
-                  <Component id="logoLabel" pref="206" max="32767" attributes="0"/>
+                  <Component id="logoLabel" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
           </Group>
@@ -68,7 +68,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="nameLabel" alignment="0" pref="300" max="32767" attributes="0"/>
+              <Component id="nameLabel" alignment="0" pref="280" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="gameLabel" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -106,7 +106,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="nameLabel" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="usernameLabel" alignment="3" min="-2" pref="16" max="-2" attributes="0"/>
                       <Component id="usernameTextField" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -121,7 +121,7 @@
                       <Component id="gameComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="gameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="exitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="loginButton" alignment="3" min="-2" max="-2" attributes="0"/>

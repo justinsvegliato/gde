@@ -14,6 +14,9 @@ public class LoginFrame extends javax.swing.JFrame {
     private static final Jongo database = DatabaseHandler.getDatabase();
     private boolean isAdmin = false;
 
+    /**
+     * Instantiates a new form LoginFrame.
+     */
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(loginButton);
@@ -154,10 +157,20 @@ public class LoginFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Ends the application when the "exit" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitButtonActionPerformed
 
+    /**
+     * When the "login / choose game" button is clicked, takes the appropriate actions
+     * in checking the username / encrypted password and the games with which the user
+     * is associated. 
+     * @param evt The swing ActionEvent trigger.
+     */
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String command = evt.getActionCommand();
         if (command.equals("Login")) {
@@ -198,10 +211,20 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
+    /**
+     * Opens a new AccountCreationDialog when the "register" button is clicked.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         new AccountCreationDialog(this);
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    /**
+     * Returns the developer in the database with the given username and password.
+     * @param username Developer's username.
+     * @param password Developer's password.
+     * @return Developer object.
+     */
     private Developer getDeveloper(String username, String password) {
         MongoCollection developersCollection = database.getCollection("developers");
         String query = String.format("{username: '%s', password: '%s'}", username, password);

@@ -22,9 +22,16 @@ public class ManageChartDialog extends javax.swing.JDialog {
     private final JTable chartTable;
     private final boolean editMode;
     
+    /**
+     * Instantiates a new form ManageChartDialog with a given game and chartTable.
+     * @param game The game with which the form should be associated.
+     * @param chartTable The chartTable with which the form should be associated.
+     * @param editMode Whether or not to enable edit mode; else the form will be opened in create mode.
+     */
     public ManageChartDialog(Game game, JTable chartTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
+        setLocationRelativeTo(null);
 
         this.game = game;
         this.chartTable = chartTable;
@@ -144,6 +151,10 @@ public class ManageChartDialog extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Populates the field choice combo boxes when a chart type is selected.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
         ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
         populateFieldComboBoxes(chartType);
@@ -151,6 +162,11 @@ public class ManageChartDialog extends javax.swing.JDialog {
         fillSelections(false);
     }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
 
+    /**
+     * Returns a part of a query string to filter based on the given chart type.
+     * @param chartType Chart type to filter on.
+     * @return String to be used in a database query.
+     */
     private String getChoiceFilter(ChartType chartType) {
         String template = ", type: {$in:[%s]}";
         String filter;
@@ -168,6 +184,10 @@ public class ManageChartDialog extends javax.swing.JDialog {
         return "";
     }
 
+    /**
+     * Fills the form combo boxes after querying the database for the selected chart's data.
+     * @param changeChart Whether or not the selected chart has changed.
+     */
     private void fillSelections(boolean changeChart) {
         if (editMode) {
             MongoCollection fieldsCollection = database.getCollection("fields");
@@ -184,6 +204,10 @@ public class ManageChartDialog extends javax.swing.JDialog {
         }
     }
     
+    /**
+     * Populates the field combo boxes based on the field collection in the database.
+     * @param chartType Type of chart selected.
+     */
     private void populateFieldComboBoxes(ChartType chartType) {
         MongoCollection fieldsCollection = database.getCollection("fields");
         String query = String.format("{gameId: '%s'%s}", game.getKey().toString(), chartType == null ? "" : getChoiceFilter(chartType));
@@ -196,12 +220,19 @@ public class ManageChartDialog extends javax.swing.JDialog {
         }
     }
     
+    /**
+     * Populates the chart type selection combo box.
+     */
     private void populateChartComboBox() {
         for (ChartType fieldType : Chart.ChartType.values()) {
             chartTypeComboBox.addItem(fieldType);
         }
     }
 
+    /**
+     * Disposes the current window and stores the changes made to the selected chart.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         dispose();
 
@@ -224,6 +255,11 @@ public class ManageChartDialog extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
+    /**
+     * Cancels the changes made to the chart after the "cancel" button is clicked
+     * and the user confirms that they want to take this action.
+     * @param evt The swing ActionEvent trigger.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (editMode) {
             int response = JOptionPane.showConfirmDialog(null, "Are you sure you want cancel your changes?", "Confirm Cancellation",
