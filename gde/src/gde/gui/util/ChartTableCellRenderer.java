@@ -32,8 +32,6 @@ public class ChartTableCellRenderer extends DefaultTableCellRenderer {
                 return ImageLoader.getPieIcon();
             case LINE:
                 return ImageLoader.getLineIcon();
-            case BAR:
-                return ImageLoader.getBarIcon();
             case MAP:
                 return ImageLoader.getMapIcon();
             case SCATTER:

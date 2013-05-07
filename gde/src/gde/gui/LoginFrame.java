@@ -1,10 +1,10 @@
 package gde.gui;
 
-import gde.models.Developer;
-import gde.models.Game;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.models.Developer;
 import gde.models.Developer.AccountType;
+import gde.models.Game;
 import javax.swing.JOptionPane;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
@@ -52,13 +52,31 @@ public class LoginFrame extends javax.swing.JFrame {
 
         usernameLabel.setText("Username");
 
+        usernameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                usernameTextFieldKeyReleased(evt);
+            }
+        });
+
+        passwordTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                passwordTextFieldKeyReleased(evt);
+            }
+        });
+
         passwordLabel.setText("Password");
 
         gameLabel.setText("Game");
 
         gameComboBox.setEnabled(false);
+        gameComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                gameComboBoxItemStateChanged(evt);
+            }
+        });
 
         loginButton.setText("Login");
+        loginButton.setEnabled(false);
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginButtonActionPerformed(evt);
@@ -189,6 +207,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     usernameTextField.setEnabled(false);
                     passwordTextField.setEnabled(false);
                     registerButton.setVisible(false);
+                    gameComboBox.addItem("Select a game...");
                     for (Game game : games) {
                         gameComboBox.addItem(game);
                     }
@@ -219,12 +238,20 @@ public class LoginFrame extends javax.swing.JFrame {
         new AccountCreationDialog(this);
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    /**
-     * Returns the developer in the database with the given username and password.
-     * @param username Developer's username.
-     * @param password Developer's password.
-     * @return Developer object.
-     */
+    private void gameComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_gameComboBoxItemStateChanged
+        loginButton.setEnabled(!gameComboBox.getSelectedItem().equals("Select a game..."));
+    }//GEN-LAST:event_gameComboBoxItemStateChanged
+
+    private void usernameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTextFieldKeyReleased
+        boolean isValid = !usernameTextField.getText().trim().isEmpty() && !passwordTextField.getText().trim().isEmpty();
+        loginButton.setEnabled(isValid);
+    }//GEN-LAST:event_usernameTextFieldKeyReleased
+
+    private void passwordTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTextFieldKeyReleased
+        boolean isValid = !usernameTextField.getText().trim().isEmpty() && !passwordTextField.getText().trim().isEmpty();
+        loginButton.setEnabled(isValid);
+    }//GEN-LAST:event_passwordTextFieldKeyReleased
+
     private Developer getDeveloper(String username, String password) {
         MongoCollection developersCollection = database.getCollection("developers");
         String query = String.format("{username: '%s', password: '%s'}", username, password);

@@ -1,31 +1,47 @@
 package gde.gui;
 
+import gde.gui.tablemodels.CapturedDataTableModel;
+import gde.gui.tablemodels.ChartTableModel;
 import gde.gui.tablemodels.DeveloperTableModel;
 import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.models.Chart;
 import gde.models.Developer;
 import gde.models.Developer.AccountType;
+import gde.models.Field;
 import gde.models.Game;
 import gde.models.Instance;
+import java.awt.BorderLayout;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
 public class ConfigurationDialog extends javax.swing.JDialog {
 
     private final Game game;
+    private final JTable chartTable;
+    private final JTable capturedDataTable;
+    private final JPanel chartContainerPanel;
+    private final JButton editButton;
+    private final JButton deleteButton;
 
-    /**
-     * Creates new form ConfigurationDialog
-     * @param game The game instance with which the admin is associated.
-     */
-    public ConfigurationDialog(Game game) {
+    public ConfigurationDialog(Game game, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, JButton editButton, JButton deleteButton) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         setLocationRelativeTo(null);
 
         this.game = game;
+        this.chartTable = chartTable;
+        this.capturedDataTable = capturedDataTable;
+        this.chartContainerPanel = chartContainerPanel;
+        this.editButton = editButton;
+        this.deleteButton = deleteButton;
 
         FieldTableModel fieldTableModel = new FieldTableModel(game);
         fieldTable.setModel(fieldTableModel);
@@ -47,13 +63,13 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         editFieldButton = new javax.swing.JButton();
         createFieldButton = new javax.swing.JButton();
         deleteFieldButton = new javax.swing.JButton();
-        fieldCancelButton = new javax.swing.JButton();
+        fieldExitButton = new javax.swing.JButton();
         developerPanel = new javax.swing.JPanel();
         developerTableScrollPane = new javax.swing.JScrollPane();
         developerTable = new javax.swing.JTable();
         addDeveloperButton = new javax.swing.JButton();
         removeDeveloperButton = new javax.swing.JButton();
-        developerCancelButton = new javax.swing.JButton();
+        developerExitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Admin Configuration");
@@ -99,10 +115,10 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }
         });
 
-        fieldCancelButton.setText("Cancel");
-        fieldCancelButton.addActionListener(new java.awt.event.ActionListener() {
+        fieldExitButton.setText("Exit");
+        fieldExitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldCancelButtonActionPerformed(evt);
+                fieldExitButtonActionPerformed(evt);
             }
         });
 
@@ -121,8 +137,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(deleteFieldButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(fieldCancelButton))
-                    .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))
+                        .add(fieldExitButton))
+                    .add(administrationScrollPane))
                 .addContainerGap())
         );
         fieldPanelLayout.setVerticalGroup(
@@ -135,7 +151,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                     .add(editFieldButton)
                     .add(deleteFieldButton)
                     .add(createFieldButton)
-                    .add(fieldCancelButton))
+                    .add(fieldExitButton))
                 .addContainerGap())
         );
 
@@ -176,10 +192,10 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }
         });
 
-        developerCancelButton.setText("Cancel");
-        developerCancelButton.addActionListener(new java.awt.event.ActionListener() {
+        developerExitButton.setText("Exit");
+        developerExitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                developerCancelButtonActionPerformed(evt);
+                developerExitButtonActionPerformed(evt);
             }
         });
 
@@ -196,7 +212,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(removeDeveloperButton)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(developerCancelButton)))
+                        .add(developerExitButton)))
                 .addContainerGap())
         );
         developerPanelLayout.setVerticalGroup(
@@ -208,7 +224,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)
                     .add(addDeveloperButton)
-                    .add(developerCancelButton))
+                    .add(developerExitButton))
                 .addContainerGap())
         );
 
@@ -220,7 +236,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationTabbedPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                .add(administrationTabbedPanel)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -242,7 +258,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      */
     private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
         if (evt.getClickCount() == 2) {
-            new ManageFieldDialog(game, fieldTable, true).setVisible(true);
+            new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, true).setVisible(true);
         }
         editFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
         deleteFieldButton.setEnabled(fieldTable.getSelectedRowCount() > 0);
@@ -253,7 +269,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void createFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFieldButtonActionPerformed
-        new ManageFieldDialog(game, fieldTable, false).setVisible(true);
+        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, false).setVisible(true);
     }//GEN-LAST:event_createFieldButtonActionPerformed
 
     /**
@@ -261,7 +277,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
-        new ManageFieldDialog(game, fieldTable, true).setVisible(true);
+        new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, true).setVisible(true);
     }//GEN-LAST:event_editFieldButtonActionPerformed
 
     /**
@@ -271,17 +287,37 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all data.", "Confirm Deletion",
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all data. MEOW", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            Field removedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
+            String removedFieldKey = removedField.getKey().toString();
             ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());
+            
+            MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
+            String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", removedFieldKey, removedFieldKey);
+            Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
+            ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
+            for (Chart chart : charts) {
+                chartTableModel.remove(new int[] {chartTableModel.getIds().indexOf(chart.getKey())});
+            }            
+            
+            capturedDataTable.setModel(new CapturedDataTableModel(game));
+                                        
+            if (chartTable.getSelectedRow() == -1) {
+                chartContainerPanel.removeAll();
+                chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                chartContainerPanel.validate();
+                editButton.setEnabled(false);
+                deleteButton.setEnabled(false);
+            }
+            
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
             MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
             for (Instance instance : instances) { 
                 String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                System.out.println(instanceQuery);
                 capturedDataCollection.remove(instanceQuery);
             }
         }
@@ -348,7 +384,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      */
     private void fieldCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCancelButtonActionPerformed
         dispose();
-    }//GEN-LAST:event_fieldCancelButtonActionPerformed
+    }//GEN-LAST:event_fieldExitButtonActionPerformed
 
     /**
      * Dispose the window when the "cancel" button is clicked.
@@ -356,7 +392,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      */
     private void developerCancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerCancelButtonActionPerformed
         dispose();
-    }//GEN-LAST:event_developerCancelButtonActionPerformed
+    }//GEN-LAST:event_developerExitButtonActionPerformed
 
     private void developerTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_developerTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
@@ -376,12 +412,12 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     private javax.swing.JTabbedPane administrationTabbedPanel;
     private javax.swing.JButton createFieldButton;
     private javax.swing.JButton deleteFieldButton;
-    private javax.swing.JButton developerCancelButton;
+    private javax.swing.JButton developerExitButton;
     private javax.swing.JPanel developerPanel;
     private javax.swing.JTable developerTable;
     private javax.swing.JScrollPane developerTableScrollPane;
     private javax.swing.JButton editFieldButton;
-    private javax.swing.JButton fieldCancelButton;
+    private javax.swing.JButton fieldExitButton;
     private javax.swing.JPanel fieldPanel;
     private javax.swing.JTable fieldTable;
     private javax.swing.JButton removeDeveloperButton;

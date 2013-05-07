@@ -5,15 +5,36 @@ import gde.models.Game;
 import javax.swing.SwingUtilities;
 import org.bson.types.ObjectId;
 
+/**
+ * The DeveloperTableModel class handles all interactions with the table that contains data types of this sort.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class DeveloperTableModel extends CollectionTableModel<Developer> {
+    
+    /** the types of the columns of this table */
     private static final Class[] TYPES = {String.class, String.class, String.class};
+    
+    /** the titles of the columns of this table */
     private static final String[] TITLES = {"Name", "Company", "Username"};
+    
+    /** the collection that will be operated upon */
     private static final String COLLECTION = "developers";
     
+    /**
+     * Creates newly-instantiated DeveloperTableModel object.
+     * 
+     * @param game the game that this table will be associated to.
+     */
     public DeveloperTableModel(Game game) {
         super(game, TYPES, TITLES, COLLECTION);
     }
 
+    /**
+     * Populates the table with all developers in the collection that match the specified query.
+     * 
+     * @param query the query that will be used to retrieve the documents
+     */
     @Override
     public void populate(String query) {
         ids.clear();
@@ -29,6 +50,9 @@ public class DeveloperTableModel extends CollectionTableModel<Developer> {
         }
     }
     
+    /**
+     * Populates the table with all developers in the collection that are associated with the game.
+     */
     @Override
     public void populate() {
         StringBuilder builder = new StringBuilder();        
@@ -41,11 +65,23 @@ public class DeveloperTableModel extends CollectionTableModel<Developer> {
         populate(query);
     }
     
+    /**
+     * Gets the Developer at the specified row.
+     * 
+     * @param rowId the row which contains the Developer
+     * @return the Developer at the specified row.
+     */
     @Override
     public Developer getEntryAt(int rowId) {
         return collection.findOne(ids.get(rowId)).as(Developer.class);
     }
 
+   /**
+     * Sets the Developer at the specified row with the specified Developer.
+     * 
+     * @param rowId the id of the row that will be updated.
+     * @param entry the Developer to be inserted into this position.
+     */
     @Override
     public void setEntryAt(int rowId, Developer entry) {
         setValueAt(entry.getFirstName() + " " + entry.getLastName(), rowId, 0);
@@ -53,6 +89,11 @@ public class DeveloperTableModel extends CollectionTableModel<Developer> {
         setValueAt(entry.getUsername(), rowId, 2);
     }
 
+    /**
+     * Adds a row to the end of the table.
+     * 
+     * @param entry the Developer to be added.
+     */
     @Override
     protected void addRow(Developer entry) {
         addRow(new Object[] {

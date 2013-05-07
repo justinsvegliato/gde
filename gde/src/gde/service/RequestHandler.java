@@ -1,12 +1,12 @@
 package gde.service;
 
-import gde.service.util.Request;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.WriteResult;
 import gde.models.CapturedData;
 import gde.models.Instance;
+import gde.service.util.Request;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import org.jongo.Jongo;

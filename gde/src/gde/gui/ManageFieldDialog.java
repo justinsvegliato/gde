@@ -1,45 +1,50 @@
 package gde.gui;
 
-import com.mongodb.WriteResult;
+import gde.gui.tablemodels.CapturedDataTableModel;
+import gde.gui.tablemodels.ChartTableModel;
 import gde.gui.tablemodels.FieldTableModel;
 import gde.gui.util.DatabaseHandler;
 import gde.gui.util.ImageLoader;
+import gde.models.Chart;
 import gde.models.Field;
 import gde.models.Field.FieldType;
 import gde.models.Game;
 import gde.models.Instance;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
-import org.jongo.Find;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
 public class ManageFieldDialog extends javax.swing.JDialog {
 
     private final Game game;
-    private final JTable fieldTable;
     private final boolean editMode;
+    private final JTable fieldTable;
+    private final JTable chartTable;
+    private final JTable capturedDataTable;
+    private final JPanel chartContainerPanel;
 
-    /**
-     * Instantiates a new form ManageFieldDialog
-     * @param game The associated game.
-     * @param fieldTable The associated fieldTable.
-     * @param editMode Whether or not to open the form in edit mode; else it will
-     * be opened in field creation mode.
-     */
-    public ManageFieldDialog(Game game, JTable fieldTable, boolean editMode) {
+    public ManageFieldDialog(Game game, JTable fieldTable, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
-        setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(saveButton);
 
         this.game = game;
         this.fieldTable = fieldTable;
         this.editMode = editMode;
+        this.chartTable = chartTable;
+        this.capturedDataTable = capturedDataTable;
+        this.chartContainerPanel = chartContainerPanel;
 
         for (FieldType type : Field.FieldType.values()) {
             typeComboBox.addItem(type);
         }
 
         fillSelections(editMode);
+        saveButton.setEnabled(editMode);
     }
 
     @SuppressWarnings("unchecked")
@@ -76,6 +81,12 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
+            }
+        });
+
+        nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nameTextFieldKeyReleased(evt);
             }
         });
 
@@ -152,17 +163,16 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
             dispose();
-            
+
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
             MongoCollection capturedDataCollection = DatabaseHandler.getDatabase().getCollection("captureddata");
-            for (Instance instance : instances) { 
+            for (Instance instance : instances) {
                 String instanceQuery = String.format("{instanceId: '%s'}", instance.getKey().toString());
-                System.out.println(instanceQuery);
                 capturedDataCollection.remove(instanceQuery);
             }
-
+            
             Field newField = new Field(
                     nameTextField.getText(),
                     (FieldType) typeComboBox.getSelectedItem(),
@@ -170,10 +180,29 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
             if (editMode) {
-                fieldTableModel.update(newField, fieldTable.getSelectedRow());
+                Field editedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
+                String editedFieldKey = editedField.getKey().toString();
+                fieldTableModel.update(newField, fieldTable.getSelectedRow());               
+                
+                if (chartTable.getSelectedRow() == -1) {
+                    chartContainerPanel.removeAll();
+                    chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
+                    chartContainerPanel.validate();
+                }
+                
+                MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
+                String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", editedFieldKey, editedFieldKey);
+                Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
+                ChartTableModel chartTableModel = (ChartTableModel) chartTable.getModel();
+                for (Chart chart : charts) {
+                    chartTableModel.remove(new int[]{chartTableModel.getIds().indexOf(chart.getKey())});
+
+                }
             } else {
                 fieldTableModel.add(newField);
             }
+            
+            capturedDataTable.setModel(new CapturedDataTableModel(game));
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
@@ -192,6 +221,11 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         }
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
+        saveButton.setEnabled(!nameTextField.getText().trim().isEmpty());
+    }//GEN-LAST:event_nameTextFieldKeyReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel nameLabel;

@@ -31,7 +31,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
     public ManageChartDialog(Game game, JTable chartTable, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
-        setLocationRelativeTo(null);
+        getRootPane().setDefaultButton(saveButton);
 
         this.game = game;
         this.chartTable = chartTable;
@@ -156,9 +156,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
-        ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();
+        ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();     
         populateFieldComboBoxes(chartType);
-        xAxisComboBox.setEnabled(chartType != ChartType.PIE);
         fillSelections(false);
     }//GEN-LAST:event_chartTypeComboBoxInputStateChanged
 
@@ -172,7 +171,6 @@ public class ManageChartDialog extends javax.swing.JDialog {
         String filter;
         switch (chartType) {
             case PIE:
-            case BAR:
                 filter = "'" + FieldType.TEXT.name() + "'";
                 return String.format(template, filter);
             case LINE:
@@ -190,14 +188,19 @@ public class ManageChartDialog extends javax.swing.JDialog {
      */
     private void fillSelections(boolean changeChart) {
         if (editMode) {
+            titleLabel.setText("Edit Chart");
+
             MongoCollection fieldsCollection = database.getCollection("fields");
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
-            Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
+            if (chart.getxAxisFieldId() != null) {
+                Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
+                xAxisComboBox.setSelectedItem(xAxisField);
+            }
+
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
-            titleLabel.setText("Edit Chart");
             yAxisComboBox.setSelectedItem(yAxisField);
-            xAxisComboBox.setSelectedItem(xAxisField);
+
             if (changeChart) {
                 chartTypeComboBox.setSelectedItem(chart.getChartType());
             }
@@ -218,6 +221,10 @@ public class ManageChartDialog extends javax.swing.JDialog {
             yAxisComboBox.addItem(field);
             xAxisComboBox.addItem(field);
         }
+                
+        saveButton.setEnabled(yAxisComboBox.getItemCount() > 0);
+        yAxisComboBox.setEnabled(yAxisComboBox.getItemCount() > 0);
+        xAxisComboBox.setEnabled((chartType != ChartType.PIE) && (yAxisComboBox.getItemCount() > 0));
     }
     
     /**

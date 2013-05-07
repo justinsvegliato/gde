@@ -8,22 +8,22 @@ import gde.models.Instance;
 import java.awt.Shape;
 import javax.swing.JTable;
 import org.bson.types.ObjectId;
-import org.jfree.chart.JFreeChart;
-import org.jfree.data.DefaultKeyedValues;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jongo.Jongo;
-import org.jongo.MongoCollection;
 import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.data.DefaultKeyedValues;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.Rotation;
 import org.jfree.util.ShapeUtilities;
+import org.jongo.Jongo;
+import org.jongo.MongoCollection;
 
 
 /**
@@ -34,7 +34,7 @@ import org.jfree.util.ShapeUtilities;
  */
 public enum JFreeChartFactory {
 
-    /** the singleton */
+    /** the singleton enum */
     INSTANCE;
     
     /** the Jongo object used to easily interact with the database */
@@ -92,12 +92,14 @@ public enum JFreeChartFactory {
         for (int i : selectedRows) {
             Instance instance = model.getEntryAt(i);
             String query = String.format("{instanceId: '%s'}", instance.getKey().toString());
-            CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
-            String stat = capturedData.getData().get(field.getName().toLowerCase());
-            if (keyedValues.getKeys().contains(stat)) {
-                keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
-            } else {
-                keyedValues.setValue(stat, 1);
+            if (capturedDataCollection.count(query) > 0) {
+                CapturedData capturedData = capturedDataCollection.find(query).sort("{_id: -1}").limit(1).as(CapturedData.class).iterator().next();
+                String stat = capturedData.getData().get(field.getName().toLowerCase());
+                if (keyedValues.getKeys().contains(stat)) {
+                    keyedValues.addValue(stat, keyedValues.getValue(stat).intValue() + 1);
+                } else {
+                    keyedValues.setValue(stat, 1);
+                }
             }
         }
 

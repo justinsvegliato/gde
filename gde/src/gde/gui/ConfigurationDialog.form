@@ -28,7 +28,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="administrationTabbedPanel" pref="487" max="32767" attributes="0"/>
+              <Component id="administrationTabbedPanel" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -71,7 +71,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="deleteFieldButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="fieldCancelButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="fieldExitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="administrationScrollPane" pref="462" max="32767" attributes="0"/>
                       </Group>
@@ -89,7 +89,7 @@
                           <Component id="editFieldButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="deleteFieldButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="createFieldButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="fieldCancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="fieldExitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -148,12 +148,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteFieldButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="fieldCancelButton">
+            <Component class="javax.swing.JButton" name="fieldExitButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cancel"/>
+                <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldCancelButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="fieldExitButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -179,7 +179,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="removeDeveloperButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="developerCancelButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="developerExitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -195,7 +195,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="removeDeveloperButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addDeveloperButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="developerCancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="developerExitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -248,12 +248,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeDeveloperButtonActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="developerCancelButton">
+            <Component class="javax.swing.JButton" name="developerExitButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Cancel"/>
+                <Property name="text" type="java.lang.String" value="Exit"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="developerCancelButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="developerExitButtonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
