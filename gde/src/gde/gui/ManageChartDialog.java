@@ -207,6 +207,7 @@ public class ManageChartDialog extends javax.swing.JDialog {
         if (editMode) {
             titleLabel.setText("Edit Chart");
 
+            // Fills the x axis combo box depending on the chart type
             MongoCollection fieldsCollection = database.getCollection("fields");
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());
@@ -214,10 +215,12 @@ public class ManageChartDialog extends javax.swing.JDialog {
                 Field xAxisField = fieldsCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
                 xAxisComboBox.setSelectedItem(xAxisField);
             }
-
+            
+            // Always fills the y axis combo box regardless of the chart type
             Field yAxisField = fieldsCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
             yAxisComboBox.setSelectedItem(yAxisField);
 
+            // If the chart already exists, selects the previous chart type selection
             if (changeChart) {
                 chartTypeComboBox.setSelectedItem(chart.getChartType());
             }
@@ -233,13 +236,16 @@ public class ManageChartDialog extends javax.swing.JDialog {
         MongoCollection fieldsCollection = database.getCollection("fields");
         String query = String.format("{gameId: '%s'%s}", game.getKey().toString(), chartType == null ? "" : getChoiceFilter(chartType));
         Iterable<Field> fields = fieldsCollection.find(query).as(Field.class);
+        
+        // Removes and then adds all fields to the combo boxes
         yAxisComboBox.removeAllItems();
-        xAxisComboBox.removeAllItems();
+        xAxisComboBox.removeAllItems();      
         for (Field field : fields) {
             yAxisComboBox.addItem(field);
             xAxisComboBox.addItem(field);
         }
                 
+        // Adjust the user interface to account for validation
         saveButton.setEnabled(yAxisComboBox.getItemCount() > 0);
         yAxisComboBox.setEnabled(yAxisComboBox.getItemCount() > 0);
         xAxisComboBox.setEnabled((chartType != ChartType.PIE) && (yAxisComboBox.getItemCount() > 0));

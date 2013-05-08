@@ -42,6 +42,7 @@ public class MainMenu extends javax.swing.JFrame {
     public MainMenu(Game game, boolean isAdmin) {
         this.game = game;
 
+        // The following code sets up all tables in on the main component of the application
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         refreshButton.setIcon(ImageLoader.getRefreshIcon());
@@ -619,7 +620,9 @@ public class MainMenu extends javax.swing.JFrame {
      * Re-populates the tables based on the instances selected in the instance table.
      */
     private void updateTables() {
+        // If there are instances selected, we update the tables
         if (instanceTable.getSelectedRows().length >= 0) {
+            // Builds the query and then updates the captured data table
             InstanceTableModel instanceTableModel = ((InstanceTableModel) instanceTable.getModel());
             StringBuilder filter = new StringBuilder();
             int[] selectedRows = instanceTable.getSelectedRows();
@@ -644,6 +647,7 @@ public class MainMenu extends javax.swing.JFrame {
      * Updates the chart view based on the selected chart in the chart table.
      */
     private void updateChart() {
+        // If a chart is selected, update the chart that is currently being viewed
         if (chartTable.getSelectedRow() != -1) {
             ChartTableModel chartTableModel = ((ChartTableModel) chartTable.getModel());
             Chart chart = chartTableModel.getEntryAt(chartTable.getSelectedRow());

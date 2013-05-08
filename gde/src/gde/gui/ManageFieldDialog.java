@@ -66,6 +66,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         this.capturedDataTable = capturedDataTable;
         this.chartContainerPanel = chartContainerPanel;
 
+        // Populates all of the fields in the combo box
         for (FieldType type : Field.FieldType.values()) {
             typeComboBox.addItem(type);
         }
@@ -192,6 +193,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         if (response == JOptionPane.YES_OPTION) {
             dispose();
 
+            // Empties the database because of field merging conflicts (will fix this later)
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
@@ -207,12 +209,15 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                     (FieldType) typeComboBox.getSelectedItem(),
                     game.getKey().toString());
 
+            // Handles the dialog differently depending on whether it is in edit mode
             FieldTableModel fieldTableModel = ((FieldTableModel) fieldTable.getModel());
-            if (editMode) {                
+            if (editMode) {      
+                // Updates the field according to the user's selection
                 Field editedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
                 String editedFieldKey = editedField.getKey().toString();
                 fieldTableModel.update(newField, fieldTable.getSelectedRow());               
                 
+                // Removes any charts that use this field
                 MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
                 String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", editedFieldKey, editedFieldKey);
                 Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
@@ -221,6 +226,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
                     chartTableModel.remove(new int[]{chartTableModel.getIds().indexOf(chart.getKey())});
                 }
                 
+                // Updates the chart table if none are selected
                 if (chartTable.getSelectedRow() == -1) {
                     chartContainerPanel.removeAll();
                     chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);

@@ -31,6 +31,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
 
         this.game = game;
         
+        // Creates the a component of the developer query
         MongoCollection collection = DatabaseHandler.getDatabase().getCollection("developers");
         StringBuilder builder = new StringBuilder();        
         for (int i = 0; i < game.getDeveloperIds().size(); i++) {            
@@ -39,6 +40,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
             builder.append("'").append(developer.getUsername()).append("'").append(delimiter);
         }
         
+        // Populates the developer table with developers that are not associated with thsi game
         String query = String.format("{username: {$nin: [%s]}, accountType: {$ne: 'ADMINISTRATOR'}}", builder.toString());
         DeveloperTableModel unassociatedDeveloperTableModel = new DeveloperTableModel(game);
         unassociatedDeveloperTable.setModel(unassociatedDeveloperTableModel);
@@ -121,6 +123,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         dispose();
         
+        // Adds the developer ids to the game
         DeveloperTableModel developerTableModel = (DeveloperTableModel) unassociatedDeveloperTable.getModel();
         List<String> developerIds = game.getDeveloperIds();
         for (int selectedRow : unassociatedDeveloperTable.getSelectedRows()) {

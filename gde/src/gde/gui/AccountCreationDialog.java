@@ -34,6 +34,7 @@ public class AccountCreationDialog extends javax.swing.JDialog {
         setIconImage(ImageLoader.getAppIcon().getImage());
         setLocationRelativeTo(null);
 
+        // The following code sets up all of the validation by leveraging the framework
         ValidationPanel validationPanel = new ValidationPanel();
         validationPanel.setInnerComponent(registerFormPanel);
         setContentPane(validationPanel);
@@ -67,6 +68,7 @@ public class AccountCreationDialog extends javax.swing.JDialog {
 
         validationPanel.getValidationGroup().add(usernameTextField, usernameValidator);
 
+        // Spawns the dialog window and subsequently inserts a new developer if the OK button is clicked
         if (validationPanel.showOkCancelDialog("Registration")) {
             MongoCollection collection = DatabaseHandler.getDatabase().getCollection("developers");
             Developer developer = new Developer(

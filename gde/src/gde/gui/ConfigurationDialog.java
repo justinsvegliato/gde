@@ -321,7 +321,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all existing player data for this game.", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
-        if (response == JOptionPane.YES_OPTION) {                                                   
+        if (response == JOptionPane.YES_OPTION) { 
+            // Erases all captured data associated with the instances of this game
             MongoCollection instanceCollection = DatabaseHandler.getDatabase().getCollection("instances");
             String gameQuery = String.format("{gameId: '%s'}", game.getKey().toString());
             Iterable<Instance> instances = instanceCollection.find(gameQuery).as(Instance.class);
@@ -332,10 +333,12 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             }
             ((CapturedDataTableModel) capturedDataTable.getModel()).populate();  
             
+            // Removes the field in question
             Field removedField = ((FieldTableModel) fieldTable.getModel()).getEntryAt(fieldTable.getSelectedRow());
             String removedFieldKey = removedField.getKey().toString();
             ((FieldTableModel) fieldTable.getModel()).remove(fieldTable.getSelectedRows());  
             
+            // Removes all charts associated with this field
             MongoCollection chartCollection = DatabaseHandler.getDatabase().getCollection("charts");
             String chartQuery = String.format("{$or: [{xAxisFieldId: '%s'}, {yAxisFieldId: '%s'}]}", removedFieldKey, removedFieldKey);
             Iterable<Chart> charts = chartCollection.find(chartQuery).as(Chart.class);
@@ -344,6 +347,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                 chartTableModel.remove(new int[] {chartTableModel.getIds().indexOf(chart.getKey())});
             }       
             
+            // Updates the chart table if the chart being viewed was deleted
             if (chartTable.getSelectedRow() == -1) {
                 chartContainerPanel.removeAll();
                 chartContainerPanel.add(new ChartPanel(ChartFactory.createPieChart("", null, true, true, false)), BorderLayout.CENTER);
@@ -352,6 +356,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
                 deleteButton.setEnabled(false);
             }                        
             
+            // Adjusts the table to account for the new fields
             capturedDataTable.setModel(new CapturedDataTableModel(game));
             
         }

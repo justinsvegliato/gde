@@ -207,7 +207,6 @@ public class LoginFrame extends javax.swing.JFrame {
             String password = new String(passwordTextField.getPassword());
             if ((developer = getDeveloper(username, password)) != null) {
                 isAdmin = developer.getAccountType() == AccountType.ADMINISTRATOR;
-
                 MongoCollection gamesCollection = database.getCollection("games");
                 String query = String.format("{developerIds: '%s'}", developer.getKey().toString());
                 Iterable<Game> games = gamesCollection.find(query).as(Game.class);
