@@ -134,7 +134,7 @@ public class CapturedDataTableModel extends CollectionTableModel<CapturedData> {
     private static String[] getTitles(Game game) {
         List<String> titles = new LinkedList<String>();
         titles.add("Date");
-        titles.add("Identifier");
+        titles.add("Player");
         MongoCollection fieldsCollection = database.getCollection("fields");
         String fieldQuery = String.format("{gameId: '%s'}", game.getKey().toString());
         Iterable<Field> fields = fieldsCollection.find(fieldQuery).as(Field.class);

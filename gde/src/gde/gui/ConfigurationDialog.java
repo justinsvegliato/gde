@@ -288,7 +288,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
-        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all data. MEOW", "Confirm Deletion",
+        int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all existing player data for this game.", "Confirm Deletion",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         
         if (response == JOptionPane.YES_OPTION) {                                                   

@@ -157,9 +157,8 @@ public class ManageFieldDialog extends javax.swing.JDialog {
      * @param evt The swing ActionEvent trigger.
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        String message = String.format("Are you sure to %s this field? %s",
-                                        editMode ? "edit" : "create",
-                                        editMode ? "Doing so will erase all data currently stored in the field." : "");
+        String message = String.format("Are you sure to %s this field? Doing so will erase all existing player data for this game.",
+                                        editMode ? "edit" : "create");
         int response = JOptionPane.showConfirmDialog(this, message, "Confirm Cancellation",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {

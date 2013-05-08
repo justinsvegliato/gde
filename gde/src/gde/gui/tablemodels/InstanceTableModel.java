@@ -15,7 +15,7 @@ public class InstanceTableModel extends CollectionTableModel<Instance> {
     private static final Class[] TYPES = {String.class};
     
     /** the titles of the columns of this table */
-    private static final String[] TITLES = {"Instances"};
+    private static final String[] TITLES = {"Players"};
     
     /** the collection that will be operated upon */
     private static final String COLLECTION = "instances";
