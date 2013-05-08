@@ -15,11 +15,18 @@ import org.netbeans.validation.api.ui.GroupValidator;
 import org.netbeans.validation.api.ui.swing.SwingValidationGroup;
 import org.netbeans.validation.api.ui.swing.ValidationPanel;
 
+
+/**
+ * The AccountCreationDialog object that provides registration functionality.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class AccountCreationDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form AccountCreationDialog.
-     * @param parent The parent frame which creates the AccountCreationDialog
+     * 
+     * @param parent the parent frame which creates the AccountCreationDialog
      */
     public AccountCreationDialog(java.awt.Frame parent) {
         super(parent);
@@ -73,12 +80,25 @@ public class AccountCreationDialog extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * The UsernameValidator class checks whether the username already exists.
+     */
     private final class UsernameValidator extends AbstractValidator<String> {
 
+        /**
+         * Creates a newly-instantiated UsernameValidator object.
+         */
         UsernameValidator() {
             super(String.class);
         }
-
+        
+        /**
+         * Checks whether the username already exists
+         * 
+         * @param problems
+         * @param name
+         * @param input 
+         */
         @Override
         public void validate(Problems problems, String name, String input) {
             if (!input.isEmpty()) {
@@ -91,8 +111,16 @@ public class AccountCreationDialog extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * The PasswordValidator class checks whether the passwords and confirmed password are equal
+     */
     private final class PasswordValidator extends GroupValidator {
 
+        /**
+         * Checks whether the passwords and confirmed password are equal
+         * 
+         * @param problems 
+         */
         @Override
         protected void performGroupValidation(Problems problems) {
             if (!new String(confirmPasswordField.getPassword()).equals(new String(passwordField.getPassword()))) {

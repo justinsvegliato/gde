@@ -9,9 +9,17 @@ import javax.swing.JOptionPane;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
+/**
+ * The LoginFrame provides basic login functionality.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class LoginFrame extends javax.swing.JFrame {
 
+    /** the database connection */
     private static final Jongo database = DatabaseHandler.getDatabase();
+    
+    /** by default the application will load in developer mode */
     private boolean isAdmin = false;
 
     /**
@@ -177,7 +185,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     /**
      * Ends the application when the "exit" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         System.exit(0);
@@ -187,7 +196,8 @@ public class LoginFrame extends javax.swing.JFrame {
      * When the "login / choose game" button is clicked, takes the appropriate actions
      * in checking the username / encrypted password and the games with which the user
      * is associated. 
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String command = evt.getActionCommand();
@@ -232,26 +242,49 @@ public class LoginFrame extends javax.swing.JFrame {
 
     /**
      * Opens a new AccountCreationDialog when the "register" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         new AccountCreationDialog(this);
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    /**
+     * Activates the login button upon the game combo box changing.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void gameComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_gameComboBoxItemStateChanged
         loginButton.setEnabled(!gameComboBox.getSelectedItem().equals("Select a game..."));
     }//GEN-LAST:event_gameComboBoxItemStateChanged
 
+    /**
+     * Activates the login button if there is text in the username field.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void usernameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameTextFieldKeyReleased
         boolean isValid = !usernameTextField.getText().trim().isEmpty() && !passwordTextField.getText().trim().isEmpty();
         loginButton.setEnabled(isValid);
     }//GEN-LAST:event_usernameTextFieldKeyReleased
 
+    /**
+     * Activates the login button if there is text in the password field.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void passwordTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordTextFieldKeyReleased
         boolean isValid = !usernameTextField.getText().trim().isEmpty() && !passwordTextField.getText().trim().isEmpty();
         loginButton.setEnabled(isValid);
     }//GEN-LAST:event_passwordTextFieldKeyReleased
 
+    /**
+     * Retrieves the developer object associated with these credentials.
+     * 
+     * @param username the username
+     * @param password the password
+     * @return the developer object associated with these credentials.
+     */
     private Developer getDeveloper(String username, String password) {
         MongoCollection developersCollection = database.getCollection("developers");
         String query = String.format("{username: '%s', password: '%s'}", username, password);

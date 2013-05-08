@@ -22,15 +22,41 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
+/**
+ * The ConfigurationDialog object allows an admin to change developers and fields.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class ConfigurationDialog extends javax.swing.JDialog {
 
+    /** the game that this instance of GDE is associated with */ 
     private final Game game;
+    
+    /** the chart table on the MainMenu */
     private final JTable chartTable;
+    
+    /** the captured data table on the MainMenu */
     private final JTable capturedDataTable;
+    
+    /** the chart container panel on the MainMenu */
     private final JPanel chartContainerPanel;
+    
+    /** the edit button on the MainMenu */
     private final JButton editButton;
+    
+    /** the delete button on the MainMenu */
     private final JButton deleteButton;
 
+    /**
+     * Creates a newly-instantiated ConfigurationDialog object.
+     * 
+     * @param game the game that this instance of GDE is associated with
+     * @param chartTable the chart table on the MainMenu
+     * @param capturedDataTable the captured data table on the MainMenu
+     * @param chartContainerPanel the chart container panel on the MainMenu
+     * @param editButton the edit button on the MainMenu
+     * @param deleteButton the delete button on the MainMenu
+     */
     public ConfigurationDialog(Game game, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, JButton editButton, JButton deleteButton) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
@@ -255,7 +281,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     /**
      * On a double click of a field in the table, opens a new ManageFieldDialog. 
      * On double or single click, enables the "edit" and "delete" buttons.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void fieldTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fieldTableMouseClicked
         if (evt.getClickCount() == 2) {
@@ -267,7 +294,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     /**
      * Opens a new ManageFieldDialog to create a field when the "create field" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void createFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createFieldButtonActionPerformed
         new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, false).setVisible(true);
@@ -275,7 +303,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     /**
      * Opens a new ManageFieldDialog to edit a field when the "edit field" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void editFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editFieldButtonActionPerformed
         new ManageFieldDialog(game, fieldTable, chartTable, capturedDataTable, chartContainerPanel, true).setVisible(true);
@@ -285,7 +314,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * Deletes a field and makes appropriate corrections to the database and application
      * after the "delete field" button has been clicked and the user has confirmed that
      * they want to take this action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void deleteFieldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFieldButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this field? Doing so will erase all existing player data for this game.", "Confirm Deletion",
@@ -331,7 +361,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
 
     /**
      * Opens and populates a new ManageDeveloperDialog window when the "add developer" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void addDeveloperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDeveloperButtonActionPerformed
         new ManageDeveloperDialog(game).setVisible(true);
@@ -342,7 +373,8 @@ public class ConfigurationDialog extends javax.swing.JDialog {
      * Deletes a developer and makes appropriate corrections to the database and application 
      * after the "remove developer" button has been clicked and the user has confirmed that 
      * they want to take this action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void removeDeveloperButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeDeveloperButtonActionPerformed
         DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
@@ -376,26 +408,45 @@ public class ConfigurationDialog extends javax.swing.JDialog {
     /**
      * Enable the "remove developer" button if a non-admin developer is selected in the 
      * developer table.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void developerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_developerTableMouseClicked
         enableRemoveDeveloperButton();
     }//GEN-LAST:event_developerTableMouseClicked
-                                            
+
+    /**
+     * Handles the enabling the "remove developer" button.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void developerTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_developerTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
             enableRemoveDeveloperButton();
         }
     }//GEN-LAST:event_developerTableKeyReleased
 
+    /**
+     * Destroys the window upon clicking the "field exit" button.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void fieldExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldExitButtonActionPerformed
         dispose();
     }//GEN-LAST:event_fieldExitButtonActionPerformed
 
+    /**
+     * Destroys the window upon clicking the "developer exit" button.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void developerExitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_developerExitButtonActionPerformed
         dispose();
     }//GEN-LAST:event_developerExitButtonActionPerformed
 
+    /**
+     * Enables the "remove developer" button.
+     */
     private void enableRemoveDeveloperButton() {
         DeveloperTableModel developerTableModel = (DeveloperTableModel) developerTable.getModel();
             removeDeveloperButton.setEnabled((developerTable.getSelectedRow() > 0) 

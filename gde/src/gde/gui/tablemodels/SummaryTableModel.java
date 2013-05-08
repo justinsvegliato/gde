@@ -93,12 +93,15 @@ public class SummaryTableModel extends TableModel {
     public void populate(List<ObjectId> ids, int[] selectedRows) {
         setRowCount(0);
         statsMap.clear();
+        
+        // Retrieves the current stats for each instance
         ExecutorService executor = Executors.newFixedThreadPool(50);
         for (int selectedRow : selectedRows) {
             Runnable worker = new DatabaseQueryRunnable(ids.get(selectedRow));
             executor.execute(worker);
         }
 
+        // Waits for the threads grabbing the stats to finish
         executor.shutdown();
         while (!executor.isTerminated()) {
         }
@@ -117,11 +120,14 @@ public class SummaryTableModel extends TableModel {
                 if (field.getType() == FieldType.TEXT) {
                     Map<String, Integer> textCounts = new HashMap<String, Integer>();
                     for (String stat : stats) {
+                        // Calculate the frequency for each field
                         if (textCounts.containsKey(stat)) {
                             textCounts.put(stat, textCounts.get(stat) + 1);
                         } else {
                             textCounts.put(stat, 1);
                         }
+                        
+                        // Calculates the max number for each field
                         Map.Entry<String, Integer> maxEntry = null;
                         Map.Entry<String, Integer> minEntry = null;
                         Double sum = 0.0;
@@ -134,6 +140,8 @@ public class SummaryTableModel extends TableModel {
                                 minEntry = entry;
                             }
                         }
+                        
+                        // Calculates the least and most field
                         least = String.format("%s (%s%%)", minEntry.getKey(), Math.round((minEntry.getValue() / sum) * 100));
                         most = String.format("%s (%s%%)", maxEntry.getKey(), Math.round((maxEntry.getValue() / sum) * 100));     
                     }
@@ -142,12 +150,15 @@ public class SummaryTableModel extends TableModel {
                     for (String stat : stats) {
                         integerStats.add(Integer.valueOf(stat));
                     }
+                    
+                    // Calculates the minimum and maximum field
                     minimum = Collections.min(integerStats).toString();
                     maximum = Collections.max(integerStats).toString();
                     double sum = 0;
                     for (double stat : integerStats) {
                         sum += stat;
                     }
+                    
                     average = String.valueOf(Math.round(sum / integerStats.size()));
                 }
                 addRow(new Object[]{

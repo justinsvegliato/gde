@@ -15,18 +15,31 @@ import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
+/**
+ * The ManageChartDialog provides chart management functionality.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class ManageChartDialog extends javax.swing.JDialog {
 
+    /** the database connection object */
     private static final Jongo database = DatabaseHandler.getDatabase();
+    
+    /** the game with which the form should be associated */
     private final Game game;
+    
+    /** the chartTable with which the form should be associated */
     private final JTable chartTable;
+    
+    /** whether or not to enable edit mode; else the form will be opened in create mode */
     private final boolean editMode;
     
     /**
      * Instantiates a new form ManageChartDialog with a given game and chartTable.
-     * @param game The game with which the form should be associated.
-     * @param chartTable The chartTable with which the form should be associated.
-     * @param editMode Whether or not to enable edit mode; else the form will be opened in create mode.
+     * 
+     * @param game the game with which the form should be associated
+     * @param chartTable the chartTable with which the form should be associated
+     * @param editMode whether or not to enable edit mode; else the form will be opened in create mode
      */
     public ManageChartDialog(Game game, JTable chartTable, boolean editMode) {
         initComponents();
@@ -154,7 +167,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     /**
      * Populates the field choice combo boxes when a chart type is selected.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void chartTypeComboBoxInputStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chartTypeComboBoxInputStateChanged
         ChartType chartType = (ChartType) chartTypeComboBox.getSelectedItem();     
@@ -164,8 +178,9 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     /**
      * Returns a part of a query string to filter based on the given chart type.
-     * @param chartType Chart type to filter on.
-     * @return String to be used in a database query.
+     * 
+     * @param chartType chart type to filter on
+     * @return string to be used in a database query
      */
     private String getChoiceFilter(ChartType chartType) {
         String template = ", type: {$in:[%s]}";
@@ -185,7 +200,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     /**
      * Fills the form combo boxes after querying the database for the selected chart's data.
-     * @param changeChart Whether or not the selected chart has changed.
+     * 
+     * @param changeChart whether or not the selected chart has changed
      */
     private void fillSelections(boolean changeChart) {
         if (editMode) {
@@ -210,7 +226,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
     
     /**
      * Populates the field combo boxes based on the field collection in the database.
-     * @param chartType Type of chart selected.
+     * 
+     * @param chartType type of chart selected
      */
     private void populateFieldComboBoxes(ChartType chartType) {
         MongoCollection fieldsCollection = database.getCollection("fields");
@@ -239,7 +256,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
 
     /**
      * Disposes the current window and stores the changes made to the selected chart.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         dispose();
@@ -266,7 +284,8 @@ public class ManageChartDialog extends javax.swing.JDialog {
     /**
      * Cancels the changes made to the chart after the "cancel" button is clicked
      * and the user confirms that they want to take this action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (editMode) {

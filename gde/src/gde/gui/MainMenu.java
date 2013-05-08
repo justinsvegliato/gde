@@ -20,14 +20,23 @@ import org.jfree.chart.JFreeChart;
 import org.jongo.Jongo;
 import org.jongo.MongoCollection;
 
+/**
+ * The MainMenu object which provides the core functionality of the application
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class MainMenu extends javax.swing.JFrame {
 
+    /** the database connection object */
     protected static final Jongo database = DatabaseHandler.getDatabase();
+    
+    /** the game associated with this instance of GDE */
     private final Game game;
 
     /**
-     * Instantiates a new form MainMenu.
-     * @param game The game in the database from which data will be displayed
+     * Instantiates a newly-created MainMenu object.
+     * 
+     * @param game the game in the database from which data will be displayed
      * @param isAdmin Whether or not the user who logged in is an admin user.
      */
     public MainMenu(Game game, boolean isAdmin) {
@@ -437,7 +446,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Selects all/no cells in the instance table when the select all/none checkbox is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void selectCheckBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectCheckBoxActionPerformed
         if (selectCheckBox.isSelected()) {
@@ -451,7 +461,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Updates the tabs based on the instance table selections when the user releases the mouse
      * after making a selection.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void instanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instanceTableMouseReleased
         updateTabs();
@@ -462,7 +473,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Opens a new ManageChartDialog when the "edit chart" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void editChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editChartButtonActionPerformed
         new ManageChartDialog(game, chartTable, true).setVisible(true);
@@ -471,7 +483,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Prompts the user to confirm that they want to delete a chart after the 
      * "delete chart" button is pressed.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void deleteChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteChartButtonActionPerformed
         int response = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this chart?", "Confirm Deletion",
@@ -485,7 +498,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Opens a new ManageChartDialog when the "create chart" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void createChartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createChartButtonActionPerformed
         new ManageChartDialog(game, chartTable, false).setVisible(true);
@@ -495,7 +509,8 @@ public class MainMenu extends javax.swing.JFrame {
      * Opens a new ManageChartDialog when the user double clicks a cell in the 
      * chart table. Regardless of click count, updates the chart view and enables
      * the "edit" and "delete" buttons.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void chartTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chartTableMouseClicked
         if (evt.getClickCount() == 2) {
@@ -509,7 +524,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Updates the tabs if the user changes the selected instances in the instance table
      * via keyboard up and down keys.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void instanceTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_instanceTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
@@ -523,7 +539,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Updates the chart view if the user changes the selected charts in the chart table
      * via keyboard up and down keys.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void chartTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_chartTableKeyReleased
         if (evt.getKeyCode() == 38 || evt.getKeyCode() == 40) {
@@ -533,7 +550,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Refreshes the instance table when the "refresh" button is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         refreshInstancesTable();
@@ -542,7 +560,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Disposes the current window and opens a new LoginFrame window when the 
      * "logout" menu option is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void logoutMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuButtonActionPerformed
         dispose();
@@ -551,7 +570,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Refreshes the instance table when the "refresh" menu option is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void refreshMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshMenuButtonActionPerformed
         refreshInstancesTable();
@@ -569,7 +589,8 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Opens a new ConfigurationDialog window and subsequently updates the tabs when the
      * "configure" menu option is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void configureMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureMenuItemActionPerformed
         new ConfigurationDialog(game, chartTable, capturedDataTable, chartContainerPanel, editChartButton, deleteChartButton).setVisible(true);
@@ -579,7 +600,8 @@ public class MainMenu extends javax.swing.JFrame {
 
     /**
      * Opens a new AboutDialog when the "about" menu option is clicked.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
         new AboutDialog().setVisible(true);

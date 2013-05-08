@@ -18,15 +18,41 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jongo.MongoCollection;
 
+/**
+ * The ManageFieldDialog provides field management functionality.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class ManageFieldDialog extends javax.swing.JDialog {
 
+    /** the game associated with this instance of gde */
     private final Game game;
+    
+    /** the field table from the main menu */
     private final boolean editMode;
+    
+    /** the chart table from the main menu */
     private final JTable fieldTable;
+    
+    /** the captured data table from the main menu */
     private final JTable chartTable;
+    
+    /** the chart container panel from the main menu */
     private final JTable capturedDataTable;
+    
+    /** true if this dialog will be in field edit mode */
     private final JPanel chartContainerPanel;
 
+    /**
+     * Creates a newly-instantiated ManageFieldDialog object.
+     * 
+     * @param game the game associated with this instance of gde
+     * @param fieldTable the field table from the main menu
+     * @param chartTable the chart table from the main menu
+     * @param capturedDataTable the captured data table from the main menu
+     * @param chartContainerPanel the chart container panel from the main menu
+     * @param editMode true if this dialog will be in field edit mode
+     */
     public ManageFieldDialog(Game game, JTable fieldTable, JTable chartTable, JTable capturedDataTable, JPanel chartContainerPanel, boolean editMode) {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
@@ -139,7 +165,8 @@ public class ManageFieldDialog extends javax.swing.JDialog {
 
     /**
      * Fills the selections in the form based on the selected field, if edit mode is enabled.
-     * @param editMode Whether or not the window is open in edit mode.
+     * 
+     * @param editMode whether or not the window is open in edit mode
      */
     private void fillSelections(boolean editMode) {
         if (editMode) {
@@ -154,7 +181,8 @@ public class ManageFieldDialog extends javax.swing.JDialog {
     /**
      * Creates or changes the selected field after the "save" button is clicked and the
      * user confirms that they want to take this action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         String message = String.format("Are you sure to %s this field? Doing so will erase all existing player data for this game.",
@@ -209,7 +237,8 @@ public class ManageFieldDialog extends javax.swing.JDialog {
     /**
      * Disposes the current window after the "cancel" button is clicked and the
      * user confirms the action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (editMode) {
@@ -222,6 +251,11 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    /**
+     * Enables the save button when there is text in the field.
+     * 
+     * @param evt the swing ActionEvent trigger
+     */
     private void nameTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextFieldKeyReleased
         saveButton.setEnabled(!nameTextField.getText().trim().isEmpty());
     }//GEN-LAST:event_nameTextFieldKeyReleased

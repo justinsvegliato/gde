@@ -170,7 +170,7 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="summaryScrollPane" pref="944" max="32767" attributes="0"/>
+                              <Component id="summaryScrollPane" pref="952" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="fieldCountTitleLAbel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -197,7 +197,7 @@
                               <Component id="instanceCountLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="summaryScrollPane" pref="577" max="32767" attributes="0"/>
+                          <Component id="summaryScrollPane" pref="585" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -270,7 +270,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="detailedAnalysisPanel" pref="944" max="32767" attributes="0"/>
+                      <Component id="detailedAnalysisPanel" pref="952" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -278,7 +278,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="detailedAnalysisPanel" pref="608" max="32767" attributes="0"/>
+                      <Component id="detailedAnalysisPanel" pref="613" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -350,7 +350,7 @@
                                   <Component id="chartContainerPanel" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace pref="556" max="32767" attributes="0"/>
+                                  <EmptySpace pref="500" max="32767" attributes="0"/>
                                   <Component id="createChartButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="editChartButton" min="-2" max="-2" attributes="0"/>
@@ -375,7 +375,7 @@
                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
-                          <Component id="chartScrollPane" pref="608" max="32767" attributes="0"/>
+                          <Component id="chartScrollPane" pref="613" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>

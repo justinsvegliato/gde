@@ -9,12 +9,20 @@ import javax.swing.JOptionPane;
 import org.bson.types.ObjectId;
 import org.jongo.MongoCollection;
 
+/**
+ * The ManageDeveloperDialog provides functionality for developer management.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class ManageDeveloperDialog extends javax.swing.JDialog {
+    
+    /** the game associated with this instance of gde */
     private final Game game;
 
     /**
-     * Instantiates a new form ManageDeveloperDialog
-     * @param game The game with which the form should be associated.
+     * Instantiates a newly-instantiated ManageDeveloperDialog object.
+     * 
+     * @param game the game with which the form should be associated
      */
     public ManageDeveloperDialog(Game game) {
         initComponents();
@@ -107,7 +115,8 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
 
     /**
      * Associates the selected user to the currently associated game and disposes the window.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void selectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectButtonActionPerformed
         dispose();
@@ -131,7 +140,8 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
     /**
      * Cancels the action and disposes the windows after the "cancel" button is clicked
      * and the user confirms that they want to take this action.
-     * @param evt The swing ActionEvent trigger.
+     * 
+     * @param evt the swing ActionEvent trigger
      */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         if (unassociatedDeveloperTable.getSelectedRows().length > 0) {

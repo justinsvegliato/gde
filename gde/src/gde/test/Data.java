@@ -57,6 +57,7 @@ public class Data {
      * for testing purposes.
      */
     public static void main(String[] args) {
+        // Instantiates all of the collections
         MongoCollection developersCollection = jongo.getCollection("developers");
         MongoCollection gamesCollection = jongo.getCollection("games");
         MongoCollection instancesCollection = jongo.getCollection("instances");
@@ -64,6 +65,7 @@ public class Data {
         MongoCollection capturedDataCollection = jongo.getCollection("captureddata");
         MongoCollection chartCollection = jongo.getCollection("charts");
         
+        // Drops all of the collections in the database
         developersCollection.drop();
         gamesCollection.drop();
         instancesCollection.drop();
@@ -71,6 +73,7 @@ public class Data {
         capturedDataCollection.drop();
         chartCollection.drop();
 
+        // Creates test developers
         Developer developer = new Developer("justin", "svegliato", "Svegabytes", "revulsion", "a9se3p2f", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);
         List<String> developers = new LinkedList<String>();
@@ -83,6 +86,7 @@ public class Data {
         developer = new Developer("justin", "svegliato", "Svegabytes", "admin", "b", AccountType.ADMINISTRATOR);
         developersCollection.save(developer);       
 
+        // Creates a test game as well as test fields and charts
         Game game = new Game("Diablo 2", "ARPG", developers);
         gamesCollection.save(game);
 
@@ -159,6 +163,7 @@ public class Data {
         field = new Field("Y Position", FieldType.INTEGER, game2.getKey().toString());
         fieldsCollection.save(field);
 
+        // Generates random captured data
         for (int i = 0; i < 100; i++) {
             Instance instance = new Instance("Revulsion" + i, game.getKey().toString());
             instancesCollection.save(instance);

@@ -73,7 +73,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="fieldExitButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="administrationScrollPane" pref="466" max="32767" attributes="0"/>
+                          <Component id="administrationScrollPane" pref="470" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -83,7 +83,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="administrationScrollPane" pref="330" max="32767" attributes="0"/>
+                      <Component id="administrationScrollPane" pref="316" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="editFieldButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -190,7 +190,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="developerTableScrollPane" pref="330" max="32767" attributes="0"/>
+                      <Component id="developerTableScrollPane" pref="316" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="removeDeveloperButton" alignment="3" min="-2" max="-2" attributes="0"/>
