@@ -79,11 +79,11 @@ public enum JFreeChartFactory {
     }
 
     /**
+     * Returns a pie chart based on the captured data, the chart axes, and the selected instances.
      * 
-     * 
-     * @param chart
-     * @param selectedRows
-     * @param model
+     * @param chart Chart object off of which to base the JFreeChart.
+     * @param selectedRows instances selected
+     * @param model InstanceTableModel
      * @return 
      */
     private JFreeChart getJFreePieChart(Chart chart, int[] selectedRows, InstanceTableModel model) {
@@ -119,6 +119,14 @@ public enum JFreeChartFactory {
         return jFreeChart;
     }
 
+    /**
+     * Returns a line graph based on the captured data, the chart axes, and the selected instances.
+     * 
+     * @param chart Chart object off of which to base the JFreeChart.
+     * @param selectedRows instances selected
+     * @param model InstanceTableModel
+     * @return 
+     */
     private JFreeChart getJFreeLineChart(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
         Field yAxisField = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
@@ -147,6 +155,14 @@ public enum JFreeChartFactory {
                 false);
     }
     
+    /**
+     * Returns a scatter chart based on the captured data, the chart axes, and the selected instances.
+     * 
+     * @param chart Chart object off of which to base the JFreeChart.
+     * @param selectedRows instances selected
+     * @param model InstanceTableModel
+     * @return 
+     */
     private JFreeChart getJFreeScatterPlot(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
         Field yAxisField = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
@@ -180,6 +196,14 @@ public enum JFreeChartFactory {
         return jFreeChart;
     }
     
+    /**
+     * Returns a position map based on the captured data, the chart axes, and the selected instances.
+     * 
+     * @param chart Chart object off of which to base the JFreeChart.
+     * @param selectedRows instances selected
+     * @param model InstanceTableModel
+     * @return 
+     */
     private JFreeChart getJFreePositionMap(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
         Field yAxisField = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);

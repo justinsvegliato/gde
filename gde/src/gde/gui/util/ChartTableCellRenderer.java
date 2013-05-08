@@ -9,6 +9,16 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 public class ChartTableCellRenderer extends DefaultTableCellRenderer {
 
+    /**
+     * 
+     * @param table The table to which the cell renderer will be applied.
+     * @param value The object which occupies the cell.
+     * @param isSelected Whether or not the cell is selected.
+     * @param hasFocus Whether or not the cell has focus.
+     * @param row The row of the cell in the table.
+     * @param column The column of the cell in the table.
+     * @return 
+     */
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
@@ -26,6 +36,11 @@ public class ChartTableCellRenderer extends DefaultTableCellRenderer {
         return label;
     }
 
+    /**
+     * Returns the appropriate image icon to represent the given chart type.
+     * @param type Chart type.
+     * @return ImageIcon to represent the chart in its cell.
+     */
     private ImageIcon getIcon(ChartType type) {
         switch (type) {
             case PIE:
