@@ -31,6 +31,7 @@ public class ManageFieldDialog extends javax.swing.JDialog {
         initComponents();
         setIconImage(ImageLoader.getAppIcon().getImage());
         getRootPane().setDefaultButton(saveButton);
+        setLocationRelativeTo(null);
 
         this.game = game;
         this.fieldTable = fieldTable;

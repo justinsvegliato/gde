@@ -145,7 +145,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(fieldPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(administrationScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(fieldPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(editFieldButton)
@@ -186,6 +186,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         });
 
         removeDeveloperButton.setText("Remove");
+        removeDeveloperButton.setEnabled(false);
         removeDeveloperButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeDeveloperButtonActionPerformed(evt);
@@ -204,7 +205,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
         developerPanelLayout.setHorizontalGroup(
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 454, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, developerPanelLayout.createSequentialGroup()
@@ -219,7 +220,7 @@ public class ConfigurationDialog extends javax.swing.JDialog {
             developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(developerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
+                .add(developerTableScrollPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(developerPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(removeDeveloperButton)

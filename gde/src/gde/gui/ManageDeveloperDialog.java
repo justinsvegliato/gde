@@ -19,6 +19,7 @@ public class ManageDeveloperDialog extends javax.swing.JDialog {
     public ManageDeveloperDialog(Game game) {
         initComponents();
         getRootPane().setDefaultButton(selectButton);
+        setLocationRelativeTo(null);
 
         this.game = game;
         
