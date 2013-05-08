@@ -30,7 +30,7 @@ import org.jongo.MongoCollection;
  * The JFreeChartFactory is a singleton object that produces a graph depending 
  * on the Chart and JTable received.
  * 
- * @author Justin Svelgiato and Martin Mena
+ * @author Justin Svegliato and Andrew Evans
  */
 public enum JFreeChartFactory {
 
@@ -40,7 +40,7 @@ public enum JFreeChartFactory {
     /** the Jongo object used to easily interact with the database */
     protected static final Jongo database = DatabaseHandler.getDatabase();
     
-    /** the captureddata collection */
+    /** the captured data collection */
     private static final MongoCollection capturedDataCollection = database.getCollection("captureddata");
     
     /** the field collection */
@@ -84,7 +84,7 @@ public enum JFreeChartFactory {
      * @param chart Chart object off of which to base the JFreeChart.
      * @param selectedRows instances selected
      * @param model InstanceTableModel
-     * @return 
+     * @return the JFreeChart object
      */
     private JFreeChart getJFreePieChart(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field field = fieldCollection.findOne(new ObjectId(chart.getyAxisFieldId())).as(Field.class);
@@ -122,10 +122,10 @@ public enum JFreeChartFactory {
     /**
      * Returns a line graph based on the captured data, the chart axes, and the selected instances.
      * 
-     * @param chart Chart object off of which to base the JFreeChart.
-     * @param selectedRows instances selected
-     * @param model InstanceTableModel
-     * @return 
+     * @param chart chart object off of which to base the JFreeChart
+     * @param selectedRows the instances that are selected
+     * @param model the instanceTableModel*
+     * @return the line chart
      */
     private JFreeChart getJFreeLineChart(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
@@ -158,10 +158,10 @@ public enum JFreeChartFactory {
     /**
      * Returns a scatter chart based on the captured data, the chart axes, and the selected instances.
      * 
-     * @param chart Chart object off of which to base the JFreeChart.
-     * @param selectedRows instances selected
-     * @param model InstanceTableModel
-     * @return 
+     * @param chart chart object off of which to base the JFreeChart.
+     * @param selectedRows the selected instances
+     * @param model the InstanceTableModel
+     * @return the scatter plot
      */
     private JFreeChart getJFreeScatterPlot(Chart chart, int[] selectedRows, InstanceTableModel model) {
         Field xAxisField = fieldCollection.findOne(new ObjectId(chart.getxAxisFieldId())).as(Field.class);
@@ -199,9 +199,9 @@ public enum JFreeChartFactory {
     /**
      * Returns a position map based on the captured data, the chart axes, and the selected instances.
      * 
-     * @param chart Chart object off of which to base the JFreeChart.
-     * @param selectedRows instances selected
-     * @param model InstanceTableModel
+     * @param chart the charthart object off of which to base the JFreeChart
+     * @param selectedRows the selected instances
+     * @param model the InstanceTableModel
      * @return 
      */
     private JFreeChart getJFreePositionMap(Chart chart, int[] selectedRows, InstanceTableModel model) {

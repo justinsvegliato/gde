@@ -7,10 +7,20 @@ import org.jongo.Jongo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The DatabaseHandler class which keeps the database information in one place.
+ * 
+ * @author Justin Svegliato and Andrew Evans
+ */
 public class DatabaseHandler {
 
+    /** the Logger object used for logging purposes */
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseHandler.class);
+    
+    /** the database collection */
     private static final String DATABASE = "gde";
+    
+    /** the Jongo helper object that allows for easy database interaction */
     private static Jongo jongo;
     
     /**
@@ -21,7 +31,8 @@ public class DatabaseHandler {
 
     /**
      * Returns the Jongo database object with which the handler is associated.
-     * @return The Jongo database object with which the handler is associated.
+     * 
+     * @return the Jongo database object with which the handler is associated
      */
     public static Jongo getDatabase() {
         if (jongo == null) {
