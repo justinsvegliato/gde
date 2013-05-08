@@ -13,9 +13,16 @@ public class DatabaseHandler {
     private static final String DATABASE = "gde";
     private static Jongo jongo;
     
+    /**
+     * Instantiates a new DatabaseHandler object.
+     */
     private DatabaseHandler() {
     }
 
+    /**
+     * Returns the Jongo database object with which the handler is associated.
+     * @return The Jongo database object with which the handler is associated.
+     */
     public static Jongo getDatabase() {
         if (jongo == null) {
             try {
